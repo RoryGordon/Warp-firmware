@@ -171,7 +171,7 @@ printSensorDataINA219(bool hexModeFlag)
 
 	if (i2cReadStatus != kWarpStatusOK)
 	{
-		SEGGER_RTT_WriteString(0, " ----,");
+		SEGGER_RTT_WriteString(0, " -ND-,");
 	}
 	else
 	{
