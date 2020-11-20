@@ -1261,7 +1261,7 @@ main(void)
 #endif
 
 #ifdef WARP_BUILD_ENABLE_DEVINA219
-	initMMA8451Q(	0x40	/* i2cAddress */,	&deviceMMA8451QState	);
+	initMMA8451Q(	0x40	/* i2cAddress */,	&deviceINA219State	);
 #endif
 
 #ifdef WARP_BUILD_ENABLE_DEVLPS25H
