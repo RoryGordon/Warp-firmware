@@ -2688,7 +2688,7 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		#endif
 		#ifdef WARP_BUILD_ENABLE_DEVINA219
-		SEGGER_RTT_WriteString(0, " INA219 current");
+		SEGGER_RTT_WriteString(0, " INA219 current, INA219 shunt voltage");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		#endif
 		SEGGER_RTT_WriteString(0, " RTC->TSR, RTC->TPR, # Config Errors");
@@ -2701,16 +2701,16 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 
 	while(1)
 	{
-		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-		SEGGER_RTT_printf(0, "%u, %d, %d,", readingCount, RTC->TSR, RTC->TPR);
-		#endif
+		//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+		//SEGGER_RTT_printf(0, "%u, %d, %d,", readingCount, RTC->TSR, RTC->TPR);
+		//#endif
 
 		#ifdef WARP_BUILD_ENABLE_DEVAMG8834
 		printSensorDataAMG8834(hexModeFlag);
 		#endif
-		#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
-		printSensorDataMMA8451Q(hexModeFlag);
-		#endif
+		//#ifdef WARP_BUILD_ENABLE_DEVMMA8451Q
+		//printSensorDataMMA8451Q(hexModeFlag);
+		//#endif
 		#ifdef WARP_BUILD_ENABLE_DEVMAG3110
 		printSensorDataMAG3110(hexModeFlag);
 		#endif
@@ -2735,9 +2735,9 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		printSensorDataINA219(hexModeFlag);
 		#endif
 
-		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-		SEGGER_RTT_printf(0, " %d, %d, %d\n", RTC->TSR, RTC->TPR, numberOfConfigErrors);
-		#endif
+		//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+		//SEGGER_RTT_printf(0, " %d, %d, %d\n", RTC->TSR, RTC->TPR, numberOfConfigErrors);
+		//#endif
 
 		if (menuDelayBetweenEachRun > 0)
 		{
