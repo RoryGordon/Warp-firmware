@@ -156,8 +156,16 @@ devSSD1331init(void)
 	 *	Any post-initialization drawing commands go here.
 	 */
 	//...
-
-
-
+	writeCommand(0x22);
+	writeCommand(0x00);
+	writeCommand(0x00);
+	writeCommand(95);
+	writeCommand(63);
+	writeCommand(0x00);
+	writeCommand(0xFF);
+	writeCommand(0x00);
+	writeCommand(0x00);
+	writeCommand(0xFF);
+	writeCommand(0x00);
 	return 0;
 }
