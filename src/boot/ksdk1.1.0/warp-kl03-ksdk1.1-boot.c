@@ -2968,7 +2968,7 @@ repeatRegisterReadForDeviceAndAddress(WarpSensorDevice warpSensorDevice, uint8_t
 			break;
 		}
 
-		case kWarpSensorMMA8451Q:
+		case kWarpSensorINA219:
 		{
 			/*
 			 *	MMA8451Q: VDD 1.95--3.6
