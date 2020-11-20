@@ -33,6 +33,18 @@ initINA219(const uint8_t i2cAddress, WarpI2CDeviceState volatile *  deviceStateP
 }
 
 WarpStatus
+configureSensorMMA8451Q(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t menuI2cPullupValue)
+{
+	WarpStatus	i2cWriteStatus;
+
+	i2cWriteStatus = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CONFIG */,
+							payloadCONFIG /* payload: Disable FIFO */,
+							menuI2cPullupValue);
+
+	return i2cWriteStatus;
+}
+
+WarpStatus
 writeSensorRegisterINA219(uint8_t deviceRegister, uint16_t payload, uint16_t menuI2cPullupValue) //need to test write command
 {
 	uint8_t		payloadByte[2];
@@ -152,8 +164,19 @@ readSensorRegisterINA219(uint8_t deviceRegister, int numberOfBytes)
 void
 printSensorDataINA219(bool hexModeFlag)
 {
-	uint16_t	readSensorRegisterValueLSB;
-	uint16_t	readSensorRegisterValueMSB;
-	int16_t		readSensorRegisterValueCombined;
+	int16_t	readSensorRegisterValue;
 	WarpStatus	i2cReadStatus;
+
+	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 1 /* numberOfBytes */);
+	readSensorRegisterValue = deviceINA219State.i2cBuffer[0];
+
+	if (i2cReadStatus != kWarpStatusOK)
+	{
+		SEGGER_RTT_WriteString(0, " ----,");
+	}
+	else
+	{
+		SEGGER_RTT_printf(0, " %d,", readSensorRegisterValue);
+	}
+	
 }

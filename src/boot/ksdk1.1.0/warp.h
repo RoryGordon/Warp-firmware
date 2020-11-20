@@ -236,6 +236,13 @@ typedef enum
 	kWarpSensorOutputRegisterMMA8451QOUT_Z_MSB			= 0x05,
 	kWarpSensorOutputRegisterMMA8451QOUT_Z_LSB			= 0x06,
 
+	kWarpSensorOutputRegisterINA219_CONFIG				= 0x00,
+	kWarpSensorOutputRegisterINA219_SHUNT				= 0x01,
+	kWarpSensorOutputRegisterINA219_BUS					= 0x02,
+	kWarpSensorOutputRegisterINA219_POWER				= 0x03,
+	kWarpSensorOutputRegisterINA219_CURRENT				= 0x04,
+	kWarpSensorOutputRegisterINA219_CALIB				= 0x05,
+
 	kWarpSensorOutputRegisterMAG3110OUT_X_MSB			= 0x01,
 	kWarpSensorOutputRegisterMAG3110OUT_X_LSB			= 0x02,
 	kWarpSensorOutputRegisterMAG3110OUT_Y_MSB			= 0x03,
