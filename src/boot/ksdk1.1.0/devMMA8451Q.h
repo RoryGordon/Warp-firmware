@@ -39,7 +39,7 @@
 #define WARP_BUILD_ENABLE_DEVMMA8451Q
 #endif
 
-void		initINA219const uint8_t i2cAddress, WarpI2CDeviceState volatile *  deviceStatePointer);
+void		initINA219(const uint8_t i2cAddress, WarpI2CDeviceState volatile *  deviceStatePointer);
 WarpStatus	readSensorRegisterMMA8451Q(uint8_t deviceRegister, int numberOfBytes);
 WarpStatus	writeSensorRegisterMMA8451Q(uint8_t deviceRegister,
 					uint8_t payloadBtye,

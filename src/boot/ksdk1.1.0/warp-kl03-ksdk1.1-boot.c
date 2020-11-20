@@ -1766,7 +1766,7 @@ devSSD1331init();
 #endif
 
 #ifdef WARP_BUILD_ENABLE_DEVINA219
-					case '5':
+					case 'l':
 					{
 						menuTargetSensor = kWarpSensorINA219;
 						menuI2cDevice = &deviceINA219State;
