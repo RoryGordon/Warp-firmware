@@ -2735,9 +2735,10 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		printSensorDataINA219(hexModeFlag);
 		#endif
 
-		//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-		//SEGGER_RTT_printf(0, " %d, %d, %d\n", RTC->TSR, RTC->TPR, numberOfConfigErrors);
-		//#endif
+		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+		//SEGGER_RTT_printf(0, " %d, %d, %d", RTC->TSR, RTC->TPR, numberOfConfigErrors);
+		SEGGER_RTT_printf(0, "\n");
+		#endif
 
 		if (menuDelayBetweenEachRun > 0)
 		{
