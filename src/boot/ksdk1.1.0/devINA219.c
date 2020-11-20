@@ -99,13 +99,18 @@ writeSensorRegisterINA219(uint8_t deviceRegister, uint16_t payload, uint16_t men
 WarpStatus
 configureSensorMMA8451Q(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t menuI2cPullupValue)
 {
-	WarpStatus	i2cWriteStatus;
+	WarpStatus	i2cWriteStatus1;
+	WarpStatus	i2cWriteStatus2;
 
-	i2cWriteStatus = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CONFIG */,
+	i2cWriteStatus1 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CONFIG */,
 							payloadCONFIG /* payload: Disable FIFO */,
 							menuI2cPullupValue);
 
-	return i2cWriteStatus;
+	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
+							0x199 /* payload: Disable FIFO */,
+							menuI2cPullupValue);
+
+	return (i2cWriteStatus1 | i2cWriteStatus2);
 }
 
 WarpStatus
