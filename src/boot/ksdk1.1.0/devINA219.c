@@ -150,7 +150,7 @@ readSensorRegisterINA219(uint8_t deviceRegister, int numberOfBytes)
 }
 
 void
-printSenorDataINA219(bool hexModeFlag)
+printSensorDataINA219(bool hexModeFlag)
 {
 	uint16_t	readSensorRegisterValueLSB;
 	uint16_t	readSensorRegisterValueMSB;
