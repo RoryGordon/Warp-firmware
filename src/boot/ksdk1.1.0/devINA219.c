@@ -173,7 +173,7 @@ printSensorDataINA219(bool hexModeFlag)
 	uint16_t	readSensorRegisterValue_combined;
 	WarpStatus	i2cReadStatus;
 
-	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
+	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG, 2 /* numberOfBytes */);
 	readSensorRegisterValue_MSB = deviceINA219State.i2cBuffer[0] & 0xFF;
 	readSensorRegisterValue_LSB = deviceINA219State.i2cBuffer[1]& 0xFF;
 	readSensorRegisterValue_combined = (readSensorRegisterValue_MSB << 8) | readSensorRegisterValue_LSB;
