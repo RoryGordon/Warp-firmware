@@ -103,12 +103,12 @@ configureSensorINA219(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t 
 	WarpStatus	i2cWriteStatus1 = kWarpStatusOK;
 	WarpStatus	i2cWriteStatus2 = kWarpStatusOK;
 
-	//i2cWriteStatus1 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CONFIG */,
-	//						payloadCONFIG /* payload: Disable FIFO */,
-	//						menuI2cPullupValue);
-
 	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CALIB */,
 							0x399F /* payload: Disable FIFO */,
+							menuI2cPullupValue);
+
+	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
+							0x199F /* payload: Disable FIFO */,
 							menuI2cPullupValue);
 
 	return (i2cWriteStatus1 | i2cWriteStatus2);
@@ -171,10 +171,10 @@ printSensorDataINA219(bool hexModeFlag)
 {
 	uint16_t	readSensorRegisterValueMSB;
 	uint16_t	readSensorRegisterValueLSB;
-	uint16_t	readSensorRegisterValueCombined;
+	int16_t	readSensorRegisterValueCombined;
 	WarpStatus	i2cReadStatus;
 
-	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG, 2 /* numberOfBytes */);
+	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceINA219State.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceINA219State.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | readSensorRegisterValueLSB;
@@ -198,8 +198,11 @@ printSensorDataINA219(bool hexModeFlag)
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_SHUNT, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceINA219State.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceINA219State.i2cBuffer[1];
-	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | readSensorRegisterValueLSB;
-
+	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0x7F) << 8) | readSensorRegisterValueLSB;
+	if (readSensorRegisterValueMSB & 0xE0) == 0xE0
+	{
+		readSensorRegisterValueCombined = -readSensorRegisterValueCombined
+	}
 	if (i2cReadStatus != kWarpStatusOK)
 	{
 		SEGGER_RTT_WriteString(0, " -ND-");
