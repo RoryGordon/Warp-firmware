@@ -2559,6 +2559,12 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 					i2cPullupValue
 					);
 	#endif
+	#ifdef WARP_BUILD_ENABLE_DEVINA219
+	numberOfConfigErrors += configureSensorINA219(0x00,/* Payload: Disable FIFO */
+					0x01,/* Normal read 8bit, 800Hz, normal, active mode */
+					i2cPullupValue
+					);
+	#endif
 	#ifdef WARP_BUILD_ENABLE_DEVMAG3110
 	numberOfConfigErrors += configureSensorMAG3110(	0x00,/*	Payload: DR 000, OS 00, 80Hz, ADC 1280, Full 16bit, standby mode to set up register*/
 					0xA0,/*	Payload: AUTO_MRST_EN enable, RAW value without offset */
