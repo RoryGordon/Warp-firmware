@@ -104,11 +104,11 @@ configureSensorINA219(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t 
 	WarpStatus	i2cWriteStatus2 = kWarpStatusOK;
 
 	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CONFIG /* register address CALIB */,
-							0x399F /* payload: Disable FIFO */,
+							0x399F /* default value */,
 							menuI2cPullupValue);
 
 	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
-							0x1900 /* payload: Disable FIFO */,
+							0x1062 /* I have no idea */,
 							menuI2cPullupValue);
 
 	return (i2cWriteStatus1 | i2cWriteStatus2);
@@ -172,13 +172,14 @@ printSensorDataINA219(bool hexModeFlag)
 	uint16_t	readSensorRegisterValueMSB;
 	uint16_t	readSensorRegisterValueLSB;
 	int16_t	readSensorRegisterValueCombined;
+	float current;
 	WarpStatus	i2cReadStatus;
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
 	readSensorRegisterValueMSB = deviceINA219State.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceINA219State.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | readSensorRegisterValueLSB;
-	SEGGER_RTT_printf(0, "!! %d : %d!!,", deviceINA219State.i2cBuffer[0], deviceINA219State.i2cBuffer[1]);
+	//SEGGER_RTT_printf(0, "!! %d : %d!!,", deviceINA219State.i2cBuffer[0], deviceINA219State.i2cBuffer[1]);
 
 	if (i2cReadStatus != kWarpStatusOK)
 	{
@@ -192,7 +193,8 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			SEGGER_RTT_printf(0, " %d,", readSensorRegisterValueCombined);
+			current *= 4.096;
+			SEGGER_RTT_printf(0, " %f,", current);
 		}	}
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_SHUNT, 2 /* numberOfBytes */);
