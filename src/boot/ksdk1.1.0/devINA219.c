@@ -199,9 +199,10 @@ printSensorDataINA219(bool hexModeFlag)
 	readSensorRegisterValueMSB = deviceINA219State.i2cBuffer[0];
 	readSensorRegisterValueLSB = deviceINA219State.i2cBuffer[1];
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0x7F) << 8) | readSensorRegisterValueLSB;
-	if (readSensorRegisterValueMSB & 0xE0) == 0xE0
+	
+	if (readSensorRegisterValueMSB & 0xE0 == 0xE0)
 	{
-		readSensorRegisterValueCombined = -readSensorRegisterValueCombined
+		readSensorRegisterValueCombined = -readSensorRegisterValueCombined;
 	}
 	if (i2cReadStatus != kWarpStatusOK)
 	{
