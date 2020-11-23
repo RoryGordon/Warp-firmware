@@ -168,11 +168,16 @@ readSensorRegisterINA219(uint8_t deviceRegister, int numberOfBytes)
 void
 printSensorDataINA219(bool hexModeFlag)
 {
-	uint16_t	readSensorRegisterValue;
+	uint16_t	readSensorRegisterValue_MSB;
+	uint16_t	readSensorRegisterValue_LSB;
+	uint16_t	readSensorRegisterValue_combined;
 	WarpStatus	i2cReadStatus;
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
-	readSensorRegisterValue = deviceINA219State.i2cBuffer[0];
+	readSensorRegisterValue_MSB = deviceINA219State.i2cBuffer[0] & 0xFF;
+	readSensorRegisterValue_LSB = deviceINA219State.i2cBuffer[1]& 0xFF;
+	readSensorRegisterValue_combined = (readSensorRegisterValue_MSB << 8) | readSensorRegisterValue_LSB;
+
 
 	if (i2cReadStatus != kWarpStatusOK)
 	{
@@ -180,10 +185,13 @@ printSensorDataINA219(bool hexModeFlag)
 	}
 	else
 	{
-		SEGGER_RTT_printf(0, " %d,", readSensorRegisterValue);
+		SEGGER_RTT_printf(0, " %d,", readSensorRegisterValue_combined);
 	}
+
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_SHUNT, 2 /* numberOfBytes */);
-	readSensorRegisterValue = deviceINA219State.i2cBuffer[0];
+	readSensorRegisterValue_MSB = deviceINA219State.i2cBuffer[0] & 0xFF;
+	readSensorRegisterValue_LSB = deviceINA219State.i2cBuffer[1]& 0xFF;
+	readSensorRegisterValue_combined = (readSensorRegisterValue_MSB << 8) | readSensorRegisterValue_LSB;
 
 	if (i2cReadStatus != kWarpStatusOK)
 	{
@@ -191,6 +199,6 @@ printSensorDataINA219(bool hexModeFlag)
 	}
 	else
 	{
-		SEGGER_RTT_printf(0, " %d", readSensorRegisterValue);
+		SEGGER_RTT_printf(0, " %d", readSensorRegisterValue_combined);
 	}
 }
