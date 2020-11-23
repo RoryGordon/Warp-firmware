@@ -193,7 +193,7 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			current *= 4.096;
+			current = readSensorRegisterValueCombined*4.096;
 			SEGGER_RTT_printf(0, " %d,", current);
 		}	}
 
