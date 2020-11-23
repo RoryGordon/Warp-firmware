@@ -194,7 +194,7 @@ printSensorDataINA219(bool hexModeFlag)
 		else
 		{
 			current *= 4.096;
-			SEGGER_RTT_printf(0, " %f,", current);
+			SEGGER_RTT_printf(0, " %d,", current);
 		}	}
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_SHUNT, 2 /* numberOfBytes */);
