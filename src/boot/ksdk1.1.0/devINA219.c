@@ -97,7 +97,7 @@ writeSensorRegisterINA219(uint8_t deviceRegister, uint16_t payload, uint16_t men
 }
 
 WarpStatus
-configureSensorMMA8451Q(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t menuI2cPullupValue)
+configureSensorINA219(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t menuI2cPullupValue)
 {
 	SEGGER_RTT_WriteString(0, "!!!---CONFIGURING INA219---!!!\n");
 	WarpStatus	i2cWriteStatus1 = kWarpStatusOK;
