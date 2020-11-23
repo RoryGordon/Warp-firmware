@@ -106,9 +106,9 @@ configureSensorMMA8451Q(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_
 	//						payloadCONFIG /* payload: Disable FIFO */,
 	//						menuI2cPullupValue);
 
-	//i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
-	//						0x19F /* payload: Disable FIFO */,
-	//						menuI2cPullupValue);
+	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
+							0x399F /* payload: Disable FIFO */,
+							menuI2cPullupValue);
 
 	return (i2cWriteStatus1 | i2cWriteStatus2);
 }
