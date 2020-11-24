@@ -219,8 +219,8 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			voltage = (float)readSensorRegisterValueLSB / 100.0f;
+			voltage = abs(readSensorRegisterValueLSB) / 100.0f;
 			current = voltage * 10;
-			SEGGER_RTT_printf(0, " %d [%d],", voltage, current);
+			SEGGER_RTT_printf(0, " %d [%d.%d],", voltage, (readSensorRegisterValueCombined/100), (readSensorRegisterValueCombined%100));
 		}	}
 }
