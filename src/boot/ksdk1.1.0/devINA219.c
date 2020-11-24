@@ -218,10 +218,14 @@ printSensorDataINA219(bool hexModeFlag)
 		else
 		{
 			SEGGER_RTT_printf(0,
-							  " %d.%01d, %d.%02d",
+							  " %d, ", readSensorRegisterValueCombined*100)
+			/*
+			SEGGER_RTT_printf(0,
+							  " %d.%01d, %d.%02d ",
 							  abs(readSensorRegisterValueCombined/10),
 							  abs(readSensorRegisterValueCombined%10),
 							  abs(readSensorRegisterValueCombined/100),
 							  abs(readSensorRegisterValueCombined%100));
+			*/
 		}	}
 }
