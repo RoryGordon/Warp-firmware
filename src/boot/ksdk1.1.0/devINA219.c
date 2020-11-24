@@ -205,7 +205,7 @@ printSensorDataINA219(bool hexModeFlag)
 	
 	if (readSensorRegisterValueMSB & 0xE0 == 0xE0)
 	{
-		readSensorRegisterValueCombined = -readSensorRegisterValueCombined;
+		//readSensorRegisterValueCombined = -readSensorRegisterValueCombined;
 	}
 	if (i2cReadStatus != kWarpStatusOK)
 	{
@@ -219,7 +219,7 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			voltage = readSensorRegisterValueCombined;// / 100;
+			voltage = readSensorRegisterValueLSB;// / 100;
 			current = voltage * 10;
 			SEGGER_RTT_printf(0, " %d [%d],", voltage, current);
 		}	}
