@@ -173,6 +173,7 @@ printSensorDataINA219(bool hexModeFlag)
 	uint16_t	readSensorRegisterValueLSB;
 	int16_t	readSensorRegisterValueCombined;
 	float current;
+	float voltage;
 	WarpStatus	i2cReadStatus;
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
@@ -193,7 +194,7 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			current = readSensorRegisterValueCombined*4.096;
+			current = readSensorRegisterValueCombined*0.04096;
 			SEGGER_RTT_printf(0, " %d,", current);
 		}	}
 
@@ -218,6 +219,8 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			SEGGER_RTT_printf(0, " %d,", readSensorRegisterValueCombined);
+			voltage = readSensorRegisterValueCombined / 100;
+			current = voltage * 10;
+			SEGGER_RTT_printf(0, " %d [%d],", voltage, current);
 		}	}
 }
