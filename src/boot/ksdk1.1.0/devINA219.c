@@ -108,7 +108,7 @@ configureSensorINA219(uint8_t payloadCONFIG, uint8_t payloadCTRL_REG1, uint16_t 
 							menuI2cPullupValue);
 
 	i2cWriteStatus2 = writeSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CALIB /* register address CALIB */,
-							0x1062 /* I have no idea */,
+							0x64 /* I have no idea */,
 							menuI2cPullupValue);
 
 	return (i2cWriteStatus1 | i2cWriteStatus2);
@@ -219,7 +219,6 @@ printSensorDataINA219(bool hexModeFlag)
 		}
 		else
 		{
-			voltage = abs(readSensorRegisterValueLSB) / 100.0f;
 			current = voltage * 10;
 			SEGGER_RTT_printf(0, " %d [%d.%d],", readSensorRegisterValueCombined, abs(readSensorRegisterValueCombined/100), abs(readSensorRegisterValueCombined%100));
 		}	}
