@@ -173,7 +173,7 @@ printSensorDataINA219(bool hexModeFlag)
 	uint16_t	readSensorRegisterValueLSB;
 	int16_t	readSensorRegisterValueCombined;
 	float current;
-	float voltage;
+	int16_t voltage;
 	WarpStatus	i2cReadStatus;
 
 	i2cReadStatus = readSensorRegisterINA219(kWarpSensorOutputRegisterINA219_CURRENT, 2 /* numberOfBytes */);
