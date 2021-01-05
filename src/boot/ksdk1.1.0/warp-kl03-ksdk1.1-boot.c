@@ -2513,6 +2513,11 @@ devSSD1331init();
 
 				break;
 			}
+			case '0':
+			{
+				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now")
+				break;
+			}
 
 
 			/*
@@ -2698,10 +2703,10 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		SEGGER_RTT_WriteString(0, " INA219 current, INA219 shunt voltage");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		#endif
-		#ifdef WARP_BUILD_ENABLE_DEVADC
-		SEGGER_RTT_WriteString(0, " ADC");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-		#endif
+//		#ifdef WARP_BUILD_ENABLE_DEVADC
+//		SEGGER_RTT_WriteString(0, " ADC");
+//		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+//		#endif
 		SEGGER_RTT_WriteString(0, " RTC->TSR, RTC->TPR, # Config Errors");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		SEGGER_RTT_WriteString(0, "\n\n");
