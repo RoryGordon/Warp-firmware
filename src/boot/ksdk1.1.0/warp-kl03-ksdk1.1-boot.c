@@ -1388,6 +1388,7 @@ devSSD1331init();
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 #ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+		printPinDirections();
 		SEGGER_RTT_printf(0, "\r\tSupply=%dmV,\tDefault Target Read Register=0x%02x\n",
 								menuSupplyVoltage, menuRegisterAddress);
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
