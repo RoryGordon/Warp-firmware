@@ -27,9 +27,25 @@ sorted if it is an issue
 May need to set ADCH to 0000 and MODE to 01 - forgotten what these mean but
 this will go in the init function if any
 */
+void
+initADC(void)
+{
+    
+}
+
+void
+configureADC(void)
+{
+
+}
 
 printSensorDataADC(bool hexModeFlag)
 {
+    /*
+    What we know so far:
+        Straight-up trying to read the supposed addresses of the ADC completely
+        nuggets everything. So, don't do that
+    */
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;

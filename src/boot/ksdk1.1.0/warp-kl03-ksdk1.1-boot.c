@@ -944,7 +944,7 @@ warpLowPowerSecondsSleep(uint32_t sleepSeconds, bool forceAllPinsIntoLowPowerSta
 void
 printPinDirections(void)
 {
-	/*
+	
 #ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 	SEGGER_RTT_printf(0, "KL03_VDD_ADC:%d\n", GPIO_DRV_GetPinDir(kWarpPinKL03_VDD_ADC));
 	OSA_TimeDelay(100);
@@ -979,7 +979,7 @@ printPinDirections(void)
 	SEGGER_RTT_printf(0, "SI4705_nRST:%d\n", GPIO_DRV_GetPinDir(kWarpPinSI4705_nRST));
 	OSA_TimeDelay(100);
 #endif
-	*/
+	
 }
 
 
@@ -1477,6 +1477,9 @@ devSSD1331init();
 #endif
 
 		SEGGER_RTT_WriteString(0, "\r- 'z': dump all sensors data.\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+		SEGGER_RTT_WriteString(0, "\r- '0': Delay pedal.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\rEnter selection> ");
@@ -2753,9 +2756,9 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		#ifdef WARP_BUILD_ENABLE_DEVINA219
 		printSensorDataINA219(hexModeFlag);
 		#endif
-		#ifdef WARP_BUILD_ENABLE_DEVADC
-		printSensorDataADC(hexModeFlag);
-		#endif
+//		#ifdef WARP_BUILD_ENABLE_DEVADC
+//		printSensorDataADC(hexModeFlag);
+//		#endif
 		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 		//SEGGER_RTT_printf(0, " %d, %d, %d", RTC->TSR, RTC->TPR, numberOfConfigErrors);
 		SEGGER_RTT_printf(0, "\n");
