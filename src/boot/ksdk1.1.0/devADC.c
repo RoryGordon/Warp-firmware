@@ -5,6 +5,7 @@
 
 #include "fsl_smc_hal.h"
 #include "fsl_pmc_hal.h"
+//#include "fsl_adc16.h" 
 #include "fsl_adc16_driver.h"
 //#include "board.h"
 
@@ -32,6 +33,30 @@ May need to set ADCH to 0000 and MODE to 01 - forgotten what these mean but
 this will go in the init function if any
 */
 
+#define ADC_0                   (0U)
+#define CHANNEL_0               (0U)
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Variables
+///////////////////////////////////////////////////////////////////////////////
+
+static uint32_t adcValue = 0;               /*! ADC value */
+static uint32_t adcrTemp25 = 0;             /*! Calibrated ADCR_TEMP25 */
+static uint32_t adcr100m = 0;
+volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
+//const uint32_t gSimBaseAddr[] = SIM_BASE_ADDRS;
+static smc_power_mode_config_t smcConfig;
+
+/* ADC Interrupt Handler */
+void ADC1IRQHandler(void)
+{
+    // Get current ADC value
+    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    // Set conversionCompleted flag. This prevents an wrong conversion in main function
+    conversionCompleted = true;
+}
+
 static int32_t initADC(uint32_t instance)
 {
 
@@ -53,7 +78,7 @@ static int32_t initADC(uint32_t instance)
     // disable continuous convert mode.
     ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
     adcUserConfig.intEnable = true;
-    adcUserConfig.resolutionMode = kAdcResolutionBitOf16;
+    adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
     adcUserConfig.hwTriggerEnable = true;
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
@@ -62,10 +87,10 @@ static int32_t initADC(uint32_t instance)
     // Install Callback function into ISR
     ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
 
-    adcChnConfig.chnNum = kAdcChannelTemperature;
+    //adcChnConfig.chnNum = kAdcChannelTemperature;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = true;
-    adcChnConfig.chnMux = kAdcChnMuxOfA;
+    //adcChnConfig.chnMux = kAdcChnMuxOfA;
 
     // Configure channel0
     ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
