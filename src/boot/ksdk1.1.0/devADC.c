@@ -134,7 +134,11 @@ printSensorDataADC(bool hexModeFlag)
         nuggets everything. So, don't do that
     */
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-    SEGGER_RTT_printf(0, "%d", adcValue);
+    int32_t currentTemperature = 0;
+    
+    // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
+    currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, "%d", currentTemperature);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
