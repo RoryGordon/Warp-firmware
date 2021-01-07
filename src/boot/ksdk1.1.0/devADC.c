@@ -101,6 +101,7 @@ static int32_t initADC(uint32_t instance)
 
 void configureADC(void)
 {
+    initADC(ADC_0);
     SEGGER_RTT_printf(0, "Have you drank your milk today?");
 }
 
