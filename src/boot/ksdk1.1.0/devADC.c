@@ -113,6 +113,9 @@ printSensorDataADC(bool hexModeFlag)
         Straight-up trying to read the supposed addresses of the ADC completely
         nuggets everything. So, don't do that
     */
+    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    SEGGER_RTT_printf(0, "%d", adcValue);
+    /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
@@ -124,6 +127,7 @@ printSensorDataADC(bool hexModeFlag)
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
     SEGGER_RTT_printf(0, "%d %d,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
+    */
     /*
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
 
