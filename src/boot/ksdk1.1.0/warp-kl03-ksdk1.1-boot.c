@@ -51,6 +51,8 @@
 #include "fsl_port_hal.h"
 #include "fsl_lpuart_driver.h"
 
+#include "fsl_smc_hal.h"
+
 #include "gpio_pins.h"
 #include "SEGGER_RTT.h"
 #include "warp.h"
