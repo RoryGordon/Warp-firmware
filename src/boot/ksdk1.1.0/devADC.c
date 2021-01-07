@@ -57,12 +57,51 @@ void ADC1IRQHandler(void)
     conversionCompleted = true;
 }
 
-
-
-void
-configureADC(void)
+static int32_t initADC(uint32_t instance)
 {
 
+#if FSL_FEATURE_ADC16_HAS_CALIBRATION
+    adc16_calibration_param_t adcCalibraitionParam;
+#endif
+    adc16_user_config_t adcUserConfig;
+    adc16_chn_config_t adcChnConfig;
+
+#if FSL_FEATURE_ADC16_HAS_CALIBRATION
+    // Auto calibration
+    ADC16_DRV_GetAutoCalibrationParam(instance, &adcCalibraitionParam);
+    ADC16_DRV_SetCalibrationParam(instance, &adcCalibraitionParam);
+#endif
+
+    // Initialization ADC for
+    // 16bit resolution, interrupt mode, hw trigger enabled.
+    // normal convert speed, VREFH/L as reference,
+    // disable continuous convert mode.
+    ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
+    adcUserConfig.intEnable = true;
+    adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
+    adcUserConfig.hwTriggerEnable = true;
+    adcUserConfig.continuousConvEnable = false;
+    adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
+    ADC16_DRV_Init(instance, &adcUserConfig);
+
+    // Install Callback function into ISR
+    ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
+
+    //adcChnConfig.chnNum = kAdcChannelTemperature;
+    adcChnConfig.diffEnable = false;
+    adcChnConfig.intEnable = true;
+    //adcChnConfig.chnMux = kAdcChnMuxOfA;
+
+    // Configure channel0
+    ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
+
+    return 0;
+}
+
+
+void configureADC(void)
+{
+    SEGGER_RTT_printf(0, "Have you drank your milk today?")
 }
 
 printSensorDataADC(bool hexModeFlag)
