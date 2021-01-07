@@ -130,8 +130,9 @@ static int32_t initADC(uint32_t instance)
 void configureADC(void)
 {
     initADC(ADC_0);
-    SEGGER_RTT_printf(0, "Have you drank your milk today?");
+    SEGGER_RTT_printf(0, "Have you drank your milk today?\n");
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
+    SEGGER_RTT_printf(0, "LED should be red\n")
 }
 
 printSensorDataADC(bool hexModeFlag)
@@ -142,12 +143,12 @@ printSensorDataADC(bool hexModeFlag)
         Straight-up trying to read the supposed addresses of the ADC completely
         nuggets everything. So, don't do that
     */
-    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     //int32_t currentTemperature = 0;
     
     // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
     //currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, "%d", adcValue);
+    //SEGGER_RTT_printf(0, "%d", adcValue);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
