@@ -36,6 +36,9 @@ this will go in the init function if any
 #define ADC_0                   (0U)
 #define CHANNEL_0               (0U)
 
+// Define array to keep run-time callback set by application
+//void (* volatile g_AdcTestCallback[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT])(void);
+volatile uint16_t g_AdcValueInt[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -47,6 +50,20 @@ static uint32_t adcr100m = 0;
 volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 //const uint32_t gSimBaseAddr[] = SIM_BASE_ADDRS;
 static smc_power_mode_config_t smcConfig;
+
+
+/* User-defined function to install callback. */
+void ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
+{
+    g_AdcTestCallback[instance][chnGroup] = callbackFunc;
+}
+
+/* User-defined function to read conversion value in ADC ISR. */
+uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
+{
+    return g_AdcValueInt[instance][chnGroup];
+}
+
 
 /* ADC Interrupt Handler */
 void ADC1IRQHandler(void)
