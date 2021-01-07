@@ -2710,10 +2710,10 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		SEGGER_RTT_WriteString(0, " INA219 current, INA219 shunt voltage");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		#endif
-//		#ifdef WARP_BUILD_ENABLE_DEVADC
-//		SEGGER_RTT_WriteString(0, " ADC");
-//		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-//		#endif
+		#ifdef WARP_BUILD_ENABLE_DEVADC
+		SEGGER_RTT_WriteString(0, " ADC");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+		#endif
 		SEGGER_RTT_WriteString(0, " RTC->TSR, RTC->TPR, # Config Errors");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		SEGGER_RTT_WriteString(0, "\n\n");
@@ -2757,9 +2757,9 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		#ifdef WARP_BUILD_ENABLE_DEVINA219
 		printSensorDataINA219(hexModeFlag);
 		#endif
-//		#ifdef WARP_BUILD_ENABLE_DEVADC
-//		printSensorDataADC(hexModeFlag);
-//		#endif
+		#ifdef WARP_BUILD_ENABLE_DEVADC
+		printSensorDataADC(hexModeFlag);
+		#endif
 		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 		//SEGGER_RTT_printf(0, " %d, %d, %d", RTC->TSR, RTC->TPR, numberOfConfigErrors);
 		SEGGER_RTT_printf(0, "\n");
