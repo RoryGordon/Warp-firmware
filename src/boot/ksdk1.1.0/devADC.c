@@ -36,6 +36,9 @@ this will go in the init function if any
 #define ADC_0                   (0U)
 #define CHANNEL_0               (0U)
 
+#define kAdcChannelTemperature  (26U)       /*! ADC channel of temperature sensor */
+#define kAdcChannelBandgap      (27U)       /*! ADC channel of BANDGAP */
+
 // Define array to keep run-time callback set by application
 void (* volatile g_AdcTestCallback[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT])(void);
 volatile uint16_t g_AdcValueInt[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT];
@@ -105,7 +108,7 @@ static int32_t initADC(uint32_t instance)
     // Install Callback function into ISR
     ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
     
-    //adcChnConfig.chnNum = kAdcChannelTemperature;
+    adcChnConfig.chnNum = kAdcChannelTemperature;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = true;
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
