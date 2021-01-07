@@ -101,7 +101,7 @@ static int32_t initADC(uint32_t instance)
 
 void configureADC(void)
 {
-    SEGGER_RTT_printf(0, "Have you drank your milk today?")
+    SEGGER_RTT_printf(0, "Have you drank your milk today?");
 }
 
 printSensorDataADC(bool hexModeFlag)
