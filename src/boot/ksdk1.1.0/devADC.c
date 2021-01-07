@@ -38,6 +38,21 @@ this will go in the init function if any
 #define LED_ON                  (0U)
 #define LED_OFF                 (1U)
 
+/*!
+ * @brief These values are used to get the temperature. DO NOT MODIFY
+ * The method used in this demo to calculate temperature of chip is mapped to
+ * Temperature Sensor for the HCS08 Microcontroller Family document (Document Number: AN3031)
+ */
+
+#define ADCR_VDD                (65535U)    /*! Maximum value when use 16b resolution */
+#define V_BG                    (1000U)     /*! BANDGAP voltage in mV (trim to 1.0V) */
+#define V_TEMP25                (716U)      /*! Typical VTEMP25 in mV */
+#define M                       (1620U)     /*! Typical slope: (mV x 1000)/oC */
+#define STANDARD_TEMP           (25)
+
+#define UPPER_VALUE_LIMIT       (1U)        /*! This value/10 is going to be added to current Temp to set the upper boundary*/
+#define LOWER_VALUE_LIMIT       (1U)        /*! This Value/10 is going to be subtracted from current Temp to set the lower boundary*/
+#define UPDATE_BOUNDARIES_TIME  (20U)       /*! This value indicates the number of cycles needed to update boundaries. To know the Time it will take, multiply this value times LPTMR_COMPARE_VALUE*/
 #define kAdcChannelTemperature  (26U)       /*! ADC channel of temperature sensor */
 #define kAdcChannelBandgap      (27U)       /*! ADC channel of BANDGAP */
 
@@ -82,6 +97,73 @@ void ADC1IRQHandler(void)
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     // Set conversionCompleted flag. This prevents an wrong conversion in main function
     conversionCompleted = true;
+}
+
+/*!
+ * Parameters calibration: VDD and ADCR_TEMP25
+ */
+void calibrateParams(void)
+{
+#if FSL_FEATURE_ADC16_HAS_CALIBRATION
+    adc16_calibration_param_t adcCalibraitionParam;
+#endif
+    adc16_user_config_t adcUserConfig;
+    adc16_chn_config_t adcChnConfig;
+    uint32_t bandgapValue = 0;  /*! ADC value of BANDGAP */
+    uint32_t vdd = 0;           /*! VDD in mV */
+
+#if FSL_FEATURE_ADC16_HAS_CALIBRATION
+    // Auto calibration
+    ADC16_DRV_GetAutoCalibrationParam(ADC_0, &adcCalibraitionParam);
+    ADC16_DRV_SetCalibrationParam(ADC_0, &adcCalibraitionParam);
+#endif
+
+    // Enable BANDGAP reference voltage
+    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
+
+    // Initialization ADC for
+    // 16bit resolution, interrupt mode, hw trigger disabled.
+    // normal convert speed, VREFH/L as reference,
+    // disable continuous convert mode.
+    ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
+    adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
+    adcUserConfig.continuousConvEnable = false;
+    adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
+    ADC16_DRV_Init(ADC_0, &adcUserConfig);
+
+#if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
+    ADC16_DRV_EnableHwAverage(ADC_0, kAdcHwAverageCountOf32);
+#endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
+
+    adcChnConfig.chnNum = kAdcChannelBandgap;
+    adcChnConfig.diffEnable = false;
+    adcChnConfig.intEnable = false;
+    //adcChnConfig.chnMux = kAdcChnMuxOfA;
+    ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
+
+    // Wait for the conversion to be done
+    ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
+
+    // Get current ADC BANDGAP value
+    bandgapValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    bandgapValue = ADC16_DRV_ConvRAWData(bandgapValue, false, adcUserConfig.resolutionMode);
+
+    // ADC stop conversion
+    ADC16_DRV_PauseConv(ADC_0, CHANNEL_0);
+
+    // Get VDD value measured in mV: VDD = (ADCR_VDD x V_BG) / ADCR_BG
+    vdd = ADCR_VDD * V_BG / bandgapValue;
+    // Calibrate ADCR_TEMP25: ADCR_TEMP25 = ADCR_VDD x V_TEMP25 / VDD
+    adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
+    // ADCR_100M = ADCR_VDD x M x 100 / VDD
+    adcr100m = (ADCR_VDD * M) / (vdd * 10);
+
+#if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
+    ADC16_DRV_DisableHwAverage(ADC_0);
+#endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
+
+    // Disable BANDGAP reference voltage
+    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, false);
 }
 
 static int32_t initADC(uint32_t instance)
@@ -132,7 +214,6 @@ void configureADC(void)
     initADC(ADC_0);
     SEGGER_RTT_printf(0, "Have you drank your milk today?\n");
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
-    SEGGER_RTT_printf(0, "LED should be red\n")
 }
 
 printSensorDataADC(bool hexModeFlag)
@@ -143,12 +224,12 @@ printSensorDataADC(bool hexModeFlag)
         Straight-up trying to read the supposed addresses of the ADC completely
         nuggets everything. So, don't do that
     */
-    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     //int32_t currentTemperature = 0;
     
     // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
     //currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    //SEGGER_RTT_printf(0, "%d", adcValue);
+    SEGGER_RTT_printf(0, "%d", adcValue);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
