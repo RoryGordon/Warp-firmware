@@ -77,9 +77,9 @@ enum _gpio_pins
 	kWarpPinPAN1326_HCI_RTS 		= GPIO_MAKE_PIN(HW_GPIOA, 6),		/*	Warp kWarpPinPAN1326_HCI_RTS --> PTA6							*/
 	kWarpPinPAN1326_HCI_CTS 		= GPIO_MAKE_PIN(HW_GPIOA, 7),		/*	Warp kWarpPinPAN1326_HCI_CTS	--> PTA7						*/
 	
-	kGpioLED1     = GPIO_MAKE_PIN(GPIOE_IDX, 26U),
-  	kGpioLED2     = GPIO_MAKE_PIN(GPIOB_IDX, 22U),
-  	kGpioLED3     = GPIO_MAKE_PIN(GPIOB_IDX, 21U)
+	kGpioLED1     = GPIO_MAKE_PIN(HW_GPIOB, 10),
+  	kGpioLED2     = GPIO_MAKE_PIN(HW_GPIOB, 11),
+  	kGpioLED3     = GPIO_MAKE_PIN(HW_GPIOB, 13)
 };
 
 extern gpio_input_pin_user_config_t	inputPins[];
