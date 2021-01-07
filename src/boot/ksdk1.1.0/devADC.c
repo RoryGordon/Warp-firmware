@@ -16,6 +16,7 @@
 #include "fsl_port_hal.h"
 
 #include "gpio_pins.h"
+#include "pin_mux.h"
 #include "SEGGER_RTT.h"
 #include "warp.h"
 
