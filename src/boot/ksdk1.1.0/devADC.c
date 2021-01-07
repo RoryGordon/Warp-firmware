@@ -35,9 +35,16 @@ this will go in the init function if any
 
 #define ADC_0                   (0U)
 #define CHANNEL_0               (0U)
+#define LED_ON                  (0U)
+#define LED_OFF                 (1U)
 
 #define kAdcChannelTemperature  (26U)       /*! ADC channel of temperature sensor */
 #define kAdcChannelBandgap      (27U)       /*! ADC channel of BANDGAP */
+
+/* board led color mapping */
+#define BOARD_GPIO_LED_RED              kGpioLED1
+#define BOARD_GPIO_LED_GREEN            kGpioLED2
+#define BOARD_GPIO_LED_BLUE             kGpioLED3
 
 // Define array to keep run-time callback set by application
 void (* volatile g_AdcTestCallback[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT])(void);
@@ -124,21 +131,23 @@ void configureADC(void)
 {
     initADC(ADC_0);
     SEGGER_RTT_printf(0, "Have you drank your milk today?");
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
 }
 
 printSensorDataADC(bool hexModeFlag)
 {
+
     /*
     What we know so far:
         Straight-up trying to read the supposed addresses of the ADC completely
         nuggets everything. So, don't do that
     */
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-    int32_t currentTemperature = 0;
+    //int32_t currentTemperature = 0;
     
     // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, "%d", currentTemperature);
+    //currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, "%d", adcValue);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
