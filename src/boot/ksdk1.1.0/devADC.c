@@ -56,7 +56,7 @@ printSensorDataADC(bool hexModeFlag)
     SEGGER_RTT_printf(0, "Attempting to read adresses...\n");
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
-    SEGGER_RTT_printf(0, "0x%02x 0x%02x,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
+    SEGGER_RTT_printf(0, "%d %d,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
     /*
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
 
