@@ -2,6 +2,6 @@
 #define WARP_BUILD_ENABLE_DEVADC
 #endif
 
-void        initADC(void);
-void        configureADC(void);
-void		printSensorDataADC(bool hexModeFlag);
+static int32_t        initADC(uint32_t instance);
+void                  configureADC(void);
+void		          printSensorDataADC(bool hexModeFlag);

@@ -131,7 +131,9 @@ volatile WarpI2CDeviceState			deviceMMA8451QState;
 #ifdef WARP_BUILD_ENABLE_DEVINA219
 volatile WarpI2CDeviceState			deviceINA219State;
 #endif
-
+#ifdef WARP_BUILD_ENABLE_DEVADC
+#define ADC_0                   (0U)
+#endif
 #ifdef WARP_BUILD_ENABLE_DEVLPS25H
 volatile WarpI2CDeviceState			deviceLPS25HState;
 #endif
@@ -2561,7 +2563,9 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 	uint32_t	readingCount = 0;
 	uint32_t	numberOfConfigErrors = 0;
 
-	
+	#ifdef WARP_BUILD_ENABLE_DEVADC
+		initADC(ADC_0);
+	#endif
 	#ifdef WARP_BUILD_ENABLE_DEVAMG8834
 	numberOfConfigErrors += configureSensorAMG8834(	0x3F,/* Initial reset */
 					0x01,/* Frame rate 1 FPS */
