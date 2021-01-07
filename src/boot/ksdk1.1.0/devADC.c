@@ -37,7 +37,7 @@ this will go in the init function if any
 #define CHANNEL_0               (0U)
 
 // Define array to keep run-time callback set by application
-//void (* volatile g_AdcTestCallback[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT])(void);
+void (* volatile g_AdcTestCallback[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT])(void);
 volatile uint16_t g_AdcValueInt[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT];
 
 ///////////////////////////////////////////////////////////////////////////////
