@@ -101,10 +101,10 @@ static int32_t initADC(uint32_t instance)
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(instance, &adcUserConfig);
 
-    /*
+
     // Install Callback function into ISR
     ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
-
+    
     //adcChnConfig.chnNum = kAdcChannelTemperature;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = true;
@@ -112,7 +112,7 @@ static int32_t initADC(uint32_t instance)
 
     // Configure channel0
     ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
-    */
+    
     return 0;
 }
 
