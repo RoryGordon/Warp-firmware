@@ -41,11 +41,11 @@ gpio_output_pin_user_config_t	outputPins[] = {
 		.config.driveStrength = kPortLowDriveStrength,
 	},
 	{
-		.pinName = kWarpPinUnusedPTA2,				/*	Was kWarpPinLED3_SI4705_nRST in Warp v2			*/
-		.config.outputLogic = 1,
-		.config.slewRate = kPortSlowSlewRate,
-		.config.driveStrength = kPortLowDriveStrength,
-	},
+//		.pinName = kWarpPinUnusedPTA2,				/*	Was kWarpPinLED3_SI4705_nRST in Warp v2			*/
+//		.config.outputLogic = 1,
+//		.config.slewRate = kPortSlowSlewRate,
+//		.config.driveStrength = kPortLowDriveStrength,
+//	},
 	{
 		.pinName = kWarpPinTPS82740_VSEL1,
 		.config.outputLogic = 1,
