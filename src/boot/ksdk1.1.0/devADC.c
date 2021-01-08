@@ -231,7 +231,7 @@ printSensorDataADC(bool hexModeFlag)
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
 
     
-    SEGGER_RTT_printf(0, "Start printing %d...\n", printCounter);
+    SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
