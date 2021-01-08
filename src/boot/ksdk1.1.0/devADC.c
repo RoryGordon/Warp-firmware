@@ -112,13 +112,13 @@ void calibrateParams(void)
     adc16_chn_config_t adcChnConfig;
     uint32_t bandgapValue = 0;  /*! ADC value of BANDGAP */
     uint32_t vdd = 0;           /*! VDD in mV */
-/*
+
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
     // Auto calibration
     ADC16_DRV_GetAutoCalibrationParam(ADC_0, &adcCalibraitionParam);
     ADC16_DRV_SetCalibrationParam(ADC_0, &adcCalibraitionParam);
 #endif
-
+/*
     // Enable BANDGAP reference voltage
     PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
 
