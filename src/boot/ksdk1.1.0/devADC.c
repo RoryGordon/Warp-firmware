@@ -200,7 +200,7 @@ static int32_t initADC(uint32_t instance)
     ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
 
     // Wait for the conversion to be done
-    ADC16_DRV_WaitConvDone(instance, CHANNEL_0);
+    //ADC16_DRV_WaitConvDone(instance, CHANNEL_0);
     // Get current ADC BANDGAP value
     adcValue = ADC16_DRV_GetConvValueRAW(instance, CHANNEL_0);
     adcValue = ADC16_DRV_ConvRAWData(adcValue, false, adcUserConfig.resolutionMode);
