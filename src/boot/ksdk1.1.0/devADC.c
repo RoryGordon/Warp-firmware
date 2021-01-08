@@ -19,19 +19,6 @@
 #include "SEGGER_RTT.h"
 #include "warp.h"
 
-/*
-As the ADC isn't I2C, half of the usual stuff should be able to be ignored
-
-I think it's just a case of reading the two adresses 0x4003B010 and 0x4003B014
-for the outputs, but I could be spectacularly wrong
-
-It seems PTA12 is the default input, but there could be some dodgy stuff with a 
-resistor to some part of the accelerometer package - hopefully this can be
-sorted if it is an issue
-
-May need to set ADCH to 0000 and MODE to 01 - forgotten what these mean but
-this will go in the init function if any
-*/
 
 #define ADC_0                   (0U)
 #define CHANNEL_0               (0U)
@@ -206,12 +193,18 @@ static int32_t initADC(uint32_t instance)
     
     adcChnConfig.chnNum = kAdcChannelADC0_SE0;
     adcChnConfig.diffEnable = false;
-    adcChnConfig.intEnable = true;
+    adcChnConfig.intEnable = true; // maybe set to false?
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
 
     // Configure channel0
     ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
-    
+
+    // Wait for the conversion to be done
+    ADC16_DRV_WaitConvDone(instance, CHANNEL_0);
+    // Get current ADC BANDGAP value
+    adcValue = ADC16_DRV_GetConvValueRAW(instance, CHANNEL_0);
+    adcValue = ADC16_DRV_ConvRAWData(adcValue, false, adcUserConfig.resolutionMode);
+
     return 0;
 }
 
@@ -232,7 +225,11 @@ printSensorDataADC(bool hexModeFlag)
     currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
     SEGGER_RTT_printf(0, " Given method: raw: %d, temp: %d", adcValue, currentTemperature);
     
-    SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
+    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
+
+    SEGGER_RTT_printf(0, "bandgap method: %d", adcValue);
+    //SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
