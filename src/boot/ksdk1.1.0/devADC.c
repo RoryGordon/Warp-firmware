@@ -120,8 +120,8 @@ void calibrateParams(void)
 #endif
 
     // Enable BANDGAP reference voltage
-    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
-/*
+//    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
+
     // Initialization ADC for
     // 16bit resolution, interrupt mode, hw trigger disabled.
     // normal convert speed, VREFH/L as reference,
@@ -131,7 +131,7 @@ void calibrateParams(void)
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(ADC_0, &adcUserConfig);
-
+/*
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_EnableHwAverage(ADC_0, kAdcHwAverageCountOf32);
 #endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
