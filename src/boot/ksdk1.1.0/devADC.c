@@ -158,14 +158,14 @@ void calibrateParams(void)
     adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
     // ADCR_100M = ADCR_VDD x M x 100 / VDD
     adcr100m = (ADCR_VDD * M) / (vdd * 10);
-/*
+
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_DisableHwAverage(ADC_0);
 #endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
 
     // Disable BANDGAP reference voltage
     PMC_HAL_SetBandgapBufferCmd(PMC_BASE, false);
-*/
+
 }
 
 static int32_t initADC(uint32_t instance)
