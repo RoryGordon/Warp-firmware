@@ -144,11 +144,11 @@ void calibrateParams(void)
 
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
-/*
+
     // Get current ADC BANDGAP value
     bandgapValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
     bandgapValue = ADC16_DRV_ConvRAWData(bandgapValue, false, adcUserConfig.resolutionMode);
-
+/*
     // ADC stop conversion
     ADC16_DRV_PauseConv(ADC_0, CHANNEL_0);
 
