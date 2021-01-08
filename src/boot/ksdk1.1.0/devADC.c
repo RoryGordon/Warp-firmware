@@ -208,17 +208,16 @@ static int32_t initADC(uint32_t instance)
     return 0;
 }
 
-
 void configureADC(void)
 {
     initADC(ADC_0);
+    calibrateParams();
     SEGGER_RTT_printf(0, "Have you drank your milk today?\n");
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
 }
 
 printSensorDataADC(bool hexModeFlag)
 {
-
     /*
     What we know so far:
         Straight-up trying to read the supposed addresses of the ADC completely
