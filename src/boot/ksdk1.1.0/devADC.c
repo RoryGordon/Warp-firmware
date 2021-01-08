@@ -118,10 +118,10 @@ void calibrateParams(void)
 //    ADC16_DRV_GetAutoCalibrationParam(ADC_0, &adcCalibraitionParam);
 //    ADC16_DRV_SetCalibrationParam(ADC_0, &adcCalibraitionParam);
 //#endif
-/*
-    // Enable BANDGAP reference voltage
-//    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
 
+    // Enable BANDGAP reference voltage
+    PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
+/*
     // Initialization ADC for
     // 16bit resolution, interrupt mode, hw trigger disabled.
     // normal convert speed, VREFH/L as reference,

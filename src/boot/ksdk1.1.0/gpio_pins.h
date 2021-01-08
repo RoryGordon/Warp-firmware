@@ -54,8 +54,10 @@ enum _gpio_pins
 	
 	kWarpPinTPS82740_VSEL1			= GPIO_MAKE_PIN(HW_GPIOA, 5),		/*	Warp TPS82740_VSEL1	--> PTA5									*/
 	kWarpPinTPS82740_VSEL2			= GPIO_MAKE_PIN(HW_GPIOA, 8),		/*	Warp TPS82740_VSEL2	--> PTA8									*/
-	kWarpPinTPS82740B_CTLEN			= GPIO_MAKE_PIN(HW_GPIOA, 12),		/*	Warp kWarpPinTPS82740B_CTLEN --> PTA12 		(was kWarpPinTPS82675_EN in Warp v2)			*/
+//	kWarpPinTPS82740B_CTLEN			= GPIO_MAKE_PIN(HW_GPIOA, 12),		/*	Warp kWarpPinTPS82740B_CTLEN --> PTA12 		(was kWarpPinTPS82675_EN in Warp v2)			*/
 
+	kWarpPinADC_IN				= GPIO_MAKE_PIN(HW_GPIOA, 12),
+	
 	kWarpPinSPI_SCK				= GPIO_MAKE_PIN(HW_GPIOB, 0),		/*	Warp kWarpPinSPI_SCK	--> PTB0		(was kWarpPinTPS82740A_CTLEN in Warp v2)		*/
 	kWarpPinKL03_VDD_ADC			= GPIO_MAKE_PIN(HW_GPIOB, 1),		/*	Warp KL03 VDD ADC	--> PTB1									*/
 	kWarpPinTPS82740_VSEL3			= GPIO_MAKE_PIN(HW_GPIOB, 5),		/*	Warp TPS82740_VSEL3	--> PTB5									*/
