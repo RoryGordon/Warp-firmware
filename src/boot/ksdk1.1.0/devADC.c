@@ -53,6 +53,7 @@ this will go in the init function if any
 #define UPPER_VALUE_LIMIT       (1U)        /*! This value/10 is going to be added to current Temp to set the upper boundary*/
 #define LOWER_VALUE_LIMIT       (1U)        /*! This Value/10 is going to be subtracted from current Temp to set the lower boundary*/
 #define UPDATE_BOUNDARIES_TIME  (20U)       /*! This value indicates the number of cycles needed to update boundaries. To know the Time it will take, multiply this value times LPTMR_COMPARE_VALUE*/
+#define kAdcChannelADC0_SE0     (0U)
 #define kAdcChannelTemperature  (26U)       /*! ADC channel of temperature sensor */
 #define kAdcChannelBandgap      (27U)       /*! ADC channel of BANDGAP */
 
@@ -187,7 +188,7 @@ static int32_t initADC(uint32_t instance)
 #endif
 
     // Initialization ADC for
-    // 16bit resolution, interrupt mode, hw trigger enabled.
+    // 12bit resolution, interrupt mode, hw trigger enabled.
     // normal convert speed, VREFH/L as reference,
     // disable continuous convert mode.
     ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
@@ -202,7 +203,7 @@ static int32_t initADC(uint32_t instance)
     // Install Callback function into ISR
     ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
     
-    adcChnConfig.chnNum = kAdcChannelTemperature;
+    adcChnConfig.chnNum = kAdcChannelADC0_SE0;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = true;
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
