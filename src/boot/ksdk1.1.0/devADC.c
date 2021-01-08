@@ -72,6 +72,7 @@ volatile uint16_t g_AdcValueInt[HW_ADC_INSTANCE_COUNT][HW_ADC_SC1n_COUNT];
 static uint32_t adcValue = 0;               /*! ADC value */
 static uint32_t adcrTemp25 = 0;             /*! Calibrated ADCR_TEMP25 */
 static uint32_t adcr100m = 0;
+static uint32_t printCounter = 0;
 volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 //const uint32_t gSimBaseAddr[] = SIM_BASE_ADDRS;
 static smc_power_mode_config_t smcConfig;
@@ -230,7 +231,7 @@ printSensorDataADC(bool hexModeFlag)
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
 
     
-    SEGGER_RTT_printf(0, "Start printing...\n");
+    SEGGER_RTT_printf(0, "Start printing %d...\n", printCounter);
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
@@ -258,5 +259,6 @@ printSensorDataADC(bool hexModeFlag)
     }
     */
     SEGGER_RTT_printf(0, " End printing...\n");
+    printCounter++;
 
 }
