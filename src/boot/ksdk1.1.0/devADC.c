@@ -135,13 +135,13 @@ void calibrateParams(void)
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_EnableHwAverage(ADC_0, kAdcHwAverageCountOf32);
 #endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
-/*
+
     adcChnConfig.chnNum = kAdcChannelBandgap;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = false;
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
     ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
-
+/*
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
 
