@@ -219,6 +219,7 @@ void configureADC(void)
 
 printSensorDataADC(bool hexModeFlag)
 {
+    SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
@@ -229,7 +230,6 @@ printSensorDataADC(bool hexModeFlag)
     adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
     SEGGER_RTT_printf(0, "bandgap method: %d", adcValue);
-    //SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
