@@ -75,7 +75,7 @@ static uint32_t adcr100m = 0;
 volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 //const uint32_t gSimBaseAddr[] = SIM_BASE_ADDRS;
 static smc_power_mode_config_t smcConfig;
-
+int32_t currentTemperature = 0;
 
 /* User-defined function to install callback. */
 void ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
@@ -227,8 +227,8 @@ printSensorDataADC(bool hexModeFlag)
     //int32_t currentTemperature = 0;
     
     // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    //currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, "%d", adcValue);
+    currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, "%d", currentTemperature);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
