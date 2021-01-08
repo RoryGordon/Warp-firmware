@@ -130,6 +130,7 @@ void calibrateParams(void)
     // disable continuous convert mode.
     ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
     adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
+    adcUserConfig.hwTriggerEnable = false;
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(ADC_0, &adcUserConfig);
@@ -216,13 +217,11 @@ static int32_t initADC(uint32_t instance)
 
 void configureADC(void)
 {
-    initADC(ADC_0);
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
     calibrateParams();
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
+    initADC(ADC_0);
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);
-    SEGGER_RTT_printf(0, "Have you drank your milk today?\n");
-    
 }
 
 printSensorDataADC(bool hexModeFlag)
