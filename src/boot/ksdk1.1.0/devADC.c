@@ -193,7 +193,7 @@ static int32_t initADC(uint32_t instance)
     
     adcChnConfig.chnNum = kAdcChannelADC0_SE0;
     adcChnConfig.diffEnable = false;
-    adcChnConfig.intEnable = true; // maybe set to false?
+    adcChnConfig.intEnable = false; // maybe set to false (originally true)?
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
 
     // Configure channel0
