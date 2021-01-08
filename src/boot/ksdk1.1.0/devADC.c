@@ -158,6 +158,8 @@ void calibrateParams(void)
     adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
     // ADCR_100M = ADCR_VDD x M x 100 / VDD
     adcr100m = (ADCR_VDD * M) / (vdd * 10);
+    SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d",
+                        bandgapValue, vdd, adcrTemp25, adcr100m);
 
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_DisableHwAverage(ADC_0);
