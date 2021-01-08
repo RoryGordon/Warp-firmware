@@ -204,7 +204,7 @@ static int32_t initADC(uint32_t instance)
     // Get current ADC BANDGAP value
     adcValue = ADC16_DRV_GetConvValueRAW(instance, CHANNEL_0);
     adcValue = ADC16_DRV_ConvRAWData(adcValue, false, adcUserConfig.resolutionMode);
-    SEGGER_RTT_printf(0, " adcValue: %d\n", adcValue)
+    SEGGER_RTT_printf(0, " adcValue: %d\n", adcValue);
     return 0;
 }
 
