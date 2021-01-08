@@ -47,17 +47,17 @@ enum _gpio_pins
 {
 	kWarpPinUnusedPTA0			= GPIO_MAKE_PIN(HW_GPIOA, 0),		/*	PTA0: Reserved for SWD CLK			(was LED1/TS5A3154_IN in Warp v2)			*/
 	kWarpPinUnusedPTA1			= GPIO_MAKE_PIN(HW_GPIOA, 1),		/*	PTA1: Reserved for SWD RESET_B			(was LED2/TS5A3154_nEN in Warp v2)			*/
-	kWarpPinUnusedPTA2			= GPIO_MAKE_PIN(HW_GPIOA, 2),		/*	PTA2: Reserved for SWD DIO			(was LED3/SI4705_nRST in Warp v2)			*/
+//	kWarpPinUnusedPTA2			= GPIO_MAKE_PIN(HW_GPIOA, 2),		/*	PTA2: Reserved for SWD DIO			(was LED3/SI4705_nRST in Warp v2)			*/
 
 	kWarpPinEXTAL0				= GPIO_MAKE_PIN(HW_GPIOA, 3),		/*	PTA3: EXTAL0												*/
 	kWarpPinXTAL0				= GPIO_MAKE_PIN(HW_GPIOA, 4),		/*	PTA4: XTAL0												*/
 	
 	kWarpPinTPS82740_VSEL1			= GPIO_MAKE_PIN(HW_GPIOA, 5),		/*	Warp TPS82740_VSEL1	--> PTA5									*/
 	kWarpPinTPS82740_VSEL2			= GPIO_MAKE_PIN(HW_GPIOA, 8),		/*	Warp TPS82740_VSEL2	--> PTA8									*/
-//	kWarpPinTPS82740B_CTLEN			= GPIO_MAKE_PIN(HW_GPIOA, 12),		/*	Warp kWarpPinTPS82740B_CTLEN --> PTA12 		(was kWarpPinTPS82675_EN in Warp v2)			*/
+	kWarpPinTPS82740B_CTLEN			= GPIO_MAKE_PIN(HW_GPIOA, 2),		/*	Warp kWarpPinTPS82740B_CTLEN --> PTA12 		(was kWarpPinTPS82675_EN in Warp v2)			*/
 
 	kWarpPinADC_IN				= GPIO_MAKE_PIN(HW_GPIOA, 12),
-	
+
 	kWarpPinSPI_SCK				= GPIO_MAKE_PIN(HW_GPIOB, 0),		/*	Warp kWarpPinSPI_SCK	--> PTB0		(was kWarpPinTPS82740A_CTLEN in Warp v2)		*/
 	kWarpPinKL03_VDD_ADC			= GPIO_MAKE_PIN(HW_GPIOB, 1),		/*	Warp KL03 VDD ADC	--> PTB1									*/
 	kWarpPinTPS82740_VSEL3			= GPIO_MAKE_PIN(HW_GPIOB, 5),		/*	Warp TPS82740_VSEL3	--> PTB5									*/
