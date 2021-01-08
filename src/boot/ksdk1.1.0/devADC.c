@@ -44,7 +44,7 @@ this will go in the init function if any
  * Temperature Sensor for the HCS08 Microcontroller Family document (Document Number: AN3031)
  */
 
-#define ADCR_VDD                (65535U)    /*! Maximum value when use 16b resolution */
+#define ADCR_VDD                (0xFFF)    /*! Maximum value when use 12b resolution */
 #define V_BG                    (1000U)     /*! BANDGAP voltage in mV (trim to 1.0V) */
 #define V_TEMP25                (716U)      /*! Typical VTEMP25 in mV */
 #define M                       (1620U)     /*! Typical slope: (mV x 1000)/oC */
@@ -158,7 +158,7 @@ void calibrateParams(void)
     adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
     // ADCR_100M = ADCR_VDD x M x 100 / VDD
     adcr100m = (ADCR_VDD * M) / (vdd * 10);
-    SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d",
+    SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d\n",
                         bandgapValue, vdd, adcrTemp25, adcr100m);
 
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
@@ -233,9 +233,9 @@ printSensorDataADC(bool hexModeFlag)
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     //int32_t currentTemperature = 0;
     
-    // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    currentTemperature = (int32_t)(25 - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, "%d", currentTemperature);
+    // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
+    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, " raw: %d, temp: %d", adcValue, currentTemperature);
     /*
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
