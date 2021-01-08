@@ -225,11 +225,10 @@ void configureADC(void)
 
 printSensorDataADC(bool hexModeFlag)
 {
-    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, " raw: %d, temp: %d", adcValue, currentTemperature);
+
     
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
@@ -242,7 +241,10 @@ printSensorDataADC(bool hexModeFlag)
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
     SEGGER_RTT_printf(0, " %x %x,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
-    
+
+    adcValue = readSensorRegisterValueLSB;
+    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, " raw: %d, temp: %d", adcValue, currentTemperature);
     /*
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
 
