@@ -131,11 +131,11 @@ void calibrateParams(void)
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(ADC_0, &adcUserConfig);
-/*
+
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_EnableHwAverage(ADC_0, kAdcHwAverageCountOf32);
 #endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
-
+/*
     adcChnConfig.chnNum = kAdcChannelBandgap;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = false;
