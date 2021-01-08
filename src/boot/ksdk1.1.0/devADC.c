@@ -225,30 +225,24 @@ void configureADC(void)
 
 printSensorDataADC(bool hexModeFlag)
 {
-    /*
-    What we know so far:
-        Straight-up trying to read the supposed addresses of the ADC completely
-        nuggets everything. So, don't do that
-    */
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-    //int32_t currentTemperature = 0;
     
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
     currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
     SEGGER_RTT_printf(0, " raw: %d, temp: %d", adcValue, currentTemperature);
-    /*
+    
     SEGGER_RTT_printf(0, "Start printing...\n");
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
-    int *MSBaddress = (int *) 0x4003B010;
+    int *MSBaddress = (int *) 0x4003B014;
     int16_t readSensorRegisterValueCombined;
 
-    SEGGER_RTT_printf(0, "Attempting to read adresses...\n");
+    //SEGGER_RTT_printf(0, "Attempting to read adresses...\n");
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
-    SEGGER_RTT_printf(0, "%d %d,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
-    */
+    SEGGER_RTT_printf(0, " %d %d,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
+    
     /*
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
 
@@ -261,6 +255,6 @@ printSensorDataADC(bool hexModeFlag)
         SEGGER_RTT_printf(0, " %d,", readSensorRegisterValueCombined);
     }
     */
-    SEGGER_RTT_printf(0, "End printing...\n");
+    SEGGER_RTT_printf(0, " End printing...\n");
 
 }
