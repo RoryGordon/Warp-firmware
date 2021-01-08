@@ -126,11 +126,11 @@ void calibrateParams(void)
     // 16bit resolution, interrupt mode, hw trigger disabled.
     // normal convert speed, VREFH/L as reference,
     // disable continuous convert mode.
-    ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
-    adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
-    adcUserConfig.continuousConvEnable = false;
-    adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
-    ADC16_DRV_Init(ADC_0, &adcUserConfig);
+//    ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
+//    adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
+//    adcUserConfig.continuousConvEnable = false;
+//    adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
+//    ADC16_DRV_Init(ADC_0, &adcUserConfig);
 /*
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_EnableHwAverage(ADC_0, kAdcHwAverageCountOf32);
