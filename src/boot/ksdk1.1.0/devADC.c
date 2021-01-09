@@ -103,11 +103,11 @@ void calibrateParams(void)
     uint32_t bandgapValue = 0;  /*! ADC value of BANDGAP */
     uint32_t vdd = 0;           /*! VDD in mV */
 
-//#if FSL_FEATURE_ADC16_HAS_CALIBRATION
+#if FSL_FEATURE_ADC16_HAS_CALIBRATION
     // Auto calibration
-//    ADC16_DRV_GetAutoCalibrationParam(ADC_0, &adcCalibraitionParam);
-//    ADC16_DRV_SetCalibrationParam(ADC_0, &adcCalibraitionParam);
-//#endif
+    ADC16_DRV_GetAutoCalibrationParam(ADC_0, &adcCalibraitionParam);
+    ADC16_DRV_SetCalibrationParam(ADC_0, &adcCalibraitionParam);
+#endif
 
     // Enable BANDGAP reference voltage
     PMC_HAL_SetBandgapBufferCmd(PMC_BASE, true);
@@ -211,10 +211,16 @@ static int32_t initADC(uint32_t instance)
 
 void configureADC(void)
 {
+    hardware_init();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
     calibrateParams();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
-    initADC(ADC_0);
+    // Initialize ADC
+    if (init_adc(ADC_0))
+    {
+        printf("Failed to do the ADC init\n");
+        return -1;
+    }
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
