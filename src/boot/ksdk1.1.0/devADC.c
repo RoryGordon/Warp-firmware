@@ -264,14 +264,16 @@ configureADC(void)
         printf("Failed to do the ADC init\n");
         return -1;
     }
-
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_OFF);
     // setup the HW trigger source
     //init_trigger_source(ADC_0);
 
     // Warm up microcontroller and allow to set first boundaries
     while(updateBoundariesCounter < (UPDATE_BOUNDARIES_TIME * 2))
     {
+        GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
         while(!conversionCompleted);
+        GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
         currentTemperature = GetCurrentTempValue();
         tempArray[updateBoundariesCounter] = currentTemperature;
         updateBoundariesCounter++;
