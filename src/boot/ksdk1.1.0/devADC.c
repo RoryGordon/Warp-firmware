@@ -248,6 +248,11 @@ lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
 
 configureADC(void)
 {
+    
+    int32_t currentTemperature = 0;
+    uint32_t updateBoundariesCounter = 0;
+    int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
+    lowPowerAdcBoundaries_t boundaries;
     //hardware_init();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
     calibrateParams();
