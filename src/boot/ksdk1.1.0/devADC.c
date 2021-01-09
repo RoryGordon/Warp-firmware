@@ -66,6 +66,8 @@ volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 static smc_power_mode_config_t smcConfig;
 int32_t currentTemperature = 0;
 
+extern void init_trigger_source(uint32_t instance);
+
 /* User-defined function to install callback. */
 void ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
 {
@@ -183,7 +185,7 @@ static int32_t initADC(uint32_t instance)
     ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
     adcUserConfig.intEnable = true;
     adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
-    adcUserConfig.hwTriggerEnable = false; //prev. true
+    adcUserConfig.hwTriggerEnable = true; //prev. true
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(instance, &adcUserConfig);
@@ -209,6 +211,40 @@ static int32_t initADC(uint32_t instance)
     return 0;
 }
 
+/* Calculate the current temperature */
+int32_t GetCurrentTempValue(void)
+{
+    int32_t currentTemperature = 0;
+
+    // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
+    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+
+    return currentTemperature;
+}
+
+/* Calculate the average temperature and set boundaries */
+lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
+                                                     int32_t *tempArray)
+{
+    uint32_t avgTemp = 0;
+    lowPowerAdcBoundaries_t boundaries;
+
+    for(int i = 0; i < updateBoundariesCounter; i++)
+    {
+        avgTemp += tempArray[i];
+    }
+    // Get average temperature
+    avgTemp /= updateBoundariesCounter;
+
+    // Set upper boundary
+    boundaries.upperBoundary = avgTemp + UPPER_VALUE_LIMIT;
+
+    // Set lower boundary
+    boundaries.lowerBoundary = avgTemp - LOWER_VALUE_LIMIT;
+
+    return boundaries;
+}
+
 void configureADC(void)
 {
     //hardware_init();
@@ -222,10 +258,33 @@ void configureADC(void)
         return -1;
     }
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
+    // setup the HW trigger source
+    init_trigger_source(ADC_0);
+
+    // Warm up microcontroller and allow to set first boundaries
+    while(updateBoundariesCounter < (UPDATE_BOUNDARIES_TIME * 2))
+    {
+        while(!conversionCompleted);
+        currentTemperature = GetCurrentTempValue();
+        tempArray[updateBoundariesCounter] = currentTemperature;
+        updateBoundariesCounter++;
+        conversionCompleted = false;
+    }
+
+    // Temp Sensor Calibration 
+    boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+    updateBoundariesCounter = 0;
 }
 
 printSensorDataADC(bool hexModeFlag)
 {
+    // Prevents the use of wrong values
+    while(!conversionCompleted)
+    {}
+
+    // Get current Temperature Value
+    currentTemperature = GetCurrentTempValue();
+
     SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
@@ -263,4 +322,14 @@ printSensorDataADC(bool hexModeFlag)
     SEGGER_RTT_printf(0, " End printing...\n");
     printCounter++;
 
+
+    // Clear conversionCompleted flag
+    conversionCompleted = false;
+
+    // Entry to Low Power Mode
+    // Once this mode exited, it will no longer be in PEE mode (assuming
+    // the device entered this mode from PEE).  Therefore, the UART 
+    // baud rate will not be correct because the device's operating 
+    // frequency will be different from the startup of the demo. 
+    SMC_HAL_SetMode(SMC_BASE, &smcConfig);
 }
