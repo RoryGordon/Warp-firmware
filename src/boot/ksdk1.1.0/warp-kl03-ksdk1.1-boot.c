@@ -2524,9 +2524,8 @@ devSSD1331init();
 			case '0':
 			{
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
-				int *ptr = (int *) 0x4003B010;
-				int value = *ptr;
-				SEGGER_RTT_printf(0, "\n%d", value);
+				configureADC();
+				printSensorDataADC(true);
 				break;
 			}
 

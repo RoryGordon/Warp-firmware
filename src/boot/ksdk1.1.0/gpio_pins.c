@@ -58,12 +58,14 @@ gpio_output_pin_user_config_t	outputPins[] = {
 		.config.slewRate = kPortSlowSlewRate,
 		.config.driveStrength = kPortLowDriveStrength,
 	},
+	
 	{
-		.pinName = kWarpPinTPS82740B_CTLEN,			/*	Was kWarpPinSPI_SCK_I2C_PULLUP_ENin Warp v2		*/
+		.pinName = kWarpPinTPS82740B_CTLEN,			//	Was kWarpPinSPI_SCK_I2C_PULLUP_ENin Warp v2
 		.config.outputLogic = 1,
 		.config.slewRate = kPortSlowSlewRate,
 		.config.driveStrength = kPortLowDriveStrength,
 	},
+	
 	{
 		.pinName = kWarpPinSPI_SCK,				/*	Was kWarpPinTPS82740A_CTLEN in Warp v2			*/
 		.config.outputLogic = 1,
@@ -226,6 +228,13 @@ gpio_output_pin_user_config_t	outputPins[] = {
 gpio_input_pin_user_config_t	inputPins[] = {
 	{
 		.pinName = kWarpPinKL03_VDD_ADC,
+		.config.isPullEnable = true,
+		.config.pullSelect = kPortPullUp,
+		.config.isPassiveFilterEnabled = false,
+		.config.interrupt = kPortIntDisabled,
+	},
+	{
+		.pinName = kWarpPinADC_IN,
 		.config.isPullEnable = true,
 		.config.pullSelect = kPortPullUp,
 		.config.isPassiveFilterEnabled = false,

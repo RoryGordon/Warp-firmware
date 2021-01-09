@@ -31,7 +31,7 @@ void InitLowPowerTmr(void);
  *
  * @return uint32_t Returns current temperature.
  */
-int32_t GetCurrentTempValue(void);
+//int32_t GetCurrentTempValue(void);
 
 /*!
  * @brief Calculate current temperature.
