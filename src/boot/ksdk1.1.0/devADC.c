@@ -73,6 +73,7 @@ int32_t currentTemperature = 0;
 ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
 {
     g_AdcTestCallback[instance][chnGroup] = callbackFunc;
+    conversionCompleted = true;
 }
 
 /* User-defined function to read conversion value in ADC ISR. */
@@ -85,6 +86,7 @@ uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
 /* ADC Interrupt Handler */
 ADC1IRQHandler(void)
 {
+    SEGGER_RTT_printf(0, "ping!\n");
     // Get current ADC value
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     // Set conversionCompleted flag. This prevents an wrong conversion in main function
