@@ -69,7 +69,7 @@ int32_t currentTemperature = 0;
 extern void init_trigger_source(uint32_t instance);
 
 /* User-defined function to install callback. */
-void ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
+ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
 {
     g_AdcTestCallback[instance][chnGroup] = callbackFunc;
 }
@@ -82,7 +82,7 @@ uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
 
 
 /* ADC Interrupt Handler */
-void ADC1IRQHandler(void)
+ADC1IRQHandler(void)
 {
     // Get current ADC value
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
@@ -93,7 +93,7 @@ void ADC1IRQHandler(void)
 /*!
  * Parameters calibration: VDD and ADCR_TEMP25
  */
-void calibrateParams(void)
+calibrateParams(void)
 {
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
@@ -163,7 +163,7 @@ void calibrateParams(void)
 
 }
 
-static int32_t initADC(uint32_t instance)
+initADC(uint32_t instance)
 {
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
@@ -212,7 +212,7 @@ static int32_t initADC(uint32_t instance)
 }
 
 /* Calculate the current temperature */
-int32_t GetCurrentTempValue(void)
+GetCurrentTempValue(void)
 {
     int32_t currentTemperature = 0;
 
@@ -245,7 +245,7 @@ lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
     return boundaries;
 }
 
-void configureADC(void)
+configureADC(void)
 {
     //hardware_init();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
