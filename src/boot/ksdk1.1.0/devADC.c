@@ -96,6 +96,7 @@ void calibrateParams(void)
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
     adc16_calibration_param_t adcCalibraitionParam;
+    SEGGER_RTT_printf(0, "You Shouldn't be here...\n")
 #endif
     adc16_user_config_t adcUserConfig;
     adc16_chn_config_t adcChnConfig;
@@ -236,7 +237,7 @@ printSensorDataADC(bool hexModeFlag)
     int *MSBaddress = (int *) 0x4003B014;
     int16_t readSensorRegisterValueCombined;
 
-    //SEGGER_RTT_printf(0, "Attempting to read adresses...\n");
+    //SEGGER_RTT_printf(0, "Attempting to read addresses...\n");
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
     SEGGER_RTT_printf(0, " Pointer method: %x %x,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
