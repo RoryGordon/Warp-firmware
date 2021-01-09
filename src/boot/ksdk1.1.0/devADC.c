@@ -289,6 +289,7 @@ configureADC(void)
     //init_trigger_source(ADC_0);
 
     // Warm up microcontroller and allow to set first boundaries
+    /*
     while(updateBoundariesCounter < (UPDATE_BOUNDARIES_TIME * 2))
     {
         GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
@@ -303,6 +304,7 @@ configureADC(void)
     // Temp Sensor Calibration 
     boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
+    */
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
