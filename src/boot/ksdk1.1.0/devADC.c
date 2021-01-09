@@ -311,10 +311,12 @@ configureADC(void)
 printSensorDataADC(bool hexModeFlag)
 {
     // Prevents the use of wrong values
+    /*
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
     while(!conversionCompleted)
     {}
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
+    */
 
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
