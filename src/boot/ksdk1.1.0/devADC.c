@@ -67,7 +67,7 @@ volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 static smc_power_mode_config_t smcConfig;
 int32_t currentTemperature = 0;
 
-extern void init_trigger_source(uint32_t instance);
+//extern void init_trigger_source(uint32_t instance);
 
 /* User-defined function to install callback. */
 ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
@@ -186,7 +186,7 @@ static int32_t initADC(uint32_t instance)
     ADC16_DRV_StructInitUserConfigDefault(&adcUserConfig);
     adcUserConfig.intEnable = true;
     adcUserConfig.resolutionMode = kAdcResolutionBitOf12or13;
-    adcUserConfig.hwTriggerEnable = true; //prev. true
+    adcUserConfig.hwTriggerEnable = false; //prev. true
     adcUserConfig.continuousConvEnable = false;
     adcUserConfig.clkSrcMode = kAdcClkSrcOfAsynClk;
     ADC16_DRV_Init(instance, &adcUserConfig);
@@ -265,7 +265,7 @@ configureADC(void)
     }
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
     // setup the HW trigger source
-    init_trigger_source(ADC_0);
+    //init_trigger_source(ADC_0);
 
     // Warm up microcontroller and allow to set first boundaries
     while(updateBoundariesCounter < (UPDATE_BOUNDARIES_TIME * 2))
