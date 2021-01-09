@@ -213,7 +213,7 @@ static int32_t initADC(uint32_t instance)
 }
 
 /* Calculate the current temperature */
-GetCurrentTempValue(void)
+int32_t GetCurrentTempValue(void)
 {
     int32_t currentTemperature = 0;
 
