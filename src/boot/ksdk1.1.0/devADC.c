@@ -195,7 +195,8 @@ static int32_t initADC(uint32_t instance)
     // Install Callback function into ISR
     ADC_TEST_InstallCallback(instance, CHANNEL_0, ADC1IRQHandler);
     
-    adcChnConfig.chnNum = kAdcChannelADC0_SE0;
+    //adcChnConfig.chnNum = kAdcChannelADC0_SE0;
+    adcChnConfig.chnNum = kAdcChannelBandgap;
     adcChnConfig.diffEnable = false;
     adcChnConfig.intEnable = false; // maybe set to false (originally true)?
     //adcChnConfig.chnMux = kAdcChnMuxOfA;
