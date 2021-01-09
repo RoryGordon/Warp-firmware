@@ -164,7 +164,7 @@ calibrateParams(void)
 
 }
 
-initADC(uint32_t instance)
+static int32_t initADC(uint32_t instance)
 {
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION

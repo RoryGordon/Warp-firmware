@@ -54,6 +54,6 @@ void ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callb
  * @brief User-defined function to read conversion value in ADC ISR. 
  */
 uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup);
-static int32_t        initADC(uint32_t instance);
+//static int32_t        initADC(uint32_t instance);
 void                  configureADC(void);
 void		          printSensorDataADC(bool hexModeFlag);
