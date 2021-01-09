@@ -264,7 +264,7 @@ configureADC(void)
         printf("Failed to do the ADC init\n");
         return -1;
     }
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
+
     // setup the HW trigger source
     //init_trigger_source(ADC_0);
 
@@ -281,13 +281,16 @@ configureADC(void)
     // Temp Sensor Calibration 
     boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
 printSensorDataADC(bool hexModeFlag)
 {
     // Prevents the use of wrong values
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
     while(!conversionCompleted)
     {}
+    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
 
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
