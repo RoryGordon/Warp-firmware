@@ -211,7 +211,7 @@ static int32_t initADC(uint32_t instance)
 
 void configureADC(void)
 {
-    hardware_init();
+    //hardware_init();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
     calibrateParams();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
