@@ -96,7 +96,7 @@ void calibrateParams(void)
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
     adc16_calibration_param_t adcCalibraitionParam;
-    SEGGER_RTT_printf(0, "You Shouldn't be here...\n")
+    SEGGER_RTT_printf(0, "You Shouldn't be here...\n");
 #endif
     adc16_user_config_t adcUserConfig;
     adc16_chn_config_t adcChnConfig;
