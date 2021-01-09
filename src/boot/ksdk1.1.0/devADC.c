@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include "devADC.h"
 #include "fsl_misc_utilities.h"
 #include "fsl_device_registers.h"
 
