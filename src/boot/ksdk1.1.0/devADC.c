@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "devADC.h"
+
 #include "fsl_misc_utilities.h"
 #include "fsl_device_registers.h"
 
@@ -15,6 +15,7 @@
 #include "fsl_mcglite_hal.h"
 #include "fsl_port_hal.h"
 
+#include "devADC.h"
 #include "gpio_pins.h"
 #include "SEGGER_RTT.h"
 #include "warp.h"
