@@ -216,7 +216,7 @@ void configureADC(void)
     calibrateParams();
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
     // Initialize ADC
-    if (init_adc(ADC_0))
+    if (initADC(ADC_0))
     {
         printf("Failed to do the ADC init\n");
         return -1;
