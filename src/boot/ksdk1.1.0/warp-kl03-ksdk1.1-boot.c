@@ -1314,8 +1314,8 @@ main(void)
 				for (i = 0U; i < DAC_TEST_BUFF_SIZE; i++)
 				{
 					g_dacBuffDat[i] = printSensorDataADC(true);
-					SEGGER_RTT_printf("DAC_DRV_Output: %d\r\n", g_dacInstance[i]);
-					DAC_DRV_Output(0U, g_dacInstance[i]);
+					SEGGER_RTT_printf("DAC_DRV_Output: %d\r\n", g_dacBuffDat[i]);
+					DAC_DRV_Output(0U, g_dacBuffDat[i]);
 					OSA_TimeDelay(200);
 				}
 				// De-initialize the DAC converter. //
