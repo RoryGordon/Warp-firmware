@@ -321,17 +321,17 @@ printSensorDataADC(bool hexModeFlag)
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
 
-    SEGGER_RTT_printf(0, " Start printing %d...\n", printCounter);
+    SEGGER_RTT_printf(0, "%d | ", printCounter);
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, " Given method: raw: %d, temp: %d", adcValue, currentTemperature);
+//    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
+    SEGGER_RTT_printf(0, " Given method: raw: %4d | ", adcValue);
     
     adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
     adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
-    SEGGER_RTT_printf(0, "bandgap method: %d", adcValue);
+    SEGGER_RTT_printf(0, "bandgap method: %4d | ", adcValue);
     uint16_t readSensorRegisterValueLSB;
     uint16_t readSensorRegisterValueMSB;
     int *LSBaddress = (int *) 0x4003B010;
@@ -341,7 +341,7 @@ printSensorDataADC(bool hexModeFlag)
     //SEGGER_RTT_printf(0, "Attempting to read addresses...\n");
     readSensorRegisterValueLSB = *LSBaddress;
     readSensorRegisterValueMSB = *MSBaddress;
-    SEGGER_RTT_printf(0, " Pointer method: %x %x,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
+    SEGGER_RTT_printf(0, " Pointer method: %4x %4x | ", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
 
     /*
 	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
@@ -355,7 +355,7 @@ printSensorDataADC(bool hexModeFlag)
         SEGGER_RTT_printf(0, " %d,", readSensorRegisterValueCombined);
     }
     */
-    SEGGER_RTT_printf(0, " End printing...\n");
+    SEGGER_RTT_printf(0, "End\n");
     printCounter++;
 
 
