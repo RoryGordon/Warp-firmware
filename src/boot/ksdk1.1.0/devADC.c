@@ -67,6 +67,9 @@ volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 static smc_power_mode_config_t smcConfig;
 int32_t currentTemperature = 0;
 
+adc16_user_config_t adcUserConfig;
+adc16_chn_config_t adcChnConfig;
+
 //extern void init_trigger_source(uint32_t instance);
 
 /* User-defined function to install callback. */
@@ -191,8 +194,7 @@ static int32_t initADC(uint32_t instance)
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
     adc16_calibration_param_t adcCalibraitionParam;
 #endif
-    adc16_user_config_t adcUserConfig;
-    adc16_chn_config_t adcChnConfig;
+
 
 #if FSL_FEATURE_ADC16_HAS_CALIBRATION
     // Auto calibration
@@ -315,7 +317,7 @@ printSensorDataADC(bool hexModeFlag)
     
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
 
-    ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
+    ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
     while(!conversionCompleted)
     {}
 
