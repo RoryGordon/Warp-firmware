@@ -64,7 +64,7 @@
 
 
 #define WARP_FRDMKL03
-
+#define DAC
 
 /*
 *	Comment out the header file to disable devices

@@ -95,6 +95,7 @@ ADD_EXECUTABLE(Warp
     "${ProjDirPath}/../../src/SEGGER_RTT_printf.c"
     "${ProjDirPath}/../../../../platform/drivers/src/i2c/fsl_i2c_irq.c"
     "${ProjDirPath}/../../../../platform/drivers/src/spi/fsl_spi_irq.c"
+    "${ProjDirPath}/../../../../platform/drivers/src/dac/fsl_dac_irq.c"
     "${ProjDirPath}/../../../../platform/drivers/src/dac/fsl_dac_driver.c"
     "${ProjDirPath}/../../../../platform/startup/MKL03Z4/system_MKL03Z4.c"
     "${ProjDirPath}/../../../../platform/startup/startup.c"

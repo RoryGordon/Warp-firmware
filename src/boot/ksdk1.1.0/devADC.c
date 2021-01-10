@@ -291,7 +291,7 @@ configureADC(void)
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
-printSensorDataADC(bool hexModeFlag)
+uint32_t printSensorDataADC(bool hexModeFlag)
 {
     SEGGER_RTT_printf(0, "%4d | ", printCounter);
 
