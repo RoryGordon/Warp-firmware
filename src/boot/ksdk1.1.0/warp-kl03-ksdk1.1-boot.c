@@ -1354,163 +1354,6 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 	}
 }
 
-/*
-void
-loopForSensor(	const char *  tagString,
-		WarpStatus  (* readSensorRegisterFunction)(uint8_t deviceRegister, int numberOfBytes),
-		volatile WarpI2CDeviceState *  i2cDeviceState,
-		volatile WarpSPIDeviceState *  spiDeviceState,
-		uint8_t  baseAddress,
-		uint8_t  minAddress,
-		uint8_t  maxAddress,
-		int  repetitionsPerAddress,
-		int  chunkReadsPerAddress,
-		int  spinDelay,
-		bool  autoIncrement,
-		uint16_t  sssupplyMillivolts,
-		uint8_t  referenceByte,
-		uint16_t adaptiveSssupplyMaxMillivolts,
-		bool  chatty
-		)
-{
-	WarpStatus		status;
-	uint8_t			address;
-	if((minAddress < baseAddress) || (baseAddress <= maxAddress))
-	{
-		 address = baseAddress;
-	}
-	else
-	{
-		address = minAddress;
-	}
-	int			readCount = repetitionsPerAddress + 1;
-	int			nSuccesses = 0;
-	int			nFailures = 0;
-	int			nCorrects = 0;
-	int			nBadCommands = 0;
-	uint16_t		actualSssupplyMillivolts = sssupplyMillivolts;
-
-
-	if (	(!spiDeviceState && !i2cDeviceState) ||
-		(spiDeviceState && i2cDeviceState) )
-	{
-#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-		SEGGER_RTT_printf(0, RTT_CTRL_RESET RTT_CTRL_BG_BRIGHT_YELLOW RTT_CTRL_TEXT_BRIGHT_WHITE kWarpConstantStringErrorSanity RTT_CTRL_RESET "\n");
-#endif
-	}
-
-	enableSssupply(actualSssupplyMillivolts);
-	SEGGER_RTT_WriteString(0, tagString);
-*/
-	/*
-	 *	Keep on repeating until we are above the maxAddress, or just once if not autoIncrement-ing
-	 *	This is checked for at the tail end of the loop.
-	 */
-//	while (true)
-//	{
-//		for (int i = 0; i < readCount; i++) for (int j = 0; j < chunkReadsPerAddress; j++)
-//		{
-//			status = readSensorRegisterFunction(address+j, 1 /* numberOfBytes */);
-//			if (status == kWarpStatusOK)
-//			{
-//				nSuccesses++;
-//				if (actualSssupplyMillivolts > sssupplyMillivolts)
-//				{
-//					actualSssupplyMillivolts -= 100;
-//					enableSssupply(actualSssupplyMillivolts);
-//				}
-//
-//				if (spiDeviceState)
-//				{
-//					if (referenceByte == spiDeviceState->spiSinkBuffer[2])
-//					{
-//						nCorrects++;
-//					}
-//
-//					if (chatty)
-//					{
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//						SEGGER_RTT_printf(0, "\r\t0x%02x --> [0x%02x 0x%02x 0x%02x]\n",
-//							address+j,
-//							spiDeviceState->spiSinkBuffer[0],
-//							spiDeviceState->spiSinkBuffer[1],
-//							spiDeviceState->spiSinkBuffer[2]);
-//#endif
-//					}
-//				}
-//				else
-//				{
-//					if (referenceByte == i2cDeviceState->i2cBuffer[0])
-//					{
-//						nCorrects++;
-//					}
-//
-//					if (chatty)
-//					{
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//						SEGGER_RTT_printf(0, "\r\t0x%02x --> 0x%02x\n",
-//							address+j,
-//							i2cDeviceState->i2cBuffer[0]);
-//#endif
-//					}
-//				}
-//			}
-//			else if (status == kWarpStatusDeviceCommunicationFailed)
-//			{
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//				SEGGER_RTT_printf(0, "\r\t0x%02x --> ----\n",
-//					address+j);
-//#endif
-//
-//				nFailures++;
-//				if (actualSssupplyMillivolts < adaptiveSssupplyMaxMillivolts)
-//				{
-//					actualSssupplyMillivolts += 100;
-//					enableSssupply(actualSssupplyMillivolts);
-//				}
-//			}
-//			else if (status == kWarpStatusBadDeviceCommand)
-//			{
-//				nBadCommands++;
-//			}
-//
-//			if (spinDelay > 0)
-//			{
-//				OSA_TimeDelay(spinDelay);
-//			}
-//		}
-//
-//		if (autoIncrement)
-//		{
-//			address++;
-//		}
-//
-//		if (address > maxAddress || !autoIncrement)
-//		{
-//			/*
-//			 *	We either iterated over all possible addresses, or were asked to do only
-//			 *	one address anyway (i.e. don't increment), so we're done.
-//			 */
-//			break;
-//		}
-//	}
-//
-//	/*
-//	 *	We intersperse RTT_printfs with forced delays to allow us to use small
-//	 *	print buffers even in RUN mode.
-//	 */
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//	SEGGER_RTT_printf(0, "\r\n\t%d/%d success rate.\n", nSuccesses, (nSuccesses + nFailures));
-//	OSA_TimeDelay(50);
-//	SEGGER_RTT_printf(0, "\r\t%d/%d successes matched ref. value of 0x%02x.\n", nCorrects, nSuccesses, referenceByte);
-//	OSA_TimeDelay(50);
-//	SEGGER_RTT_printf(0, "\r\t%d bad commands.\n\n", nBadCommands);
-//	OSA_TimeDelay(50);
-//#endif
-//
-//
-//	return;
-//}
 
 int
 char2int(int character)
@@ -1534,7 +1377,6 @@ char2int(int character)
 }
 
 
-
 uint8_t
 readHexByte(void)
 {
@@ -1545,7 +1387,6 @@ readHexByte(void)
 
 	return (char2int(topNybble) << 4) + char2int(bottomNybble);
 }
-
 
 
 int
@@ -1560,7 +1401,6 @@ read4digits(void)
 
 	return (digit1 - '0')*1000 + (digit2 - '0')*100 + (digit3 - '0')*10 + (digit4 - '0');
 }
-
 
 
 WarpStatus
