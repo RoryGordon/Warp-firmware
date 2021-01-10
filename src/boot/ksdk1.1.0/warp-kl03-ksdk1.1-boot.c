@@ -1427,7 +1427,9 @@ main(void)
 #else
 		SEGGER_RTT_WriteString(0, "\r\n\n\t\tWARNING: SEGGER_RTT_printf disabled in this firmware build.\n\t\tOnly showing output that does not require value formatting.\n\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+*/
 #endif
+/*
 
 		SEGGER_RTT_WriteString(0, "\rSelect:\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
