@@ -313,6 +313,8 @@ configureADC(void)
 
 printSensorDataADC(bool hexModeFlag)
 {
+    SEGGER_RTT_printf(0, "%4d | ", printCounter);
+
     // Prevents the use of wrong values
     
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
@@ -327,7 +329,6 @@ printSensorDataADC(bool hexModeFlag)
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
 
-    SEGGER_RTT_printf(0, "%4d | ", printCounter);
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
     // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
