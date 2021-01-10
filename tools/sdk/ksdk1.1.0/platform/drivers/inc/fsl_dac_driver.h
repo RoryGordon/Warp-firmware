@@ -36,7 +36,7 @@
 #include "fsl_dac_hal.h"
 
 #define HW_DAC_DATnL_COUNT (2U)
-#define HW_DAC_INSTNCE_COUNT (1U)
+#define HW_DAC_INSTANCE_COUNT (1U)
 /*!
  * @addtogroup dac_driver
  * @{
