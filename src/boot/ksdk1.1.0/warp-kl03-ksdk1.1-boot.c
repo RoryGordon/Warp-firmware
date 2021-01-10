@@ -615,7 +615,6 @@ lowPowerPinStates(void)
 }
 
 
-
 void
 disableTPS82740A(void)
 {

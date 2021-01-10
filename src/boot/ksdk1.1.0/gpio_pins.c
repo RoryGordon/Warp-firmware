@@ -161,13 +161,13 @@ gpio_input_pin_user_config_t	inputPins[] = {
 		.config.isPassiveFilterEnabled = false,
 		.config.interrupt = kPortIntDisabled,
 	},
-	{
-		.pinName = kWarpPinADC_IN,
-		.config.isPullEnable = true, //Prev. true
-		.config.pullSelect = kPortPullDown,// kPortPullUp,
-		.config.isPassiveFilterEnabled = false,
-		.config.interrupt = kPortIntDisabled,
-	},
+//	{
+//		.pinName = kWarpPinADC_IN,
+//		.config.isPullEnable = true, //Prev. true
+//		.config.pullSelect = kPortPullDown,// kPortPullUp,
+//		.config.isPassiveFilterEnabled = false,
+//		.config.interrupt = kPortIntDisabled,
+//	},
 	{
 		.pinName = GPIO_PINS_OUT_OF_RANGE,
 	}
