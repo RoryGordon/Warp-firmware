@@ -1303,7 +1303,7 @@ main(void)
 				g_dacInstance = 0U;
 				
 				// Fill values into data buffer. //
-				DAC_TEST_FillBuffDat(g_dacBuffDat, DAC_TEST_BUFF_SIZE);
+				//DAC_TEST_FillBuffDat(g_dacBuffDat, DAC_TEST_BUFF_SIZE);
 				
 				// Fill the structure with configuration of software trigger. //
 				DAC_DRV_StructInitUserConfigNormal(&MyDacUserConfigStruct);
