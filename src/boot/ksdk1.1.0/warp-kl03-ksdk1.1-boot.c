@@ -838,8 +838,8 @@ printPinDirections(void)
 	SEGGER_RTT_printf(0, "PIN DIRECTIONS:\n");
 	SEGGER_RTT_printf(0, "\tKL03_VDD_ADC:%d\n", GPIO_DRV_GetPinDir(kWarpPinKL03_VDD_ADC));
 	OSA_TimeDelay(100);
-	SEGGER_RTT_printf(0, "\t       PTA12:%d\n", GPIO_DRV_GetPinDir(kWarpPinADC_IN));
-	OSA_TimeDelay(100);
+//	SEGGER_RTT_printf(0, "\t       PTA12:%d\n", GPIO_DRV_GetPinDir(kWarpPinADC_IN));
+//	OSA_TimeDelay(100);
 	SEGGER_RTT_printf(0, "\t   CLKOUT32K:%d\n", GPIO_DRV_GetPinDir(kWarpPinCLKOUT32K));
 	OSA_TimeDelay(100);
 	SEGGER_RTT_printf(0, "\t     RED LED:%d\n", GPIO_DRV_GetPinDir(kGpioLED1));
