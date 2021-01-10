@@ -72,10 +72,12 @@
 
 #ifdef WARP_FRDMKL03
 #   include "devADC.h"
-#	include "fsl_dac_driver.h"
-#	include "fsl_dac_hal.h"
-#endif
 
+#endif
+#ifdef DAC
+#	include "fsl_dac_driver.h"
+//#	include "fsl_dac_hal.h"
+#endif
 
 #define WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
 
@@ -1295,7 +1297,7 @@ main(void)
 
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
 				configureADC();
-			
+#ifdef DAC			
 				dac_user_config_t MyDacUserConfigStruct;
 				uint8_t i;
 
@@ -1325,6 +1327,7 @@ main(void)
 				}
 				// De-initialize the DAC converter. //
 				DAC_DRV_Deinit(0U);
+#endif
 				break;
 			}
 
