@@ -537,11 +537,11 @@ lowPowerPinStates(void)
 #endif
 #endif
 
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
 
 #ifndef WARP_BUILD_ENABLE_THERMALCHAMBERANALYSIS
 	GPIO_DRV_ClearPinOutput(kWarpPinCLKOUT32K);
@@ -619,22 +619,22 @@ lowPowerPinStates(void)
 void
 disableTPS82740A(void)
 {
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
 }
 
 void
 disableTPS82740B(void)
 {
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
 }
 
 
 void
 enableTPS82740A(uint16_t voltageMillivolts)
 {
-	setTPS82740CommonControlLines(voltageMillivolts);
-	GPIO_DRV_SetPinOutput(kWarpPinTPS82740A_CTLEN);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
+//	setTPS82740CommonControlLines(voltageMillivolts);
+//	GPIO_DRV_SetPinOutput(kWarpPinTPS82740A_CTLEN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740B_CTLEN);
 
 	/*
 	 *	Select the TS5A3154 to use the output of the TPS82740
@@ -642,15 +642,15 @@ enableTPS82740A(uint16_t voltageMillivolts)
 	 *		IN = high selects the output of the TPS82740B:
 	 *		IN = low selects the output of the TPS82740A:
 	 */
-	GPIO_DRV_ClearPinOutput(kWarpPinTS5A3154_IN);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTS5A3154_IN);
 }
 
 void
 enableTPS82740B(uint16_t voltageMillivolts)
 {
-	setTPS82740CommonControlLines(voltageMillivolts);
-	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
-	GPIO_DRV_SetPinOutput(kWarpPinTPS82740B_CTLEN);
+//	setTPS82740CommonControlLines(voltageMillivolts);
+//	GPIO_DRV_ClearPinOutput(kWarpPinTPS82740A_CTLEN);
+//	GPIO_DRV_SetPinOutput(kWarpPinTPS82740B_CTLEN);
 
 	/*
 	 *	Select the TS5A3154 to use the output of the TPS82740
@@ -658,7 +658,7 @@ enableTPS82740B(uint16_t voltageMillivolts)
 	 *		IN = high selects the output of the TPS82740B:
 	 *		IN = low selects the output of the TPS82740A:
 	 */
-	GPIO_DRV_SetPinOutput(kWarpPinTS5A3154_IN);
+//	GPIO_DRV_SetPinOutput(kWarpPinTS5A3154_IN);
 }
 
 
@@ -677,9 +677,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 2600:
 		case 1800:
 		{
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -687,9 +687,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 2700:
 		case 1900:
 		{
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -697,9 +697,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 2800:
 		case 2000:
 		{
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -707,9 +707,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 2900:
 		case 2100:
 		{
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -717,9 +717,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 3000:
 		case 2200:
 		{
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -727,9 +727,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 3100:
 		case 2300:
 		{
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -737,9 +737,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 3200:
 		case 2400:
 		{
-			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_ClearPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
@@ -747,9 +747,9 @@ setTPS82740CommonControlLines(uint16_t voltageMillivolts)
 		case 3300:
 		case 2500:
 		{
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
-			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL1);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL2);
+//			GPIO_DRV_SetPinOutput(kWarpPinTPS82740_VSEL3);
 
 			break;
 		}
