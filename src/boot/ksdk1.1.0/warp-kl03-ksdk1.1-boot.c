@@ -53,6 +53,7 @@
 
 #include "fsl_smc_hal.h"
 #include "fsl_dac_driver.h"
+#include "fsl_dac_hal.h"
 
 #include "gpio_pins.h"
 #include "SEGGER_RTT.h"
