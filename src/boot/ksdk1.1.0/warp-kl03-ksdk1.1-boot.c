@@ -40,7 +40,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "fsl_dac_driver.h"
 #include "fsl_misc_utilities.h"
 #include "fsl_device_registers.h"
 #include "fsl_i2c_master_driver.h"
@@ -53,6 +52,7 @@
 #include "fsl_lpuart_driver.h"
 
 #include "fsl_smc_hal.h"
+#include "fsl_dac_driver.h"
 
 #include "gpio_pins.h"
 #include "SEGGER_RTT.h"
