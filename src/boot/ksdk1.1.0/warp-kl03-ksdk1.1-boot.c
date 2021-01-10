@@ -1324,18 +1324,12 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 
 	if (printHeadersAndCalibration)
 	{
-		SEGGER_RTT_WriteString(0, "Measurement number, RTC->TSR, RTC->TPR,");
-		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
 		#ifdef WARP_BUILD_ENABLE_DEVADC
 		SEGGER_RTT_WriteString(0, " ADC");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		#endif
-//		SEGGER_RTT_WriteString(0, " RTC->TSR, RTC->TPR, # Config Errors");
-//		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		SEGGER_RTT_WriteString(0, "\n\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
-
 	}
 
 
@@ -1345,7 +1339,6 @@ printAllSensors(bool printHeadersAndCalibration, bool hexModeFlag, int menuDelay
 		printSensorDataADC(hexModeFlag);
 		#endif
 		#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-		//SEGGER_RTT_printf(0, " %d, %d, %d", RTC->TSR, RTC->TPR, numberOfConfigErrors);
 		SEGGER_RTT_printf(0, "\n");
 		#endif
 
