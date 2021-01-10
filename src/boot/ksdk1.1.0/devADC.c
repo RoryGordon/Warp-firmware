@@ -105,7 +105,7 @@ static void ADC16_TEST_IRQHandler(uint32_t instance)
 /* ADC Interrupt Handler */
 ADC1IRQHandler(void)
 {
-    //SEGGER_RTT_printf(0, "ping!\n");
+    SEGGER_RTT_printf(0, "ping!\n");
     // Get current ADC value
     adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
     //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
