@@ -319,15 +319,16 @@ printSensorDataADC(bool hexModeFlag)
     
     //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
 
-    //ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
+    ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
     //while(!conversionCompleted)
     //{
     //    SEGGER_RTT_printf(0,'.');
     //}
 
     //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
-    
-
+    SEGGER_RTT_printf(0, "C | ");
+    // Wait for the conversion to be done
+    ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
 
