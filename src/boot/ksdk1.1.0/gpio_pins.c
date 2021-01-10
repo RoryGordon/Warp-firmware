@@ -145,8 +145,8 @@ gpio_input_pin_user_config_t	inputPins[] = {
 	},
 	{
 		.pinName = kWarpPinADC_IN,
-		.config.isPullEnable = true,
-		.config.pullSelect = kPortPullUp,
+		.config.isPullEnable = false, //Prev. true
+//		.config.pullSelect = kPortPullUp,
 		.config.isPassiveFilterEnabled = false,
 		.config.interrupt = kPortIntDisabled,
 	},
