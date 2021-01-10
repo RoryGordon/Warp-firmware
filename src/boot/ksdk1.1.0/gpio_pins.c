@@ -28,24 +28,6 @@ gpio_output_pin_user_config_t	outputPins[] = {
 	/*
 	 *	Set unused pins as outputs
 	 */
-//	{
-//		.pinName = kWarpPinUnusedPTA0,				/*	Was kWarpPinLED1_TS5A3154_IN in Warp v2			*/
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTA1,				/*	Was kWarpPinLED2_TS5A3154_nEN in Warp v2		*/
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTA2,				/*	Was kWarpPinLED3_SI4705_nRST in Warp v2			*/
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
 	{
 		.pinName = kWarpPinTPS82740_VSEL1,
 		.config.outputLogic = 1,
@@ -90,13 +72,6 @@ gpio_output_pin_user_config_t	outputPins[] = {
 		.config.slewRate = kPortSlowSlewRate,
 		.config.driveStrength = kPortLowDriveStrength,
 	},
-//#ifndef WARP_BUILD_ENABLE_THERMALCHAMBERANALYSIS
-//	{
-//		.pinName = kWarpPinPAN1326_nSHUTD,			/*	Was kWarpPinUnusedPTB10 in Warp v2			*/
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
 	{
 		.pinName = kWarpPinISL23415_nCS, 			/*	Was kWarpPinTPS82675_MODE in Warp v2			*/
 		.config.outputLogic = 1,
@@ -109,13 +84,6 @@ gpio_output_pin_user_config_t	outputPins[] = {
 		.config.slewRate = kPortSlowSlewRate,
 		.config.driveStrength = kPortLowDriveStrength,
 	},
-//#endif
-//	{
-//		.pinName = kWarpPinADXL362_CS,				/*	Was kWarpPinADXL362_CS_PAN1326_nSHUTD in Warp v2	*/
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
 	{
 		.pinName = kWarpPinI2C0_SCL,
 		.config.outputLogic = 1,
@@ -146,64 +114,6 @@ gpio_output_pin_user_config_t	outputPins[] = {
 		.config.slewRate = kPortSlowSlewRate,
 		.config.driveStrength = kPortLowDriveStrength,
 	},
-//#ifdef WARP_FRDMKL03
-//	{
-//		.pinName = kWarpPinUnusedPTB2,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinPAN1323_nSHUTD,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTB4,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTB6,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTB7,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinUnusedPTB9,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//#endif
-//#ifdef WARP_BUILD_ENABLE_THERMALCHAMBERANALYSIS
-//	{
-//		.pinName = kWarpPinFRDMKL03LED_Red,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//	{
-//		.pinName = kWarpPinFRDMKL03LED_Green,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//		{
-//		.pinName = kWarpPinFRDMKL03LED_Blue,
-//		.config.outputLogic = 1,
-//		.config.slewRate = kPortSlowSlewRate,
-//		.config.driveStrength = kPortLowDriveStrength,
-//	},
-//#endif
 	{
 		.pinName = GPIO_PINS_OUT_OF_RANGE,
 	}

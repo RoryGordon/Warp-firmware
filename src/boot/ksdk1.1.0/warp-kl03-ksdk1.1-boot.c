@@ -556,9 +556,9 @@ lowPowerPinStates(void)
 #ifndef WARP_BUILD_ENABLE_THERMALCHAMBERANALYSIS
 	GPIO_DRV_SetPinOutput(kWarpPinISL23415_nCS);
 #endif
-#ifdef WARP_BUILD_ENABLE_DEVADXL362
-	GPIO_DRV_SetPinOutput(kWarpPinADXL362_CS);
-#endif
+//#ifdef WARP_BUILD_ENABLE_DEVADXL362
+//	GPIO_DRV_SetPinOutput(kWarpPinADXL362_CS);
+//#endif
 
 	/*
 	 *	When the PAN1326 is installed, note that it has the
