@@ -322,7 +322,7 @@ printSensorDataADC(bool hexModeFlag)
     ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
     while(!conversionCompleted)
     {
-        SEGGER_RTT_printf(0,'.')
+        SEGGER_RTT_printf(0,'.');
     }
 
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
