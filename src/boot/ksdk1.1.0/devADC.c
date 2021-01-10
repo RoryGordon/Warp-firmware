@@ -22,7 +22,7 @@
 
 
 #define ADC_0                   (0U)
-#define CHANNEL_0               (0U) // Now PTA8 (2 for PTA9, 0 for PTA12)
+#define CHANNEL_0               (0U) // Now PTA8 (2 for PTA9, 0 for PTA12) - this works
 #define LED_ON                  (0U)
 #define LED_OFF                 (1U)
 
