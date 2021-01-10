@@ -66,7 +66,7 @@ enum _gpio_pins
 
 //	kWarpPinPAN1326_nSHUTD			= GPIO_MAKE_PIN(HW_GPIOB, 10),		/*	Warp PAN1326_nSHUTD	--> PTB10		(was unused in Warp v2)					*/
 //	kWarpPinISL23415_nCS			= GPIO_MAKE_PIN(HW_GPIOB, 11),		/*	Warp ISL23415_nCS	--> PTB11		(was TPS82675_MODE in Warp v2)				*/
-//	kWarpPinCLKOUT32K			= GPIO_MAKE_PIN(HW_GPIOB, 13),		/*	Warp KL03_CLKOUT32K	--> PTB13									*/
+	kWarpPinCLKOUT32K			= GPIO_MAKE_PIN(HW_GPIOB, 13),		/*	Warp KL03_CLKOUT32K	--> PTB13									*/
 
 //	kWarpPinADXL362_CS			= GPIO_MAKE_PIN(HW_GPIOB, 2),		/*	Warp ADXL362_CS		--> PTB2		(was kWarpPinADXL362_CS_PAN1326_nSHUTD in Warp v2)	*/
 	kWarpPinI2C0_SCL			= GPIO_MAKE_PIN(HW_GPIOB, 3),		/*	Warp KL03_I2C0_SCL	--> PTB3									*/
