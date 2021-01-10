@@ -40,6 +40,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define HW_DAC_DATnL_COUNT = 2U
+#define HW_DAC_INSTNCE_COUNT = 1U
+#define BM_DAC_C0_DACSWTRG = 0x10
+
 #include "fsl_misc_utilities.h"
 #include "fsl_device_registers.h"
 #include "fsl_i2c_master_driver.h"
@@ -60,9 +64,7 @@
 
 
 #define WARP_FRDMKL03
-#define HW_DAC_DATnL_COUNT = 2U
-#define HW_DAC_INSTNCE_COUNT = 1U
-#define BM_DAC_C0_DACSWTRG = 0x10
+
 
 /*
 *	Comment out the header file to disable devices
