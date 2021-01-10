@@ -64,7 +64,7 @@
 
 
 #define WARP_FRDMKL03
-#define DAC
+//#define DAC
 
 /*
 *	Comment out the header file to disable devices
@@ -72,8 +72,8 @@
 
 #ifdef WARP_FRDMKL03
 #   include "devADC.h"
-
 #endif
+
 #ifdef DAC
 #	include "fsl_dac_driver.h"
 //#	include "fsl_dac_hal.h"
