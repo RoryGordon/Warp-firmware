@@ -31,7 +31,7 @@
 #ifndef __FSL_DAC_DRIVER_H__
 #define __FSL_DAC_DRIVER_H__
 
-#define HW_DAC_INSTANCE_COUNT (2U) // Warning: A complete guess
+//#define HW_DAC_INSTANCE_COUNT (2U) // Warning: A complete guess
 #include <stdint.h>
 #include <stdbool.h>
 #include "fsl_dac_hal.h"

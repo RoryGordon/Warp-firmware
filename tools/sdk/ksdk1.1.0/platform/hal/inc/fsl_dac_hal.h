@@ -31,7 +31,7 @@
 #ifndef __FSL_DAC_HAL_H__
 #define __FSL_DAC_HAL_H__
 
-#define BM_DAC_C0_DACSWTRG   (0x10U)       /*!< Bit mask for DAC_C0_DACSWTRG. WARNING: A complete guess */
+//#define BM_DAC_C0_DACSWTRG   (0x10U)       /*!< Bit mask for DAC_C0_DACSWTRG. WARNING: A complete guess */
 
 #include <stdint.h>
 #include <stdbool.h>
