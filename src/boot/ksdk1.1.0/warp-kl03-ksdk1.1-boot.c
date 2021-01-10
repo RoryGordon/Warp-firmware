@@ -1070,7 +1070,7 @@ main(void)
 	 *	Note that it is lowPowerPinStates() that sets the pin mux mode,
 	 *	so until we call it pins are in their default state.
 	 */
-	lowPowerPinStates();
+//	lowPowerPinStates();
 
 
 
