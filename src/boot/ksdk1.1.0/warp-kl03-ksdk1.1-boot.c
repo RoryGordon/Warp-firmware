@@ -52,8 +52,7 @@
 #include "fsl_lpuart_driver.h"
 
 #include "fsl_smc_hal.h"
-#include "fsl_dac_driver.h"
-#include "fsl_dac_hal.h"
+
 
 #include "gpio_pins.h"
 #include "SEGGER_RTT.h"
@@ -61,15 +60,18 @@
 
 
 #define WARP_FRDMKL03
-
+#define HW_DAC_DATnL_COUNT = 2U
+#define HW_DAC_INSTNCE_COUNT = 1U
+#define BM_DAC_C0_DACSWTRG = 0x10
 
 /*
 *	Comment out the header file to disable devices
 */
 
 #ifdef WARP_FRDMKL03
-
 #   include "devADC.h"
+#	include "fsl_dac_driver.h"
+#	include "fsl_dac_hal.h"
 #endif
 
 
