@@ -104,9 +104,10 @@ ADC1IRQHandler(void)
 {
     //SEGGER_RTT_printf(0, "ping!\n");
     // Get current ADC value
-    //adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
     //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-    ADC16_TEST_IRQHandler(ADC_0);
+    //ADC16_TEST_IRQHandler(ADC_0);
+
     // Set conversionCompleted flag. This prevents an wrong conversion in main function
     conversionCompleted = true;
 }
@@ -311,12 +312,15 @@ configureADC(void)
 printSensorDataADC(bool hexModeFlag)
 {
     // Prevents the use of wrong values
-    /*
+    
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
+
+    ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
     while(!conversionCompleted)
     {}
+
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
-    */
+    
 
     // Get current Temperature Value
     currentTemperature = GetCurrentTempValue();
@@ -367,5 +371,5 @@ printSensorDataADC(bool hexModeFlag)
     // the device entered this mode from PEE).  Therefore, the UART 
     // baud rate will not be correct because the device's operating 
     // frequency will be different from the startup of the demo. 
-    SMC_HAL_SetMode(SMC_BASE, &smcConfig);
+    //SMC_HAL_SetMode(SMC_BASE, &smcConfig);
 }
