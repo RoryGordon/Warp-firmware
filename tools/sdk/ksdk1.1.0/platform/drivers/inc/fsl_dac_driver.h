@@ -31,11 +31,12 @@
 #ifndef __FSL_DAC_DRIVER_H__
 #define __FSL_DAC_DRIVER_H__
 
-//#define HW_DAC_INSTANCE_COUNT (2U) // Warning: A complete guess
 #include <stdint.h>
 #include <stdbool.h>
 #include "fsl_dac_hal.h"
 
+#define HW_DAC_DATnL_COUNT (2U)
+#define HW_DAC_INSTNCE_COUNT (1U)
 /*!
  * @addtogroup dac_driver
  * @{

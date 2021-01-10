@@ -38,6 +38,8 @@
 #include <assert.h>
 #include "fsl_device_registers.h"
 
+#define BM_DAC_C0_DACSWTRG    (0x10U)
+
 /*!
  * @addtogroup dac_hal
  * @{
