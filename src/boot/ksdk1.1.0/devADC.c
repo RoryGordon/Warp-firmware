@@ -288,26 +288,6 @@ configureADC(void)
         return -1;
     }
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_OFF);
-    // setup the HW trigger source
-    //init_trigger_source(ADC_0);
-
-    // Warm up microcontroller and allow to set first boundaries
-    /*
-    while(updateBoundariesCounter < (UPDATE_BOUNDARIES_TIME * 2))
-    {
-        GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
-        while(!conversionCompleted);
-        GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
-        currentTemperature = GetCurrentTempValue();
-        tempArray[updateBoundariesCounter] = currentTemperature;
-        updateBoundariesCounter++;
-        conversionCompleted = false;
-    }
-
-    // Temp Sensor Calibration 
-    boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
-    updateBoundariesCounter = 0;
-    */
     GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
@@ -320,12 +300,7 @@ printSensorDataADC(bool hexModeFlag)
     //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
 
     ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
-    //while(!conversionCompleted)
-    //{
-    //    SEGGER_RTT_printf(0,'.');
-    //}
 
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_OFF);
     SEGGER_RTT_printf(0, "C | ");
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
@@ -334,48 +309,26 @@ printSensorDataADC(bool hexModeFlag)
 
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
-    // Temperature = STANDARD_TEMP - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-//    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-    SEGGER_RTT_printf(0, " Given method: %4d | ", adcValue);
-    
     adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
     adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
     SEGGER_RTT_printf(0, "bandgap method: %4d | ", adcValue);
-    uint16_t readSensorRegisterValueLSB;
-    uint16_t readSensorRegisterValueMSB;
-    int *LSBaddress = (int *) 0x4003B010;
-    int *MSBaddress = (int *) 0x4003B014;
-    int16_t readSensorRegisterValueCombined;
 
-    //SEGGER_RTT_printf(0, "Attempting to read addresses...\n");
-    readSensorRegisterValueLSB = *LSBaddress;
-    readSensorRegisterValueMSB = *MSBaddress;
-    SEGGER_RTT_printf(0, " Pointer method: %4x %4x | ", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
+    //uint16_t readSensorRegisterValueLSB;
+    //uint16_t readSensorRegisterValueMSB;
+    //int *LSBaddress = (int *) 0x4003B010;
+    //int *MSBaddress = (int *) 0x4003B014;
+    //int16_t readSensorRegisterValueCombined;
+//
+//    //SEGGER_RTT_printf(0, "Attempting to read addresses...\n");
+//    readSensorRegisterValueLSB = *LSBaddress;
+//    readSensorRegisterValueMSB = *MSBaddress;
+//    SEGGER_RTT_printf(0, " Pointer method: %4x %4x | ", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
 
-    /*
-	readSensorRegisterValueCombined = ((readSensorRegisterValueMSB & 0xFF) << 8) | (readSensorRegisterValueLSB);
-
-    if (hexModeFlag)
-    {
-        SEGGER_RTT_printf(0, " 0x%02x 0x%02x,", readSensorRegisterValueMSB, readSensorRegisterValueLSB);
-    }
-    else
-    {
-        SEGGER_RTT_printf(0, " %d,", readSensorRegisterValueCombined);
-    }
-    */
     SEGGER_RTT_printf(0, "End");
     printCounter++;
 
-
     // Clear conversionCompleted flag
     conversionCompleted = false;
-
-    // Entry to Low Power Mode
-    // Once this mode exited, it will no longer be in PEE mode (assuming
-    // the device entered this mode from PEE).  Therefore, the UART 
-    // baud rate will not be correct because the device's operating 
-    // frequency will be different from the startup of the demo. 
-    //SMC_HAL_SetMode(SMC_BASE, &smcConfig);
+    return adcValue;
 }

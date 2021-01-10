@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "fsl_dac_driver.h"
 #include "fsl_misc_utilities.h"
 #include "fsl_device_registers.h"
 #include "fsl_i2c_master_driver.h"
@@ -89,6 +90,13 @@
 	#define ADC_0                   (0U)
 #endif
 
+/*
+ * DAC globals
+ */
+#define DAC_TEST_BUFF_SIZE  (16U)
+volatile uint32_t g_dacInstance = 0U;
+static uint16_t g_dacBuffDat[DAC_TEST_BUFF_SIZE];
+extern void DAC_TEST_FillBuffDat(uint16_t*buffPtr, uint32_t buffLen);
 
 /*
  *	TODO: move this and possibly others into a global structure
@@ -1279,9 +1287,39 @@ main(void)
 			}
 			case '0':
 			{
+
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
 				configureADC();
-				printSensorDataADC(true);
+			
+				dac_user_config_t MyDacUserConfigStruct;
+				uint8_t i;
+
+				for (i = 0U; i < DAC_TEST_BUFF_SIZE; i++)
+				{
+					g_dacBuffDat[i] = i;
+				}
+
+				g_dacInstance = 0U;
+				
+				// Fill values into data buffer. //
+				DAC_TEST_FillBuffDat(g_dacBuffDat, DAC_TEST_BUFF_SIZE);
+				
+				// Fill the structure with configuration of software trigger. //
+				DAC_DRV_StructInitUserConfigNormal(&MyDacUserConfigStruct);
+				
+				// Initialize the DAC Converter. //
+				DAC_DRV_Init(0U, &MyDacUserConfigStruct);
+				
+				// Output the DAC value. //
+				for (i = 0U; i < DAC_TEST_BUFF_SIZE; i++)
+				{
+					g_dacBuffDat[i] = printSensorDataADC(true);
+					SEGGER_RTT_printf("DAC_DRV_Output: %d\r\n", g_dacInstance[i]);
+					DAC_DRV_Output(0U, g_dacInstance[i]);
+					OSA_TimeDelay(200);
+				}
+				// De-initialize the DAC converter. //
+				DAC_DRV_Deinit(0U);
 				break;
 			}
 
