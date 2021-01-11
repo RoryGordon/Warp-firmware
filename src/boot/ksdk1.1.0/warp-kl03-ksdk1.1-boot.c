@@ -1309,8 +1309,8 @@ main(void)
 				int16_t feedback = 0;
 				int16_t delayOut = 0;
 
-				int8_t writePos = 0;
-				int8_t readPos = 1;
+				int16_t writePos = 0;
+				int16_t readPos = 1;
 
 				/*
 				 * Multiply by gain, then bitshift by Gain_div to make it smaller
