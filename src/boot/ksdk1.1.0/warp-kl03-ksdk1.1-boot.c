@@ -1335,7 +1335,7 @@ main(void)
 				}
 				
 				delayBuffer[1000] = 0x8000; // Imitating a single pulse input
-				SEGGER_RTT_printf(0, "%8d\n", delayBuffer[1000]);
+				SEGGER_RTT_printf(0, "%d\n", delayBuffer[1000]);
 
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
