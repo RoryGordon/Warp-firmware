@@ -97,13 +97,15 @@
 	#define ADC_0                   (0U)
 #endif
 
-/*
- * DAC globals
- */
-#define DAC_TEST_BUFF_SIZE  (16U)
-volatile uint32_t g_dacInstance = 0U;
-static uint16_t g_dacBuffDat[DAC_TEST_BUFF_SIZE];
-extern void DAC_TEST_FillBuffDat(uint16_t*buffPtr, uint32_t buffLen);
+#ifdef DAC
+	/*
+	* DAC globals
+	*/
+	#define DAC_TEST_BUFF_SIZE  (16U)
+	volatile uint32_t g_dacInstance = 0U;
+	static uint16_t g_dacBuffDat[DAC_TEST_BUFF_SIZE];
+	extern void DAC_TEST_FillBuffDat(uint16_t*buffPtr, uint32_t buffLen);
+#endif
 
 /*
  *	TODO: move this and possibly others into a global structure
@@ -1295,7 +1297,7 @@ main(void)
 			case '0':
 			{
 				uint32_t readCounter = 0;
-				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
+				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now\n");
 				configureADC();
 				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n");
 				for (readCounter=0U; readCounter < 20000U; readCounter++)
