@@ -65,7 +65,6 @@ static uint32_t printCounter = 0;
 volatile bool conversionCompleted = false;  /*! Conversion is completed Flag */
 //const uint32_t gSimBaseAddr[] = SIM_BASE_ADDRS;
 static smc_power_mode_config_t smcConfig;
-int32_t currentTemperature = 0;
 
 adc16_user_config_t adcUserConfig;
 adc16_chn_config_t adcChnConfig;
@@ -236,16 +235,6 @@ static int32_t initADC(uint32_t instance)
     return 0;
 }
 
-/* Calculate the current temperature */
-int32_t GetCurrentTempValue(void)
-{
-    int32_t currentTemperature = 0;
-
-    // Temperature = 25 - (ADCR_T - ADCR_TEMP25) * 100 / ADCR_100M
-    currentTemperature = (int32_t)(STANDARD_TEMP - ((int32_t)adcValue - (int32_t)adcrTemp25) * 100 / (int32_t)adcr100m);
-
-    return currentTemperature;
-}
 
 /* Calculate the average temperature and set boundaries */
 lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
@@ -273,7 +262,6 @@ lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
 configureADC(void)
 {
     
-    int32_t currentTemperature = 0;
     uint32_t updateBoundariesCounter = 0;
     int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
     lowPowerAdcBoundaries_t boundaries;
@@ -304,8 +292,6 @@ uint32_t printSensorDataADC(bool hexModeFlag)
     SEGGER_RTT_printf(0, "C | ");
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
-    // Get current Temperature Value
-    currentTemperature = GetCurrentTempValue();
 
     adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
@@ -327,6 +313,25 @@ uint32_t printSensorDataADC(bool hexModeFlag)
 
     SEGGER_RTT_printf(0, "End");
     printCounter++;
+
+    // Clear conversionCompleted flag
+    conversionCompleted = false;
+    return adcValue;
+}
+
+uint32_t getSensorDataADC(bool hexModeFlag)
+{
+    // Prevents the use of wrong values
+
+    ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
+
+    // Wait for the conversion to be done
+    ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
+
+    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+
+    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
     // Clear conversionCompleted flag
     conversionCompleted = false;
