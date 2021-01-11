@@ -1326,7 +1326,7 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
-					//SEGGER_RTT_printf(0, "%6d", i);
+					SEGGER_RTT_printf(0, "%6d", i);
 					delayBuffer[i] = 0;
 				}
 
