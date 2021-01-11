@@ -1168,6 +1168,9 @@ main(void)
 		SEGGER_RTT_WriteString(0, "\r- '0': Delay pedal.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
+		SEGGER_RTT_WriteString(0, "\r- '1': Delay train example.\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
 		SEGGER_RTT_WriteString(0, "\rEnter selection> ");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 		key = SEGGER_RTT_WaitKey();
@@ -1293,6 +1296,56 @@ main(void)
 				 */
 				disableI2Cpins();
 
+				break;
+			}
+			case '1':
+			{
+				int16_t delayBuffer[delayBufSize];
+
+				int16_t inputSignal = 0;
+				int16_t outputSignal = 0;
+
+				int16_t feedback = 0;
+				int16_t delayOut = 0;
+
+				int8_t writePos = 0;
+				int8_t readPos = 1;
+
+				/*
+				 * Multiply by gain, then bitshift by Gain_div to make it smaller
+				 * 
+				 * Gain(real) = Gain / 2^(Gain_div)
+				 */
+
+				int8_t Gain_d = 3;
+				int8_t Gain_f = 1;
+
+				int8_t Gain_div_d = 2;
+				int8_t Gain_div_f = 0;
+
+				for(uint8_t i = 0; i < delayBufSize; i++)
+				{
+					delayBuffer[i] = 0;
+				}
+
+				delayBuffer[0] = 0x8000; // Imitating a single pulse input
+
+				while(1)
+				{
+					delayBuffer[writePos] = inputSignal + feedback;
+					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
+					outputSignal = delayOut + inputSignal;
+					if(outputSignal > 1)
+					{
+						SEGGER_RTT_printf(0, "%8d\n",outputSignal);
+					}
+
+					feedback = (outputSignal*Gain_f) >> Gain_div_f;
+
+					writePos = (writePos+1) % delayBufSize;
+					readPos = (readPos+1) % delayBufSize;
+					//OSA_TimeDelay(1);
+				}
 				break;
 			}
 			case '0':
