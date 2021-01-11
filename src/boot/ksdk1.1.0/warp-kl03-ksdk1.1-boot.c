@@ -1338,11 +1338,11 @@ main(void)
 				{
 					delayBuffer[writePos] = inputSignal + feedback;
 					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
-					/*
 					outputSignal = delayOut + inputSignal;
 					
 					SEGGER_RTT_printf(0, "\t%8d\n",outputSignal);
 
+					/*
 					feedback = (outputSignal*Gain_f) >> Gain_div_f;
 
 					writePos = (writePos+1) % delayBufSize;
