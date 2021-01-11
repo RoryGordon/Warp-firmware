@@ -1343,8 +1343,8 @@ main(void)
 				{
 					delayBuffer[writePos] = (inputSignal + feedback)&0xFFF;
 					//delayBuffer[writePos] = inputSignal;
-					//delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&0xFFF;
-					delayOut = delayBuffer[readPos];
+					delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&0xFFF;
+					//delayOut = delayBuffer[readPos];
 					//outputSignal = (delayOut + inputSignal)&0xFFF;
 					outputSignal = delayOut;
 					// For some weird reason this line completely breaks everything
