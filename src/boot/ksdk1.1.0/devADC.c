@@ -292,10 +292,8 @@ uint32_t printSensorDataADC(bool hexModeFlag)
     SEGGER_RTT_printf(0, "C | ");
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
-
-    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
     
-//    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
 //    adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
     SEGGER_RTT_printf(0, "bandgap method: %4d | ", adcValue);
