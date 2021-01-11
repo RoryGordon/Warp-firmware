@@ -1330,7 +1330,7 @@ main(void)
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
 					delayBuffer[i] = 0;
-					SEGGER_RTT_printf(0, "%6d", delayBuffer[i]);
+					//SEGGER_RTT_printf(0, "%6d", delayBuffer[i]);
 
 				}
 
