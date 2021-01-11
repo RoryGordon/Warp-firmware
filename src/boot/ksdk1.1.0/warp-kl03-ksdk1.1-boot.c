@@ -1301,6 +1301,8 @@ main(void)
 			
 			case '1':
 			{
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
+
 				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
 				int16_t delayBuffer[delayBufSize];
 
@@ -1336,24 +1338,25 @@ main(void)
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
+					/*
 					delayBuffer[writePos] = (inputSignal + feedback);//&0xFFF;
 					delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d);//&0xFFF;
 					outputSignal = (delayOut + inputSignal);//&0xFFF;
 					
 					// For some weird reason this line completely breaks everything
 					//SEGGER_RTT_printf(0, "%6d", outputSignal);
-					/*
+					
 					if(outputSignal != 0)
 					{
 						SEGGER_RTT_WriteString(0,"Will this print?\n");
 					}
-					*/
+					
 					feedback = ((outputSignal*Gain_f) >> Gain_div_f);//&0xFFF;
 
 					writePos = (writePos+1) % delayBufSize;
 					readPos = (readPos+1) % delayBufSize;
 					//OSA_TimeDelay(1);
-					
+					*/
 				}
 				
 				SEGGER_RTT_WriteString(0,"\tDone\n");
@@ -1369,6 +1372,9 @@ main(void)
 				{
 					delayBuffer[i] = 0U;
 				}
+
+				// runs quicker with this :)
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
 
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now\n");
 				configureADC();
