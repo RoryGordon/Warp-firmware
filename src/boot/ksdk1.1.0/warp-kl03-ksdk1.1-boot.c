@@ -1332,7 +1332,7 @@ main(void)
 				}
 
 				delayBuffer[0] = 0x8000; // Imitating a single pulse input
-				
+
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
@@ -1341,7 +1341,8 @@ main(void)
 					outputSignal = delayOut + inputSignal;
 					
 					// For some weird reason this line completely breaks everything
-					SEGGER_RTT_printf(0, "%6d", outputSignal);
+					//SEGGER_RTT_printf(0, "%6d", outputSignal);
+					SEGGER_RTT_WriteString(0,"Will this print?\n");
 
 					
 					feedback = (outputSignal*Gain_f) >> Gain_div_f;
