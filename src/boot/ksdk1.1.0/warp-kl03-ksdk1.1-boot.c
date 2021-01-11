@@ -1312,8 +1312,8 @@ main(void)
 				int16_t feedback = 0;
 				int16_t delayOut = 0;
 
-				int16_t writePos = 0;
-				int16_t readPos = 10000; // Should be any other number < delayBufSize
+				uint16_t writePos = 0;
+				uint16_t readPos = 10000; // Should be any other number < delayBufSize
 				
 				//
 				// Multiply by gain, then bitshift by Gain_div to make it smaller
@@ -1330,7 +1330,7 @@ main(void)
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
 					delayBuffer[i] = 0;
-					//SEGGER_RTT_printf(0, "%6d", delayBuffer[i]);
+					SEGGER_RTT_printf(0, "%6d", delayBuffer[i]);
 
 				}
 
