@@ -1337,8 +1337,8 @@ main(void)
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
 					delayBuffer[writePos] = inputSignal + feedback;
-					/*
 					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
+					/*
 					outputSignal = delayOut + inputSignal;
 					
 					SEGGER_RTT_printf(0, "\t%8d\n",outputSignal);
