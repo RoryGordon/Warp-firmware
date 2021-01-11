@@ -1297,12 +1297,12 @@ main(void)
 				uint32_t readCounter = 0;
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
 				configureADC();
-				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n")
+				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n");
 				for (readCounter=0U; i < 20000U; readCounter++)
 				{
 					getSensorDataADC(true);
 				}
-				SEGGER_RTT_WriteString(0, "20,000 reads done\n")
+				SEGGER_RTT_WriteString(0, "20,000 reads done\n");
 
 #ifdef DAC			
 				dac_user_config_t MyDacUserConfigStruct;
