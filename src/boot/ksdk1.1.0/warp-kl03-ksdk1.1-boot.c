@@ -1321,10 +1321,10 @@ main(void)
 				// Gain(real) = Gain / 2^(Gain_div)
 				//
 
-				int8_t Gain_d = 3;
+				int8_t Gain_d = 1;
 				int8_t Gain_f = 1;
 
-				int8_t Gain_div_d = 2;
+				int8_t Gain_div_d = 1;
 				int8_t Gain_div_f = 0;
 				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < delayBufSize; i++)
