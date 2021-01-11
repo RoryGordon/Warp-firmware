@@ -1298,7 +1298,7 @@ main(void)
 
 				break;
 			}
-			/*
+			
 			case '1':
 			{
 				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
@@ -1312,12 +1312,12 @@ main(void)
 
 				int16_t writePos = 0;
 				int16_t readPos = 1;
-
+				/*
 				//
-				 / Multiply by gain, then bitshift by Gain_div to make it smaller
-				 / 
-				 / Gain(real) = Gain / 2^(Gain_div)
-				 //
+				// Multiply by gain, then bitshift by Gain_div to make it smaller
+				// 
+				// Gain(real) = Gain / 2^(Gain_div)
+				//
 
 				int8_t Gain_d = 3;
 				int8_t Gain_f = 1;
@@ -1348,10 +1348,11 @@ main(void)
 					readPos = (readPos+1) % delayBufSize;
 					//OSA_TimeDelay(1);
 				}
+				*/
 				SEGGER_RTT_WriteString(0,"\tDone\n");
 				break;
 			}
-			*/
+			
 			case '0':
 			{
 				uint16_t readCounter = 0;
