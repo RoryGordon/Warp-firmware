@@ -1354,10 +1354,10 @@ main(void)
 			*/
 			case '0':
 			{
-				uint32_t readCounter = 0;
+				uint16_t readCounter = 0;
 				uint16_t delayBuffer[delayBufSize];
 
-				for(uint8_t i = 0; i < delayBufSize; i++)
+				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
 					delayBuffer[i] = 0U;
 				}
