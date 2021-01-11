@@ -1341,7 +1341,7 @@ main(void)
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
-					if(i%5 == 0)
+					if(i%5 == 0 && i <= 25)
 					{
 						inputSignal = 2048;
 					}
