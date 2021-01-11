@@ -1300,7 +1300,7 @@ main(void)
 			}
 			case '1':
 			{
-				SEGGER_RTT_WriteString(0,"Initialising delay sequence...\n");
+				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
 				int16_t delayBuffer[delayBufSize];
 
 				int16_t inputSignal = 0;
@@ -1323,7 +1323,7 @@ main(void)
 
 				int8_t Gain_div_d = 2;
 				int8_t Gain_div_f = 0;
-
+				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint8_t i = 0; i < delayBufSize; i++)
 				{
 					delayBuffer[i] = 0;
