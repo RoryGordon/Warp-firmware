@@ -95,7 +95,7 @@
 
 #ifdef WARP_BUILD_ENABLE_DEVADC
 	#define ADC_0                   (0U)
-	#define delayBufSize 			(20000U)
+	#define delayBufSize 			(20U)
 #endif
 
 #ifdef DAC
@@ -1313,7 +1313,7 @@ main(void)
 				int16_t delayOut = 0;
 
 				uint16_t writePos = 0;
-				uint16_t readPos = 10000; // Should be any other number < delayBufSize
+				uint16_t readPos = 10; // Should be any other number < delayBufSize
 				
 				//
 				// Multiply by gain, then bitshift by Gain_div to make it smaller
@@ -1334,8 +1334,8 @@ main(void)
 
 				}
 				
-				delayBuffer[1000] = 2048; // Imitating a single pulse input
-				SEGGER_RTT_printf(0, "%d\n", delayBuffer[1000]);
+				delayBuffer[15] = 2048; // Imitating a single pulse input
+				SEGGER_RTT_printf(0, "%d\n", delayBuffer[15]);
 				SEGGER_RTT_printf(0, "%d\n", readPos);
 
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
@@ -1348,7 +1348,7 @@ main(void)
 					//outputSignal = (delayOut + inputSignal)&&0xFFF;
 					outputSignal = delayOut;
 					// For some weird reason this line completely breaks everything
-					//SEGGER_RTT_printf(0, "%6d", delayBuffer[readPos]);
+					SEGGER_RTT_printf(0, "writePos: %6d | readPos: %6d\n", writePos, readPos);
 					// So does this statement - seems to be references to outputSignal
 					/*
 					if(outputSignal != 0)
