@@ -320,16 +320,12 @@ uint32_t printSensorDataADC(bool hexModeFlag)
 uint32_t getSensorDataADC(bool hexModeFlag)
 {
     // Prevents the use of wrong values
-
     ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
 
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
 
-    adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-
     adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
-    adcValue = ADC16_DRV_ConvRAWData(adcValue, false, kAdcResolutionBitOf12or13);
 
     // Clear conversionCompleted flag
     conversionCompleted = false;
