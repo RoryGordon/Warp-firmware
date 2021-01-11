@@ -1333,14 +1333,17 @@ main(void)
 					delayBuffer[i] = 0;
 				}
 
-				delayBuffer[0] = 0x8000; // Imitating a single pulse input
+				delayBuffer[1000] = 0x8000; // Imitating a single pulse input
 
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{					
-					delayBuffer[writePos] = (inputSignal + feedback)&&0xFFF;
-					delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&&0xFFF;
-					outputSignal = (delayOut + inputSignal)&&0xFFF;
+					//delayBuffer[writePos] = (inputSignal + feedback)&&0xFFF;
+					delayBuffer[writePos] = inputSignal;
+					//delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&&0xFFF;
+					delayOut = delayBuffer[readPos];
+					//outputSignal = (delayOut + inputSignal)&&0xFFF;
+					outputSignal = delayOut;
 					// For some weird reason this line completely breaks everything
 					SEGGER_RTT_printf(0, "%6d", delayBuffer[writePos]);
 					// So does this statement - seems to be references to outputSignal
@@ -1350,7 +1353,7 @@ main(void)
 						SEGGER_RTT_WriteString(0,"Will this print?\n");
 					}
 					*/
-					feedback = ((outputSignal*Gain_f) >> Gain_div_f)&&0xFFF;
+					//feedback = ((outputSignal*Gain_f) >> Gain_div_f)&&0xFFF;
 
 					writePos = (writePos+1) % delayBufSize;
 					readPos = (readPos+1) % delayBufSize;
