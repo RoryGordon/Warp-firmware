@@ -1340,15 +1340,15 @@ main(void)
 					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
 					outputSignal = delayOut + inputSignal;
 					
-					SEGGER_RTT_printf(0, "\t%8d\n",outputSignal);
+					//SEGGER_RTT_printf(0, "\t%8d\n",outputSignal);
 
-					/*
+					
 					feedback = (outputSignal*Gain_f) >> Gain_div_f;
 
 					writePos = (writePos+1) % delayBufSize;
 					readPos = (readPos+1) % delayBufSize;
 					//OSA_TimeDelay(1);
-					*/
+					
 				}
 				
 				SEGGER_RTT_WriteString(0,"\tDone\n");
