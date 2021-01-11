@@ -1359,7 +1359,7 @@ main(void)
 					SEGGER_RTT_printf(0, "writePos: %6d (%6d) | readPos: %6d (%6d)\n",
 						writePos, delayBuffer[writePos], readPos, outputSignal);
 
-					feedback = ((outputSignal*Gain_f) >> Gain_div_f)&0xFFF;
+					feedback = ((delayOut*Gain_f) >> Gain_div_f)&0xFFF;
 
 					writePos = (writePos+1) % delayBufSize;
 					readPos = (readPos+1) % delayBufSize;
