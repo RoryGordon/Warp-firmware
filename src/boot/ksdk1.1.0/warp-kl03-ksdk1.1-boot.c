@@ -1327,14 +1327,14 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
-					SEGGER_RTT_printf(0, "%6d", i);
+					//SEGGER_RTT_printf(0, "%6d", i);
 					delayBuffer[i] = 0;
 				}
 
 				delayBuffer[0] = 0x8000; // Imitating a single pulse input
-				/*
+				
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
-				while(1)
+				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
 					delayBuffer[writePos] = inputSignal + feedback;
 					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
@@ -1348,7 +1348,7 @@ main(void)
 					readPos = (readPos+1) % delayBufSize;
 					//OSA_TimeDelay(1);
 				}
-				*/
+				
 				SEGGER_RTT_WriteString(0,"\tDone\n");
 				break;
 			}
