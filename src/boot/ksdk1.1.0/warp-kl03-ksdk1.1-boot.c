@@ -1329,8 +1329,9 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
-					//SEGGER_RTT_printf(0, "%6d", i);
 					delayBuffer[i] = 0;
+					SEGGER_RTT_printf(0, "%6d", delayBuffer[i]);
+
 				}
 
 				delayBuffer[1000] = 0x8000; // Imitating a single pulse input
@@ -1345,7 +1346,7 @@ main(void)
 					//outputSignal = (delayOut + inputSignal)&&0xFFF;
 					outputSignal = delayOut;
 					// For some weird reason this line completely breaks everything
-					SEGGER_RTT_printf(0, "%6d", delayBuffer[readPos]);
+					SEGGER_RTT_printf(0, "%6d", delayBuffer[writePos]);
 					// So does this statement - seems to be references to outputSignal
 					/*
 					if(outputSignal != 0)
