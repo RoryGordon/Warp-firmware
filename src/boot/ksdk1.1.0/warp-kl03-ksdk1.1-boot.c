@@ -1313,7 +1313,7 @@ main(void)
 				int16_t delayOut = 0;
 
 				int16_t writePos = 0;
-				int16_t readPos = 1;
+				int16_t readPos = 0; // Should be any other number < delayBufSize
 				
 				//
 				// Multiply by gain, then bitshift by Gain_div to make it smaller
