@@ -95,6 +95,7 @@
 
 #ifdef WARP_BUILD_ENABLE_DEVADC
 	#define ADC_0                   (0U)
+	#define delayBufSize 			(20000U)
 #endif
 
 #ifdef DAC
@@ -1297,12 +1298,19 @@ main(void)
 			case '0':
 			{
 				uint32_t readCounter = 0;
+				uint16_t delayBuffer[delayBufSize];
+
+				for(uint8_t i = 0; i < delayBufSize; i++)
+				{
+					delayBuffer[i] = 0U;
+				}
+
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now\n");
 				configureADC();
 				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n");
-				for (readCounter=0U; readCounter < 20000U; readCounter++)
+				for (readCounter=0U; readCounter < delayBufSize; readCounter++)
 				{
-					getSensorDataADC(true);
+					delayBuffer[readCounter] = getSensorDataADC(true);
 				}
 				SEGGER_RTT_WriteString(0, "20,000 reads done\n");
 
