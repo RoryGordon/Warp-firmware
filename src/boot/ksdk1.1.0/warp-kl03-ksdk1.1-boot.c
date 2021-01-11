@@ -1340,7 +1340,8 @@ main(void)
 					delayOut = (delayBuffer[readPos]*Gain_d) >> Gain_div_d;
 					outputSignal = delayOut + inputSignal;
 					
-					//SEGGER_RTT_printf(0, "\t%8d\n",outputSignal);
+					// For some weird reason this line completely breaks everything
+					SEGGER_RTT_printf(0, "%6d", outputSignal);
 
 					
 					feedback = (outputSignal*Gain_f) >> Gain_div_f;
@@ -1354,7 +1355,7 @@ main(void)
 				SEGGER_RTT_WriteString(0,"\tDone\n");
 				break;
 			}
-			
+
 			case '0':
 			{
 				uint16_t readCounter = 0;
