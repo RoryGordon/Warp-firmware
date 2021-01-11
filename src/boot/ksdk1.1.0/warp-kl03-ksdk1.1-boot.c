@@ -1298,7 +1298,7 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now");
 				configureADC();
 				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n");
-				for (readCounter=0U; i < 20000U; readCounter++)
+				for (readCounter=0U; readCounter < 20000U; readCounter++)
 				{
 					getSensorDataADC(true);
 				}
