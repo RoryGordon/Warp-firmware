@@ -1312,7 +1312,7 @@ main(void)
 
 				int16_t writePos = 0;
 				int16_t readPos = 1;
-				/*
+				
 				//
 				// Multiply by gain, then bitshift by Gain_div to make it smaller
 				// 
@@ -1332,7 +1332,7 @@ main(void)
 				}
 
 				delayBuffer[0] = 0x8000; // Imitating a single pulse input
-
+				/*
 				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 				while(1)
 				{
