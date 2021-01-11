@@ -1360,7 +1360,7 @@ main(void)
 
 					writePos = (writePos+1) % delayBufSize;
 					readPos = (readPos+1) % delayBufSize;
-					//OSA_TimeDelay(1);
+					OSA_TimeDelay(100);
 					
 				}
 				
