@@ -53,7 +53,7 @@ void initPWM(void)
     SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
         PwmParams.uDutyCyclePercent);
     
-    //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
     /* When switching mode, disable channel first  */
     //TPM_HAL_DisableChn(g_tpmBaseAddr[TPM_0], PWM_CHANNEL);
 
