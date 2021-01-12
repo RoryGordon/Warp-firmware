@@ -1421,9 +1421,11 @@ main(void)
 			}
 			case '2':
 			{
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
+
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
-				OSA_TimeDelay(500);
+				OSA_TimeDelay(50);
 				GPIO_DRV_ClearPinOutput(kGpioLED1);
 
 				OSA_TimeDelay(500);
@@ -1455,6 +1457,7 @@ main(void)
 					OSA_TimeDelay(500);
 				}
     		GPIO_DRV_ClearPinOutput(kGpioLED3);
+			lowPowerPinStates();
 			break;
 			}
 
