@@ -86,7 +86,7 @@ void writeToPWM(uint16_t output)
     }
     else
     {
-        SEGGER_RTT_WriteString(0,"PWMStart failed\n")
+        SEGGER_RTT_WriteString(0,"PWMStart failed\n");
     }
     
 }
