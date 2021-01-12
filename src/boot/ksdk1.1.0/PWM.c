@@ -79,10 +79,11 @@ void initPWM(void)
 void writeToPWM(uint16_t output)
 {
     //SEGGER_RTT_WriteString(0, "\tpush val\n");
-    PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
+    //PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
+    PwmParams.uDutyCyclePercent = 100;
     if(TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL))
     {
-        SEGGER_RTT_printf(0, "\tStart: %d, Input val: %3d, Channel val: %3d\n",
+        SEGGER_RTT_printf(0, "\tInput val: %3d, Channel val: %3d\n",
             PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
     }
     else
