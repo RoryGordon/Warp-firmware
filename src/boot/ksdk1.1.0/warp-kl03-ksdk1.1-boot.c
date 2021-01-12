@@ -1441,9 +1441,9 @@ main(void)
 				OSA_TimeDelay(500);
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
-				// Set green and red LEDs as outputs
+				// Set green LED as output
 				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
-				//PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt2);
 
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();

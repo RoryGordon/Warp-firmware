@@ -12,7 +12,7 @@
 
 #define TPM_0 (0U)
 #define TPM_1 (1U)
-#define PWM_CHANNEL (1U)
+#define PWM_CHANNEL (0U)
 
 #define PWM_BASE_ADDRESS  (0x4003)
 #define PWM_VALUE_ADDRESS (0x8010)
