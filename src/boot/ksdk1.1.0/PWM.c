@@ -49,7 +49,7 @@ void initPWM(void)
     TPM_DRV_Init(TPM_0, &PwmGConfig);
     //TPM_DRV_Init(TPM_1, &CountConfig);
     //TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
-    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy1);
+    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy128);
     SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
         PwmParams.uDutyCyclePercent);
     
