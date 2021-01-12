@@ -1421,7 +1421,6 @@ main(void)
 			}
 			case '2':
 			{
-				RTC_HAL_SetOscillatorCmd(0x40065000, true);
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
 				OSA_TimeDelay(500);
