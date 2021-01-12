@@ -277,7 +277,6 @@ enableLPUARTpins(void)
 {
 	/*	Enable UART CLOCK */
 	CLOCK_SYS_EnableLpuartClock(0);
-
 	/*
 	*	set UART pin association
 	*	see page 99 in https://www.nxp.com/docs/en/reference-manual/KL03P24M48SF0RM.pdf
@@ -1422,6 +1421,7 @@ main(void)
 			}
 			case '2':
 			{
+				RTC_HAL_SetOscillatorCmd(0x40065000, true);
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
 				OSA_TimeDelay(500);
@@ -1429,10 +1429,12 @@ main(void)
 
 				OSA_TimeDelay(500);
     			GPIO_DRV_SetPinOutput(kGpioLED1);
+				OSA_TimeDelay(50);
 				GPIO_DRV_ClearPinOutput(kGpioLED2);
 
 				OSA_TimeDelay(500);
     			GPIO_DRV_SetPinOutput(kGpioLED2);
+				OSA_TimeDelay(50);
 				GPIO_DRV_ClearPinOutput(kGpioLED3);
 
 				OSA_TimeDelay(500);
