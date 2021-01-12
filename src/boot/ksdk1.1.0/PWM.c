@@ -7,6 +7,7 @@
 #include "fsl_port_hal.h"
 #include "fsl_tpm_driver.h"
 
+
 #include "SEGGER_RTT.h"
 
 #define TPM_0 (0U)
@@ -16,28 +17,6 @@
 #define PWM_BASE_ADDRESS  (0x4003)
 #define PWM_VALUE_ADDRESS (0x8010)
 
-
-
-/*
-// FTM configuration structure
-typedef struct FtmUserConfig {
-    uint8_t tofFrequency;
-    bool isFTMMode;
-    uint8_t BDMMode;
-    bool isWriteProtection;
-    //bool isTimerOverFlowInterrupt;
-    //bool isFaultInterrupt;
-} ftm_user_config_t;
-
-typedef struct FtmPwmParam
-{
-    ftm_user_config_t mode;
-    ftm_pwm_edge_mode_t edgeMode;
-    uint32_t uFrequencyHz
-    uint32_t uDutyCyclePercent;
-    uint16_t uFirstEdgeDelayPercent;
-} ftm_pwm_param_t;
-*/
 
 tpm_general_config_t PwmGConfig = {
     .isDBGMode = true,
@@ -74,6 +53,11 @@ void initPWM(void)
     TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk,kTpmDividedBy1);
     SEGGER_RTT_WriteString(0, "\tInit complete\n");
     //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    /* When switching mode, disable channel first  */
+    TPM_HAL_DisableChn(g_tpmBaseAddr[TPM_0], PWM_CHANNEL);
+
+    /* Set the requested PWM mode */
+    TPM_HAL_EnablePwmMode(g_tpmBaseAddr[TPM_0], &PwmParams, PWM_CHANNEL);
 }
 
 void writeToPWM(uint16_t output)
@@ -81,6 +65,11 @@ void writeToPWM(uint16_t output)
     //SEGGER_RTT_WriteString(0, "\tpush val\n");
     //PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
     PwmParams.uDutyCyclePercent = 100;
+
+    TPM_HAL_SetMod(g_tpmBaseAddr[TPM_0], 199);
+    TPM_HAL_SetChnCountVal(g_tpmBaseAddr[TPM_0], PWM_CHANNEL, 200);
+    SEGGER_RTT_printf(0, "\t channel value: &3d\n", TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
+    /*
     if(TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL))
     {
         TPM_DRV_SetTimeOverflowIntCmd(TPM_0, true);
@@ -91,5 +80,6 @@ void writeToPWM(uint16_t output)
     {
         SEGGER_RTT_WriteString(0,"PWMStart failed\n");
     }
+    */
     
 }
