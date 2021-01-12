@@ -20,7 +20,7 @@
 
 tpm_general_config_t PwmGConfig = {
     .isDBGMode = true,
-    .isGlobalTimeBase = false,
+    .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
     .isCountReloadOnTrig = false,
