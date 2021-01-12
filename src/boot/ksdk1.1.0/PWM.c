@@ -36,7 +36,13 @@ typedef struct FtmPwmParam
 } ftm_pwm_param_t;
 */
 
-tpm_general_config_t PwmGConfig;
+tpm_general_config_t PwmGConfig = {
+    .isDBGMode = true,
+    .isGlobalTimeBase = false,
+    .isTriggerMode = true,
+    .isStopCountOnOveflow = false,
+    .isCountReloadOnTrig = true,
+};
 
 tpm_pwm_param_t PwmParams = {
     .mode = kTpmEdgeAlignedPWM,
