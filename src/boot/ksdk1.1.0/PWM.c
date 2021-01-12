@@ -12,6 +12,8 @@
 #define TPM_0 (0U)
 #define PWM_CHANNEL (1U)
 
+#define PWM_BASE_ADDRESS  (0x4003)
+#define PWM_VALUE_ADDRESS (0x8010)
 
 
 
@@ -71,5 +73,5 @@ void writeToPWM(uint16_t output)
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
     TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
     SEGGER_RTT_printf(0, "\tChannel val: %d\n", TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
-    
+    SEGGER_RTT_printf(0, "TOF: %d\n", TPM_HAL_GetTimerOverflowStatus(0x4003800));
 }
