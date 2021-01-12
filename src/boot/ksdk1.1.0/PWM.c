@@ -17,14 +17,13 @@
 #define PWM_BASE_ADDRESS  (0x4003)
 #define PWM_VALUE_ADDRESS (0x8010)
 
-
 tpm_general_config_t PwmGConfig = {
     .isDBGMode = false,
     .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
     .isCountReloadOnTrig = false,
-    .triggerSource = kTpmTpm1Trig,
+    .triggerSource = kTpmExtTrig,
 };
 
 tpm_general_config_t CountConfig = {
@@ -39,9 +38,9 @@ tpm_counting_mode_t CountMode = kTpmCountingUp;
 
 tpm_pwm_param_t PwmParams = {
     .mode = kTpmEdgeAlignedPWM,
-    .edgeMode = kTpmLowTrue,
-    .uFrequencyHZ = 240000,
-    .uDutyCyclePercent = 100,
+    .edgeMode = kTpmHighTrue,
+    .uFrequencyHZ = 240000U,
+    .uDutyCyclePercent = 50U,
 };
 
 
@@ -50,7 +49,7 @@ void initPWM(void)
     TPM_DRV_Init(TPM_0, &PwmGConfig);
     //TPM_DRV_Init(TPM_1, &CountConfig);
     //TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
-    TPM_DRV_SetClock(TPM_0, 2U,kTpmDividedBy1);
+    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy1);
     SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
         PwmParams.uDutyCyclePercent);
     
