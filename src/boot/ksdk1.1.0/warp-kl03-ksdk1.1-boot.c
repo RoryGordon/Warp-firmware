@@ -860,8 +860,8 @@ printPinDirections(void)
 //	OSA_TimeDelay(100);
 	SEGGER_RTT_printf(0, "\t   CLKOUT32K:%d\n", GPIO_DRV_GetPinDir(kWarpPinCLKOUT32K));
 	OSA_TimeDelay(100);
-	SEGGER_RTT_printf(0, "\t     RED LED:%d\n", GPIO_DRV_GetPinDir(kGpioLED1));
-	OSA_TimeDelay(100);
+//	SEGGER_RTT_printf(0, "\t     RED LED:%d\n", GPIO_DRV_GetPinDir(kGpioLED1));
+//	OSA_TimeDelay(100);
 #endif
 }
 
