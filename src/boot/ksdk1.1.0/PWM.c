@@ -44,7 +44,7 @@ tpm_general_config_t PwmGConfig = {
     .isGlobalTimeBase = false,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
-    .isCountReloadOnTrig = true,
+    .isCountReloadOnTrig = false,
     .triggerSource = kTpmTpm1Trig,
 };
 
@@ -83,8 +83,8 @@ void writeToPWM(uint16_t output)
     PwmParams.uDutyCyclePercent = 100;
     if(TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL))
     {
-        SEGGER_RTT_printf(0, "\tInput val: %3d, Channel val: %3d\n",
-            PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
+        SEGGER_RTT_printf(0, "\tfreq: %d, Input val: %3d, Channel val: %3d\n",
+            TPM_DRV_GetClock(TPM_0), PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
     }
     else
     {
