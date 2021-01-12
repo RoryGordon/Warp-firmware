@@ -1434,7 +1434,7 @@ main(void)
 				uint16_t testOutput = 0;
 				for(uint8_t i=0; i < 15; i++)
 				{
-					SEGGER_RTT_printf(0,"testOuput = %4d\n", testOutput);
+					SEGGER_RTT_printf(0,"testOuput = %5d\n", testOutput);
 					writeToPWM(testOutput);
 					testOutput = 5120* (i%3);
 					OSA_TimeDelay(500);

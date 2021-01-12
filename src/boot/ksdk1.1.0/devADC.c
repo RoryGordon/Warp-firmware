@@ -266,17 +266,17 @@ configureADC(void)
     int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
     lowPowerAdcBoundaries_t boundaries;
     //hardware_init();
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
+    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
     calibrateParams();
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
+    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
     // Initialize ADC
     if (initADC(ADC_0))
     {
         printf("Failed to do the ADC init\n");
         return -1;
     }
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_OFF);
-    GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
+    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_OFF);
+    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
 }
 
 uint32_t printSensorDataADC(bool hexModeFlag)
