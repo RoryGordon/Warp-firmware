@@ -1429,7 +1429,7 @@ main(void)
 			case '2':
 			{
 				SEGGER_RTT_WriteString(0, "Initialising PWM...\n");
-    			GPIO_DRV_WritePinOutput(kGpioLED3, LED_ON);
+    			GPIO_DRV_SetPinOutput(kGpioLED3);
 				initPWM();
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;
