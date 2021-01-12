@@ -10,6 +10,7 @@
 #include "SEGGER_RTT.h"
 
 #define TPM_0 (0U)
+#define TPM_1 (1U)
 #define PWM_CHANNEL (1U)
 
 #define PWM_BASE_ADDRESS  (0x4003)
@@ -54,6 +55,8 @@ tpm_pwm_param_t PwmParams = {
     .uDutyCyclePercent = 50,
 };
 
+bool PWMstart = false;
+
 void initPWM(void)
 {
     // TODO: find config values (trust default?)
@@ -66,15 +69,15 @@ void initPWM(void)
 
     TPM_DRV_Init(TPM_0, &PwmGConfig);
     SEGGER_RTT_WriteString(0, "\tInit complete\n");
-    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
 
 void writeToPWM(uint16_t output)
 {
     //SEGGER_RTT_WriteString(0, "\tpush val\n");
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
-    //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
-
-    SEGGER_RTT_printf(0, "\tInput val: %d, Channel val: %d\n",
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    TPM_DRV_SetTimeOverflowIntCmd(TPM_0, true);
+    SEGGER_RTT_printf(0, "\tInput val: %3d, Channel val: %3d\n",
         PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
 }
