@@ -1442,9 +1442,10 @@ main(void)
 				{
 					SEGGER_RTT_printf(0,"testOuput = %5d\n", testOutput);
 					writeToPWM(testOutput);
-					testOutput = 5120* (i%3);
+					testOutput = 5120 * (1 + (i%2));
 					OSA_TimeDelay(500);
 				}
+    		GPIO_DRV_ClearPinOutput(kGpioLED3);
 			break;
 			}
 

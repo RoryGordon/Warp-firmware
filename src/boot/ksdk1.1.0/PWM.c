@@ -36,24 +36,22 @@ typedef struct FtmPwmParam
 
 tpm_general_config_t PwmGConfig;
 
-tpm_pwm_param_t PwmParams;
+tpm_pwm_param_t PwmParams = {
+    .mode = kTpmEdgeAlignedPWM,
+    .edgeMode = kTpmLowTrue,
+    .uFrequencyHZ = 240000,
+    .uDutyCyclePercent = 0,
+};
 
 void initPWM(void)
 {
-    // TODO: find config values
-    PwmGConfig.isDBGMode = false;            //Debug mode
-    PwmGConfig.isGlobalTimeBase = false;     //not sure what this does, but false feels safer
+    // TODO: find config values (trust default?)
+    //PwmGConfig.isDBGMode = false;            //Debug mode
+    //PwmGConfig.isGlobalTimeBase = false;     //not sure what this does, but false feels safer
     PwmGConfig.isTriggerMode = false;        //we don't have hardware triggers
-    PwmGConfig.isStopCountOnOveflow = false; //again another guess
-    PwmGConfig.isCountReloadOnTrig = false;  //probably doesn't matter if we arent using a trigger
+    //PwmGConfig.isStopCountOnOveflow = false; //again another guess
+    //PwmGConfig.isCountReloadOnTrig = false;  //probably doesn't matter if we arent using a trigger
     //PwmGConfig.triggerSource;              //Don't need
-
-    PwmParams.mode = kTpmEdgeAlignedPWM;
-    PwmParams.edgeMode = kTpmHighTrue; //Not sure what this means
-    PwmParams.uFrequencyHZ = 22000U;   //A guess at the speed of the program
-    PwmParams.uDutyCyclePercent = 50U; //Default to midrange
-
-
 
     TPM_DRV_Init(TPM_0, &PwmGConfig);
 }
@@ -63,4 +61,5 @@ void writeToPWM(uint16_t output)
 
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
     TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    
 }
