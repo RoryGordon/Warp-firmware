@@ -64,8 +64,8 @@ void initPWM(void)
 void writeToPWM(uint16_t output)
 {
     //SEGGER_RTT_WriteString(0, "\tpush val\n");
-    //PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
-    PwmParams.uDutyCyclePercent = 100;
+    PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
+    //PwmParams.uDutyCyclePercent = 100;
 
     //TPM_HAL_SetMod(g_tpmBaseAddr[TPM_0], 199);
     //TPM_HAL_SetChnCountVal(g_tpmBaseAddr[TPM_0], PWM_CHANNEL, 200);
