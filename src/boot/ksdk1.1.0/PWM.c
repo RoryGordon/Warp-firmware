@@ -44,6 +44,7 @@ tpm_general_config_t PwmGConfig = {
     .isTriggerMode = true,
     .isStopCountOnOveflow = false,
     .isCountReloadOnTrig = true,
+    .triggerSource = kTpmTpm0Trig;
 };
 
 tpm_pwm_param_t PwmParams = {
@@ -58,20 +59,22 @@ void initPWM(void)
     // TODO: find config values (trust default?)
     //PwmGConfig.isDBGMode = false;            //Debug mode
     //PwmGConfig.isGlobalTimeBase = false;     //not sure what this does, but false feels safer
-    PwmGConfig.isTriggerMode = false;        //we don't have hardware triggers
+    //PwmGConfig.isTriggerMode = false;        //we don't have hardware triggers
     //PwmGConfig.isStopCountOnOveflow = false; //again another guess
     //PwmGConfig.isCountReloadOnTrig = false;  //probably doesn't matter if we arent using a trigger
     //PwmGConfig.triggerSource;              //Don't need
 
     TPM_DRV_Init(TPM_0, &PwmGConfig);
     SEGGER_RTT_WriteString(0, "\tInit complete\n");
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
 
 void writeToPWM(uint16_t output)
 {
     //SEGGER_RTT_WriteString(0, "\tpush val\n");
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
-    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+
     SEGGER_RTT_printf(0, "\tInput val: %d, Channel val: %d\n",
         PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
 }
