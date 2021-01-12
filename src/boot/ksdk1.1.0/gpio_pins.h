@@ -75,7 +75,7 @@ enum _gpio_pins
 	
 	//kGpioLED1     = GPIO_MAKE_PIN(HW_GPIOB, 10),
   	//kGpioLED2     = GPIO_MAKE_PIN(HW_GPIOB, 11),
-  	//kGpioLED3     = GPIO_MAKE_PIN(HW_GPIOB, 13)
+  	kGpioLED3     = GPIO_MAKE_PIN(HW_GPIOB, 13)
 };
 
 extern gpio_input_pin_user_config_t	inputPins[];

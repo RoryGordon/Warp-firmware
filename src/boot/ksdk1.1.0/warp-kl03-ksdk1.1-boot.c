@@ -1429,6 +1429,7 @@ main(void)
 			case '2':
 			{
 				SEGGER_RTT_WriteString(0, "Initialising PWM...\n");
+    			GPIO_DRV_WritePinOutput(kGpioLED3, LED_ON);
 				initPWM();
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;
@@ -1439,7 +1440,7 @@ main(void)
 					testOutput = 5120* (i%3);
 					OSA_TimeDelay(500);
 				}
-
+			break;
 			}
 
 			/*
