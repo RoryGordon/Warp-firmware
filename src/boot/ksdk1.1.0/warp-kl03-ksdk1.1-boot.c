@@ -1426,7 +1426,21 @@ main(void)
 #endif
 				break;
 			}
+			case '2':
+			{
+				SEGGER_RTT_WriteString(0, "Initialising PWM...\n");
+				initPWM();
+				SEGGER_RTT_WriteString(0,"Done");
+				uint16_t testOutput = 0;
+				for(uint8_t i=0; i < 15; i++)
+				{
+					SEGGER_RTT_printf(0,"testOuput = %4d\n", testOutput);
+					writeToPWM(testOutput);
+					testOutput = 5120* (i%3);
+					OSA_TimeDelay(500);
+				}
 
+			}
 
 			/*
 			 *	Ignore naked returns.
