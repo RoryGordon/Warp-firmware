@@ -1428,8 +1428,13 @@ main(void)
 			}
 			case '2':
 			{
-				SEGGER_RTT_WriteString(0, "Initialising PWM...\n");
     			GPIO_DRV_SetPinOutput(kGpioLED3);
+
+				// Set green and red LEDs as outputs
+				PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt2);
+
+				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;

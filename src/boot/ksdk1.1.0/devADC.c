@@ -259,7 +259,7 @@ lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
     return boundaries;
 }
 
-configureADC(void)
+void configureADC(void)
 {
     
     uint32_t updateBoundariesCounter = 0;

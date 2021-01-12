@@ -53,7 +53,8 @@ void initPWM(void)
     PwmParams.uFrequencyHZ = 22000U;   //A guess at the speed of the program
     PwmParams.uDutyCyclePercent = 50U; //Default to midrange
 
-    PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
+
+
     TPM_DRV_Init(TPM_0, &PwmGConfig);
 }
 
