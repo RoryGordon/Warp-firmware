@@ -19,7 +19,7 @@
 
 
 tpm_general_config_t PwmGConfig = {
-    .isDBGMode = true,
+    .isDBGMode = false,
     .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
@@ -28,7 +28,7 @@ tpm_general_config_t PwmGConfig = {
 };
 
 tpm_general_config_t CountConfig = {
-    .isDBGMode = true,
+    .isDBGMode = false,
     .isGlobalTimeBase = false,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
