@@ -42,7 +42,7 @@ typedef struct FtmPwmParam
 tpm_general_config_t PwmGConfig = {
     .isDBGMode = true,
     .isGlobalTimeBase = false,
-    .isTriggerMode = true,
+    .isTriggerMode = false,
     .isStopCountOnOveflow = false,
     .isCountReloadOnTrig = true,
     .triggerSource = kTpmTpm1Trig,
@@ -69,8 +69,9 @@ tpm_pwm_param_t PwmParams = {
 void initPWM(void)
 {
     TPM_DRV_Init(TPM_0, &PwmGConfig);
-    TPM_DRV_Init(TPM_1, &CountConfig);
-    TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
+    //TPM_DRV_Init(TPM_1, &CountConfig);
+    //TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
+    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk,kTpmDividedBy1);
     SEGGER_RTT_WriteString(0, "\tInit complete\n");
     //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
