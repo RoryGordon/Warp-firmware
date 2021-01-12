@@ -1432,7 +1432,9 @@ main(void)
 				GPIO_DRV_ClearPinOutput(kGpioLED2);
 
 				OSA_TimeDelay(500);
-				GPIO_DRV_ClearPinOutput(kGpioLED2);
+    			GPIO_DRV_SetPinOutput(kGpioLED2);
+				GPIO_DRV_ClearPinOutput(kGpioLED3);
+
 				OSA_TimeDelay(500);
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
