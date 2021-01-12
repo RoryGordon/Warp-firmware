@@ -50,12 +50,12 @@ void initPWM(void)
     PwmParams.edgeMode = kTpmHighTrue; //Not sure what this means
     PwmParams.uFrequencyHZ = 22000U;   //A guess at the speed of the program
     PwmParams.uDutyCyclePercent = 50U; //Default to midrange
-    TPM_DRV_init(TPM_0, PwmGConfig);
+    TPM_DRV_Init(TPM_0, &PwmGConfig);
 }
 
 void writeToPWM(uint16_t output)
 {
 
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
-    TPM_DRV_PWMStart(TPM_0, PwmParams, CHANNEL);
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, CHANNEL);
 }
