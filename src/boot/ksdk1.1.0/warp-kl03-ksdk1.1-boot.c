@@ -1097,9 +1097,9 @@ main(void)
 	OSA_TimeDelay(200);
 	GPIO_DRV_ClearPinOutput(kWarpPinSI4705_nRST);
 	OSA_TimeDelay(200);
-	GPIO_DRV_SetPinOutput(kWarpPinSI4705_nRST);
+	GPIO_DRV_SetPinOutput(kGpioLED1);
 	OSA_TimeDelay(200);
-	GPIO_DRV_ClearPinOutput(kWarpPinSI4705_nRST);
+	GPIO_DRV_ClearPinOutput(kGpioLED1);
 	OSA_TimeDelay(200);
 	GPIO_DRV_SetPinOutput(kWarpPinSI4705_nRST);
 	OSA_TimeDelay(200);
@@ -1442,8 +1442,8 @@ main(void)
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
 				// Set green and red LEDs as outputs
-				PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
-				PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt1);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt1);
 
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
