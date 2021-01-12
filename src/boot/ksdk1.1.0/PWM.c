@@ -41,7 +41,7 @@ tpm_pwm_param_t PwmParams = {
     .mode = kTpmEdgeAlignedPWM,
     .edgeMode = kTpmLowTrue,
     .uFrequencyHZ = 240000,
-    .uDutyCyclePercent = 50,
+    .uDutyCyclePercent = 100,
 };
 
 
@@ -51,7 +51,9 @@ void initPWM(void)
     //TPM_DRV_Init(TPM_1, &CountConfig);
     //TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
     TPM_DRV_SetClock(TPM_0, 2U,kTpmDividedBy1);
-    SEGGER_RTT_WriteString(0, "\tInit complete\n");
+    SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
+        PwmParams.uDutyCyclePercent);
+    
     //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
     /* When switching mode, disable channel first  */
     //TPM_HAL_DisableChn(g_tpmBaseAddr[TPM_0], PWM_CHANNEL);
