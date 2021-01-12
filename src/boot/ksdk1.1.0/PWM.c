@@ -40,7 +40,7 @@ tpm_pwm_param_t PwmParams = {
     .mode = kTpmEdgeAlignedPWM,
     .edgeMode = kTpmLowTrue,
     .uFrequencyHZ = 240000,
-    .uDutyCyclePercent = 0,
+    .uDutyCyclePercent = 50,
 };
 
 void initPWM(void)
