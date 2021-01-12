@@ -3,10 +3,12 @@
  */
 #include <stdlib.h>
 
+//#include "fsl_device_registers.h"
+#include "fsl_port_hal.h"
 #include "fsl_tpm_driver.h"
 
 #define TPM_0 (0U)
-#define CHANNEL (0U)
+#define PWM_CHANNEL (1U)
 
 
 
@@ -50,6 +52,8 @@ void initPWM(void)
     PwmParams.edgeMode = kTpmHighTrue; //Not sure what this means
     PwmParams.uFrequencyHZ = 22000U;   //A guess at the speed of the program
     PwmParams.uDutyCyclePercent = 50U; //Default to midrange
+
+    PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
     TPM_DRV_Init(TPM_0, &PwmGConfig);
 }
 
@@ -57,5 +61,5 @@ void writeToPWM(uint16_t output)
 {
 
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
-    TPM_DRV_PwmStart(TPM_0, &PwmParams, CHANNEL);
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
