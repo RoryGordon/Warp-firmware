@@ -44,7 +44,7 @@ tpm_general_config_t PwmGConfig = {
     .isTriggerMode = true,
     .isStopCountOnOveflow = false,
     .isCountReloadOnTrig = true,
-    .triggerSource = kTpmTpm0Trig;
+    .triggerSource = kTpmTpm0Trig,
 };
 
 tpm_pwm_param_t PwmParams = {
