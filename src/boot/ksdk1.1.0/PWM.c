@@ -56,12 +56,12 @@ void initPWM(void)
     //PwmGConfig.triggerSource;              //Don't need
 
     TPM_DRV_Init(TPM_0, &PwmGConfig);
-    SEGGER_RTT_WriteString(0, "\tInit complete\n")
+    SEGGER_RTT_WriteString(0, "\tInit complete\n");
 }
 
 void writeToPWM(uint16_t output)
 {
-    SEGGER_RTT_WriteString(0, "\tpush val\n")
+    SEGGER_RTT_WriteString(0, "\tpush val\n");
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
     TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
     
