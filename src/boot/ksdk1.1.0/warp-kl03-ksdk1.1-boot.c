@@ -468,8 +468,8 @@ lowPowerPinStates(void)
 	/*
 	 *	PTA3 and PTA4 are the EXTAL/XTAL
 	 */
-	PORT_HAL_SetMuxMode(PORTA_BASE, 3, kPortPinDisabled);
-	PORT_HAL_SetMuxMode(PORTA_BASE, 4, kPortPinDisabled);
+	//PORT_HAL_SetMuxMode(PORTA_BASE, 3, kPortPinDisabled);
+	//PORT_HAL_SetMuxMode(PORTA_BASE, 4, kPortPinDisabled);
 
 	PORT_HAL_SetMuxMode(PORTA_BASE, 5, kPortMuxAsGpio);
 	PORT_HAL_SetMuxMode(PORTA_BASE, 6, kPortMuxAsGpio);
@@ -1276,24 +1276,24 @@ main(void)
 			{
 				bool		hexModeFlag;
 
-				SEGGER_RTT_WriteString(0, "\r\n\tEnabling I2C pins...\n");
-				enableI2Cpins(menuI2cPullupValue);
+				//SEGGER_RTT_WriteString(0, "\r\n\tEnabling I2C pins...\n");
+				//enableI2Cpins(menuI2cPullupValue);
 
-				SEGGER_RTT_WriteString(0, "\r\n\tHex or converted mode? ('h' or 'c')> ");
-				key = SEGGER_RTT_WaitKey();
-				hexModeFlag = (key == 'h' ? 1 : 0);
+				//SEGGER_RTT_WriteString(0, "\r\n\tHex or converted mode? ('h' or 'c')> ");
+				//key = SEGGER_RTT_WaitKey();
+				//hexModeFlag = (key == 'h' ? 1 : 0);
 
 				SEGGER_RTT_WriteString(0, "\r\n\tSet the time delay between each run in milliseconds (e.g., '1234')> ");
 				uint16_t	menuDelayBetweenEachRun = read4digits();
 				SEGGER_RTT_printf(0, "\r\n\tDelay between read batches set to %d milliseconds.\n\n", menuDelayBetweenEachRun);
 				OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-				printAllSensors(true /* printHeadersAndCalibration */, hexModeFlag, menuDelayBetweenEachRun, menuI2cPullupValue);
+				printAllSensors(true /* printHeadersAndCalibration */, true, menuDelayBetweenEachRun, menuI2cPullupValue);
 
 				/*
 				 *	Not reached (printAllSensors() does not return)
 				 */
-				disableI2Cpins();
+				//disableI2Cpins();
 
 				break;
 			}
@@ -1367,24 +1367,61 @@ main(void)
 			case '0':
 			{
 				uint16_t readCounter = 0;
-				uint16_t delayBuffer[delayBufSize];
+				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
+				int16_t delayBuffer[delayBufSize];
 
+				int16_t inputSignal = 0;
+				int16_t outputSignal = 0;
+
+				int16_t feedback = 0;
+				int16_t delayOut = 0;
+
+				uint16_t writePos = 0;
+				uint16_t readPos = 10000; // Should be any other number < delayBufSize
+				
+				//
+				// Multiply by gain, then bitshift by Gain_div to make it smaller
+				// 
+				// Gain(real) = Gain / 2^(Gain_div)
+				//
+
+				int8_t Gain_d = 1;
+				int8_t Gain_f = 1;
+
+				int8_t Gain_div_d = 1;
+				int8_t Gain_div_f = 0;
+				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < delayBufSize; i++)
 				{
-					delayBuffer[i] = 0U;
+					delayBuffer[i] = 0;
 				}
+
+				SEGGER_RTT_WriteString(0,"\tBegin here\n");
 
 				// runs quicker with this :)
 				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
 
-				SEGGER_RTT_WriteString(0, "\r\n\t I see you have chosen your funky new program\n\tLets see what happens now\n");
 				configureADC();
-				SEGGER_RTT_WriteString(0, "Beginning 20,000 reads...\n");
-				for (readCounter=0U; readCounter < delayBufSize; readCounter++)
+				SEGGER_RTT_WriteString(0, "Beginning 40,000 reads...\n");
+				for (readCounter=0U; readCounter < 40000; readCounter++)
 				{
-					delayBuffer[readCounter] = getSensorDataADC(true);
+					inputSignal = getSensorDataADC(true) - 0x4FF;// From unsigned to signed
+
+					delayBuffer[writePos] = (inputSignal + feedback)&0xFFF;
+					
+					delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&0xFFF;
+					
+					outputSignal = (delayOut + inputSignal)&0xFFF;
+
+					//SEGGER_RTT_printf(0, "writePos: %6d (%6d) | readPos: %6d (%6d)\n",
+					//	writePos, delayBuffer[writePos], readPos, outputSignal);
+
+					feedback = ((delayOut*Gain_f) >> Gain_div_f)&0xFFF;
+
+					writePos = (writePos+1) % delayBufSize;
+					readPos = (readPos+1) % delayBufSize;
 				}
-				SEGGER_RTT_WriteString(0, "20,000 reads done\n");
+				SEGGER_RTT_WriteString(0, "40,000 reads done\n");
 
 #ifdef DAC			
 				dac_user_config_t MyDacUserConfigStruct;
@@ -1446,6 +1483,7 @@ main(void)
 				//PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
 
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
+				
 				initPWM();
 				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
 				PORT_HAL_SetMuxMode(0x4004A000u,11u, kPortMuxAlt2);
