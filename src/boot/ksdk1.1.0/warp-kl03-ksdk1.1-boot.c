@@ -1509,7 +1509,7 @@ main(void)
 				uint16_t readCounter = 0;
 				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
 				#define sampleBufSize  (40000U)
-				`int16_t sampleBuffer[sampleBufSize];
+				int16_t sampleBuffer[sampleBufSize];
 
 				int16_t inputSignal = 0;
 				int16_t maxValue = 0;
