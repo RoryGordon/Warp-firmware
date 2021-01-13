@@ -1512,8 +1512,8 @@ main(void)
 				int16_t sampleBuffer[sampleBufSize];
 
 				int16_t inputSignal = 0;
-				int16_t maxValue = 0;
-				int16_t minValue = 0;
+				int16_t maxValue = -4000;
+				int16_t minValue = 4000;
 
 				//int16_t outputSignal = 0;
 
@@ -1564,8 +1564,8 @@ main(void)
 					}
 					SEGGER_RTT_printf(0,"\tMax val: %4d | Min val: %4d\n",
 									  maxValue, minValue);
-					maxValue = 0;
-					minValue = 0;
+					maxValue = -4000;
+					minValue = 4000;
 				}
 				break;
 			}
