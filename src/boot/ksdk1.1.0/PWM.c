@@ -10,9 +10,9 @@
 
 #include "SEGGER_RTT.h"
 
-#define TPM_0 (0U)
+#define TPM_0 (1U)
 #define TPM_1 (1U)
-#define PWM_CHANNEL (0U)
+#define PWM_CHANNEL (1U)
 
 #define PWM_BASE_ADDRESS  (0x4003)
 #define PWM_VALUE_ADDRESS (0x8010)
@@ -49,7 +49,7 @@ void initPWM(void)
     TPM_DRV_Init(TPM_0, &PwmGConfig);
     //TPM_DRV_Init(TPM_1, &CountConfig);
     //TPM_DRV_CounterStart(TPM_1, CountMode, 4U, false);
-    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy2);
+    TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy1);
     SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
         PwmParams.uDutyCyclePercent);
     

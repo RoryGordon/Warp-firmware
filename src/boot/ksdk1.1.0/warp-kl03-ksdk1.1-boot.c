@@ -1443,7 +1443,7 @@ main(void)
 
 				// Set green LED as output
 				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
-				PORT_HAL_SetMuxMode(PORTA_BASE,6u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,13u,kPortMuxAlt2);
 
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
@@ -1456,8 +1456,8 @@ main(void)
 					testOutput = 5120 * (1 + (i%2));
 					OSA_TimeDelay(500);
 				}
-    		GPIO_DRV_ClearPinOutput(kGpioLED3);
 			lowPowerPinStates();
+    		GPIO_DRV_ClearPinOutput(kGpioLED3);
 			break;
 			}
 
