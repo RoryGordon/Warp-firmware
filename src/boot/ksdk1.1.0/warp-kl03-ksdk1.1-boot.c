@@ -1551,7 +1551,7 @@ main(void)
 				{
 					for (readCounter=0U; readCounter < 40000; readCounter++)
 					{
-						inputSignal = getSensorDataADC(true) - 0x4FF;// From unsigned to signed
+						inputSignal = getSensorDataADC(true) ;//- 0x4FF;// From unsigned to signed
 
 						if(inputSignal > maxValue)
 						{
