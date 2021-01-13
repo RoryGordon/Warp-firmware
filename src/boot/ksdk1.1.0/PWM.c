@@ -17,7 +17,7 @@
 #define PWM_VALUE_ADDRESS (0x8010)
 
 tpm_general_config_t PwmGConfig = {
-    .isDBGMode = false,
+    .isDBGMode = true,
     .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
