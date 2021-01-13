@@ -1161,13 +1161,16 @@ main(void)
 		SEGGER_RTT_WriteString(0, "\r- 'r': switch to RUN mode.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-		SEGGER_RTT_WriteString(0, "\r- 'z': dump all sensors data.\n");
+		SEGGER_RTT_WriteString(0, "\r- 'z': print ADC value.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-		SEGGER_RTT_WriteString(0, "\r- '0': Delay pedal.\n");
+		SEGGER_RTT_WriteString(0, "\r- '0': ADC/delay speed test.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\r- '1': Delay train example.\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+		SEGGER_RTT_WriteString(0, "\r- '2': PWM testing.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\rEnter selection> ");
@@ -1176,42 +1179,42 @@ main(void)
 		
 		switch (key)
 		{
-			/*
-			 *	Change default I2C baud rate
-			 */
-			case 'b':
-			{
-				SEGGER_RTT_WriteString(0, "\r\n\tSet I2C baud rate in kbps (e.g., '0001')> ");
-				gWarpI2cBaudRateKbps = read4digits();
-
-				/*
-				 *	Round 9999kbps to 10Mbps
-				 */
-				if (gWarpI2cBaudRateKbps == 9999)
-				{
-					gWarpI2cBaudRateKbps = 10000;
-				}
-
-#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-				SEGGER_RTT_printf(0, "\r\n\tI2C baud rate set to %d kb/s", gWarpI2cBaudRateKbps);
-#endif
-
-				break;
-			}
-
-			/*
-			 *	Configure default TPS82740 voltage
-			 */
-			case 'g':
-			{
-				SEGGER_RTT_WriteString(0, "\r\n\tOverride SSSUPPLY in mV (e.g., '1800')> ");
-				menuSupplyVoltage = read4digits();
-#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-				SEGGER_RTT_printf(0, "\r\n\tOverride SSSUPPLY set to %d mV", menuSupplyVoltage);
-#endif
-
-				break;
-			}
+//			/*
+//			 *	Change default I2C baud rate
+//			 */
+//			case 'b':
+//			{
+//				SEGGER_RTT_WriteString(0, "\r\n\tSet I2C baud rate in kbps (e.g., '0001')> ");
+//				gWarpI2cBaudRateKbps = read4digits();
+//
+//				/*
+//				 *	Round 9999kbps to 10Mbps
+//				 */
+//				if (gWarpI2cBaudRateKbps == 9999)
+//				{
+//					gWarpI2cBaudRateKbps = 10000;
+//				}
+//
+//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+//				SEGGER_RTT_printf(0, "\r\n\tI2C baud rate set to %d kb/s", gWarpI2cBaudRateKbps);
+//#endif
+//
+//				break;
+//			}
+//
+//			/*
+//			 *	Configure default TPS82740 voltage
+//			 */
+//			case 'g':
+//			{
+//				SEGGER_RTT_WriteString(0, "\r\n\tOverride SSSUPPLY in mV (e.g., '1800')> ");
+//				menuSupplyVoltage = read4digits();
+//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
+//				SEGGER_RTT_printf(0, "\r\n\tOverride SSSUPPLY set to %d mV", menuSupplyVoltage);
+//#endif
+//
+//				break;
+//			}
 
 			/*
 			 *	Sleep for 30 seconds.
@@ -1501,7 +1504,71 @@ main(void)
     		GPIO_DRV_ClearPinOutput(kGpioLED3);
 			break;
 			}
+			case '3':
+			{
+				uint16_t readCounter = 0;
+				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
+				#define sampleBufSize  (40000U)
+				`int16_t sampleBuffer[sampleBufSize];
 
+				int16_t inputSignal = 0;
+				int16_t maxValue = 0;
+				int16_t minValue = 0;
+
+				//int16_t outputSignal = 0;
+
+				//int16_t feedback = 0;
+				//int16_t delayOut = 0;
+
+				//uint16_t writePos = 0;
+				//uint16_t readPos = 10000; // Should be any other number < delayBufSize
+				
+				//
+				// Multiply by gain, then bitshift by Gain_div to make it smaller
+				// 
+				// Gain(real) = Gain / 2^(Gain_div)
+				//
+
+				//int8_t Gain_d = 1;
+				//int8_t Gain_f = 1;
+
+				//int8_t Gain_div_d = 1;
+				//int8_t Gain_div_f = 0;
+				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
+				for(uint16_t i = 0; i < sampleBufSize; i++)
+				{
+					sampleBuffer[i] = 0;
+				}
+
+				SEGGER_RTT_WriteString(0,"\tBegin here\n");
+
+				// runs quicker with this :)
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
+
+				configureADC();
+				SEGGER_RTT_WriteString(0, "Beginning 40,000 reads...\n");
+				while(1)
+				{
+					for (readCounter=0U; readCounter < 40000; readCounter++)
+					{
+						inputSignal = getSensorDataADC(true) - 0x4FF;// From unsigned to signed
+
+						if(inputSignal > maxValue)
+						{
+							maxValue = inputSignal;
+						}
+						else if (inputSignal < minValue)
+						{
+							minValue = inputSignal;
+						}
+					}
+					SEGGER_RTT_printf(0,"\tMax val: %4d | Min val: %4d\n",
+									  maxValue, minValue);
+					maxValue = 0;
+					minValue = 0;
+				}
+				break;
+			}
 			/*
 			 *	Ignore naked returns.
 			 */
