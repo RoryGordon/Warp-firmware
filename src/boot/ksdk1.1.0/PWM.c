@@ -52,8 +52,9 @@ void writeToPWM(uint16_t output)
     if(TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL))
     {
         //TPM_DRV_SetTimeOverflowIntCmd(TPM_0, true);
-        SEGGER_RTT_printf(0, "\tfreq: %d, Input val: %3d, Channel val: %3d\n",
-            TPM_DRV_GetClock(TPM_0), PwmParams.uDutyCyclePercent, TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL));
+        SEGGER_RTT_printf(0, "\tfreq: %d, Input val: %3d, Channel val: %4d, mod val: %4d\n",
+            TPM_DRV_GetClock(TPM_0), PwmParams.uDutyCyclePercent,
+            TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL), TPM_DRV_GetMod(g_tpmBaseAddr[TPM_0]));
     }
     else
     {
