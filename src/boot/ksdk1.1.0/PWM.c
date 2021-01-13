@@ -21,7 +21,7 @@ tpm_general_config_t PwmGConfig = {
     .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
-    .isCountReloadOnTrig = false,
+    .isCountReloadOnTrig = true,
     .triggerSource = kTpmExtTrig,
 };
 
