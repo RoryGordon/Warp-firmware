@@ -31,6 +31,7 @@ tpm_pwm_param_t PwmParams = {
     .uFrequencyHZ = 240000U,
     .uDutyCyclePercent = 50U,
 };
+uint32_t tpmBaseAddr = g_tpmBaseAddr[TPM_0];
 
 
 void initPWM(void)
@@ -40,7 +41,8 @@ void initPWM(void)
     TPM_DRV_SetClock(TPM_0, kTpmClockSourceModuleClk, kTpmDividedBy1);
     SEGGER_RTT_printf(0, "\tInit complete - duty cycle = %d\n",
         PwmParams.uDutyCyclePercent);
-    
+    TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
+    SEGGER_RTT_printf(0, "Clock mode: %d", TPM_HAL_GetClockMode(tpmBaseAddr));
     //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
 
