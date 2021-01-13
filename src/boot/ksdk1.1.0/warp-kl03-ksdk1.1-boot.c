@@ -1562,8 +1562,8 @@ main(void)
 							minValue = inputSignal;
 						}
 					}
-					SEGGER_RTT_printf(0,"\tMax val: %4d | Min val: %4d\n",
-									  maxValue, minValue);
+					SEGGER_RTT_printf(0,"\tMax val: %5d | Min val: %5d | Diff: %5d\n",
+									  maxValue, minValue, maxValue - minValue);
 					maxValue = -4000;
 					minValue = 4000;
 				}
