@@ -1443,7 +1443,7 @@ main(void)
 
 				// Set green LED as output
 				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
-				PORT_HAL_SetMuxMode(PORTB_BASE,11u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
 				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
