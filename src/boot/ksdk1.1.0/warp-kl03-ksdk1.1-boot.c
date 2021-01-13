@@ -1448,7 +1448,7 @@ main(void)
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
 				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
-				PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(0x4004A000u,11u, kPortMuxAlt2);
 
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;
