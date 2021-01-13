@@ -21,14 +21,14 @@ tpm_general_config_t PwmGConfig = {
     .isGlobalTimeBase = true,
     .isTriggerMode = false,
     .isStopCountOnOveflow = false,
-    .isCountReloadOnTrig = true,
+    .isCountReloadOnTrig = false,
     .triggerSource = kTpmExtTrig,
 };
 
 tpm_pwm_param_t PwmParams = {
     .mode = kTpmEdgeAlignedPWM,
     .edgeMode = kTpmHighTrue,
-    .uFrequencyHZ = 240000U,
+    .uFrequencyHZ = 24000U,
     .uDutyCyclePercent = 50U,
 };
 
