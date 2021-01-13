@@ -524,14 +524,14 @@ lowPowerPinStates(void)
 	 *	NOTE: The KL03 has no PTB8 or PTB9
 	 */
 
-	//PORT_HAL_SetMuxMode(PORTB_BASE, 10, kPortMuxAsGpio);
-	//PORT_HAL_SetMuxMode(PORTB_BASE, 11, kPortMuxAsGpio);
+	PORT_HAL_SetMuxMode(PORTB_BASE, 10, kPortMuxAsGpio);
+	PORT_HAL_SetMuxMode(PORTB_BASE, 11, kPortMuxAsGpio);
 
 	/*
 	 *	NOTE: The KL03 has no PTB12
 	 */
 
-	//PORT_HAL_SetMuxMode(PORTB_BASE, 13, kPortMuxAsGpio);
+	PORT_HAL_SetMuxMode(PORTB_BASE, 13, kPortMuxAsGpio);
 
 
 
@@ -1444,11 +1444,12 @@ main(void)
 				// Set green LED as output
 				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
 				//PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
-				//PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinAlt2);
 
-				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				initPWM();
+				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortMuxAlt2);
+
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;
 				for(uint8_t i=0; i < 15; i++)
