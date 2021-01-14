@@ -72,11 +72,11 @@ adc16_chn_config_t adcChnConfig;
 //extern void init_trigger_source(uint32_t instance);
 
 /* User-defined function to install callback. */
-//ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
-//{
-//    g_AdcTestCallback[instance][chnGroup] = callbackFunc;
-//    //conversionCompleted = true;
-//}
+ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
+{
+    g_AdcTestCallback[instance][chnGroup] = callbackFunc;
+    //conversionCompleted = true;
+}
 
 ///* User-defined function to read conversion value in ADC ISR. */
 //uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
@@ -102,17 +102,17 @@ adc16_chn_config_t adcChnConfig;
 //}
 
 /* ADC Interrupt Handler */
-//ADC1IRQHandler(void)
-//{
-//    SEGGER_RTT_printf(0, "ping!\n");
-//    // Get current ADC value
-//    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
-//    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-//    //ADC16_TEST_IRQHandler(ADC_0);
-//
-//    // Set conversionCompleted flag. This prevents an wrong conversion in main function
-//    conversionCompleted = true;
-//}
+ADC1IRQHandler(void)
+{
+    SEGGER_RTT_printf(0, "ping!\n");
+    // Get current ADC value
+    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+    //ADC16_TEST_IRQHandler(ADC_0);
+
+    // Set conversionCompleted flag. This prevents an wrong conversion in main function
+    conversionCompleted = true;
+}
 
 /*!
  * Parameters calibration: VDD and ADCR_TEMP25
