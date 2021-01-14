@@ -169,14 +169,14 @@ calibrateParams(void)
     // ADC stop conversion
     ADC16_DRV_PauseConv(ADC_0, CHANNEL_0);
 
-    // Get VDD value measured in mV: VDD = (ADCR_VDD x V_BG) / ADCR_BG
-    vdd = ADCR_VDD * V_BG / bandgapValue;
-    // Calibrate ADCR_TEMP25: ADCR_TEMP25 = ADCR_VDD x V_TEMP25 / VDD
-    adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
-    // ADCR_100M = ADCR_VDD x M x 100 / VDD
-    adcr100m = (ADCR_VDD * M) / (vdd * 10);
-    SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d\n",
-                        bandgapValue, vdd, adcrTemp25, adcr100m);
+    //// Get VDD value measured in mV: VDD = (ADCR_VDD x V_BG) / ADCR_BG
+    //vdd = ADCR_VDD * V_BG / bandgapValue;
+    //// Calibrate ADCR_TEMP25: ADCR_TEMP25 = ADCR_VDD x V_TEMP25 / VDD
+    //adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
+    //// ADCR_100M = ADCR_VDD x M x 100 / VDD
+    //adcr100m = (ADCR_VDD * M) / (vdd * 10);
+    //SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d\n",
+    //                    bandgapValue, vdd, adcrTemp25, adcr100m);
 
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_DisableHwAverage(ADC_0);
@@ -235,36 +235,8 @@ static int32_t initADC(uint32_t instance)
     return 0;
 }
 
-
-/* Calculate the average temperature and set boundaries */
-//lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
-//                                                     int32_t *tempArray)
-//{
-//    uint32_t avgTemp = 0;
-//    lowPowerAdcBoundaries_t boundaries;
-//
-//    for(int i = 0; i < updateBoundariesCounter; i++)
-//    {
-//        avgTemp += tempArray[i];
-//    }
-//    // Get average temperature
-//    avgTemp /= updateBoundariesCounter;
-//
-//    // Set upper boundary
-//    boundaries.upperBoundary = avgTemp + UPPER_VALUE_LIMIT;
-//
-//    // Set lower boundary
-//    boundaries.lowerBoundary = avgTemp - LOWER_VALUE_LIMIT;
-//
-//    return boundaries;
-//}
-
 void configureADC(void)
 {
-    
-    //uint32_t updateBoundariesCounter = 0;
-    //int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
-    //lowPowerAdcBoundaries_t boundaries;
     calibrateParams();
 
     // Initialize ADC
