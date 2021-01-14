@@ -78,7 +78,6 @@ ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFu
     //conversionCompleted = true;
 }
 
-///* User-defined function to read conversion value in ADC ISR. */
 //uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
 //{
 //    return g_AdcValueInt[instance][chnGroup];
@@ -169,15 +168,6 @@ calibrateParams(void)
     // ADC stop conversion
     ADC16_DRV_PauseConv(ADC_0, CHANNEL_0);
 
-    //// Get VDD value measured in mV: VDD = (ADCR_VDD x V_BG) / ADCR_BG
-    //vdd = ADCR_VDD * V_BG / bandgapValue;
-    //// Calibrate ADCR_TEMP25: ADCR_TEMP25 = ADCR_VDD x V_TEMP25 / VDD
-    //adcrTemp25 = ADCR_VDD * V_TEMP25 / vdd;
-    //// ADCR_100M = ADCR_VDD x M x 100 / VDD
-    //adcr100m = (ADCR_VDD * M) / (vdd * 10);
-    //SEGGER_RTT_printf(0, "bandgapValue: %d, vdd: %d, adcrTemp25: %d, adcr100m: %d\n",
-    //                    bandgapValue, vdd, adcrTemp25, adcr100m);
-
 #if FSL_FEATURE_ADC16_HAS_HW_AVERAGE
     ADC16_DRV_DisableHwAverage(ADC_0);
 #endif // FSL_FEATURE_ADC16_HAS_HW_AVERAGE
@@ -220,8 +210,7 @@ static int32_t initADC(uint32_t instance)
     adcChnConfig.chnNum = kAdcChannelADC0_SE3;
     //adcChnConfig.chnNum = kAdcChannelBandgap;
     adcChnConfig.diffEnable = false;
-    adcChnConfig.intEnable = false; // maybe set to false (originally true)?
-    //adcChnConfig.chnMux = kAdcChnMuxOfA;
+    adcChnConfig.intEnable = false; 
 
     // Configure channel0
     ADC16_DRV_ConfigConvChn(instance, CHANNEL_0, &adcChnConfig);
