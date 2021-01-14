@@ -1167,10 +1167,13 @@ main(void)
 		SEGGER_RTT_WriteString(0, "\r- '0': ADC/delay speed test.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-		SEGGER_RTT_WriteString(0, "\r- '1': Delay train example.\n");
+		SEGGER_RTT_WriteString(0, "\r- '1': delay train example.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\r- '2': PWM testing.\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+		SEGGER_RTT_WriteString(0, "\r- '2': input hardware testing.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\rEnter selection> ");
@@ -1179,43 +1182,6 @@ main(void)
 		
 		switch (key)
 		{
-//			/*
-//			 *	Change default I2C baud rate
-//			 */
-//			case 'b':
-//			{
-//				SEGGER_RTT_WriteString(0, "\r\n\tSet I2C baud rate in kbps (e.g., '0001')> ");
-//				gWarpI2cBaudRateKbps = read4digits();
-//
-//				/*
-//				 *	Round 9999kbps to 10Mbps
-//				 */
-//				if (gWarpI2cBaudRateKbps == 9999)
-//				{
-//					gWarpI2cBaudRateKbps = 10000;
-//				}
-//
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//				SEGGER_RTT_printf(0, "\r\n\tI2C baud rate set to %d kb/s", gWarpI2cBaudRateKbps);
-//#endif
-//
-//				break;
-//			}
-//
-//			/*
-//			 *	Configure default TPS82740 voltage
-//			 */
-//			case 'g':
-//			{
-//				SEGGER_RTT_WriteString(0, "\r\n\tOverride SSSUPPLY in mV (e.g., '1800')> ");
-//				menuSupplyVoltage = read4digits();
-//#ifdef WARP_BUILD_ENABLE_SEGGER_RTT_PRINTF
-//				SEGGER_RTT_printf(0, "\r\n\tOverride SSSUPPLY set to %d mV", menuSupplyVoltage);
-//#endif
-//
-//				break;
-//			}
-
 			/*
 			 *	Sleep for 30 seconds.
 			 */

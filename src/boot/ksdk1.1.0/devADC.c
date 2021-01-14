@@ -72,47 +72,47 @@ adc16_chn_config_t adcChnConfig;
 //extern void init_trigger_source(uint32_t instance);
 
 /* User-defined function to install callback. */
-ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
-{
-    g_AdcTestCallback[instance][chnGroup] = callbackFunc;
-    //conversionCompleted = true;
-}
+//ADC_TEST_InstallCallback(uint32_t instance, uint32_t chnGroup, void (*callbackFunc)(void) )
+//{
+//    g_AdcTestCallback[instance][chnGroup] = callbackFunc;
+//    //conversionCompleted = true;
+//}
 
-/* User-defined function to read conversion value in ADC ISR. */
-uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
-{
-    return g_AdcValueInt[instance][chnGroup];
-}
-
-/* User-defined ADC ISR. */
-static void ADC16_TEST_IRQHandler(uint32_t instance)
-{
-    uint32_t chnGroup;
-    for (chnGroup = 0U; chnGroup < HW_ADC_SC1n_COUNT; chnGroup++)
-    {
-        if (   ADC16_DRV_GetChnFlag(instance, chnGroup, kAdcChnConvCompleteFlag) )
-        {
-            g_AdcValueInt[instance][chnGroup] = ADC16_DRV_GetConvValueRAW(instance, chnGroup);
-            if ( g_AdcTestCallback[instance][chnGroup] )
-            {
-                (void)(*(g_AdcTestCallback[instance][chnGroup]))();
-            }
-        }
-    }
-}
+///* User-defined function to read conversion value in ADC ISR. */
+//uint16_t ADC_TEST_GetConvValueRAWInt(uint32_t instance, uint32_t chnGroup)
+//{
+//    return g_AdcValueInt[instance][chnGroup];
+//}
+//
+///* User-defined ADC ISR. */
+//static void ADC16_TEST_IRQHandler(uint32_t instance)
+//{
+//    uint32_t chnGroup;
+//    for (chnGroup = 0U; chnGroup < HW_ADC_SC1n_COUNT; chnGroup++)
+//    {
+//        if (   ADC16_DRV_GetChnFlag(instance, chnGroup, kAdcChnConvCompleteFlag) )
+//        {
+//            g_AdcValueInt[instance][chnGroup] = ADC16_DRV_GetConvValueRAW(instance, chnGroup);
+//            if ( g_AdcTestCallback[instance][chnGroup] )
+//            {
+//                (void)(*(g_AdcTestCallback[instance][chnGroup]))();
+//            }
+//        }
+//    }
+//}
 
 /* ADC Interrupt Handler */
-ADC1IRQHandler(void)
-{
-    SEGGER_RTT_printf(0, "ping!\n");
-    // Get current ADC value
-    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
-    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
-    //ADC16_TEST_IRQHandler(ADC_0);
-
-    // Set conversionCompleted flag. This prevents an wrong conversion in main function
-    conversionCompleted = true;
-}
+//ADC1IRQHandler(void)
+//{
+//    SEGGER_RTT_printf(0, "ping!\n");
+//    // Get current ADC value
+//    adcValue = ADC16_DRV_GetConvValueRAW(ADC_0, CHANNEL_0);
+//    //adcValue = ADC_TEST_GetConvValueRAWInt (ADC_0, CHANNEL_0);
+//    //ADC16_TEST_IRQHandler(ADC_0);
+//
+//    // Set conversionCompleted flag. This prevents an wrong conversion in main function
+//    conversionCompleted = true;
+//}
 
 /*!
  * Parameters calibration: VDD and ADCR_TEMP25
@@ -237,59 +237,53 @@ static int32_t initADC(uint32_t instance)
 
 
 /* Calculate the average temperature and set boundaries */
-lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
-                                                     int32_t *tempArray)
-{
-    uint32_t avgTemp = 0;
-    lowPowerAdcBoundaries_t boundaries;
-
-    for(int i = 0; i < updateBoundariesCounter; i++)
-    {
-        avgTemp += tempArray[i];
-    }
-    // Get average temperature
-    avgTemp /= updateBoundariesCounter;
-
-    // Set upper boundary
-    boundaries.upperBoundary = avgTemp + UPPER_VALUE_LIMIT;
-
-    // Set lower boundary
-    boundaries.lowerBoundary = avgTemp - LOWER_VALUE_LIMIT;
-
-    return boundaries;
-}
+//lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCounter,
+//                                                     int32_t *tempArray)
+//{
+//    uint32_t avgTemp = 0;
+//    lowPowerAdcBoundaries_t boundaries;
+//
+//    for(int i = 0; i < updateBoundariesCounter; i++)
+//    {
+//        avgTemp += tempArray[i];
+//    }
+//    // Get average temperature
+//    avgTemp /= updateBoundariesCounter;
+//
+//    // Set upper boundary
+//    boundaries.upperBoundary = avgTemp + UPPER_VALUE_LIMIT;
+//
+//    // Set lower boundary
+//    boundaries.lowerBoundary = avgTemp - LOWER_VALUE_LIMIT;
+//
+//    return boundaries;
+//}
 
 void configureADC(void)
 {
     
-    uint32_t updateBoundariesCounter = 0;
-    int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
-    lowPowerAdcBoundaries_t boundaries;
-    //hardware_init();
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_ON);
+    //uint32_t updateBoundariesCounter = 0;
+    //int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
+    //lowPowerAdcBoundaries_t boundaries;
     calibrateParams();
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_ON);    
+
     // Initialize ADC
     if (initADC(ADC_0))
     {
         printf("Failed to do the ADC init\n");
         return -1;
     }
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_GREEN, LED_OFF);
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_RED, LED_OFF);
+
 }
 
 uint32_t printSensorDataADC(bool hexModeFlag)
 {
     SEGGER_RTT_printf(0, "%4d | ", printCounter);
 
-    // Prevents the use of wrong values
-    
-    //GPIO_DRV_WritePinOutput(BOARD_GPIO_LED_BLUE, LED_ON);
-
     ADC16_DRV_ConfigConvChn(ADC_0, CHANNEL_0, &adcChnConfig);
 
     SEGGER_RTT_printf(0, "C | ");
+
     // Wait for the conversion to be done
     ADC16_DRV_WaitConvDone(ADC_0, CHANNEL_0);
     
