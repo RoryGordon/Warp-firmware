@@ -1173,7 +1173,10 @@ main(void)
 		SEGGER_RTT_WriteString(0, "\r- '2': PWM testing.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
-		SEGGER_RTT_WriteString(0, "\r- '2': input hardware testing.\n");
+		SEGGER_RTT_WriteString(0, "\r- '3': input hardware testing.\n");
+		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+		SEGGER_RTT_WriteString(0, "\r- '4': integrating all parts.\n");
 		OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
 
 		SEGGER_RTT_WriteString(0, "\rEnter selection> ");
@@ -1300,7 +1303,7 @@ main(void)
 					delayBuffer[i] = 0;
 				}
 
-				SEGGER_RTT_WriteString(0,"\tBegin here\n");
+				SEGGER_RTT_WriteString(0,"\tBegin here\nInput , Ouput\n-------------");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
 					if(i%5 == 0 && i <= 25)
@@ -1318,8 +1321,8 @@ main(void)
 					
 					outputSignal = (delayOut + inputSignal)&0xFFF;
 
-					SEGGER_RTT_printf(0, "writePos: %6d (%6d) | readPos: %6d (%6d)\n",
-						writePos, delayBuffer[writePos], readPos, outputSignal);
+					SEGGER_RTT_printf(0, "%6d,%6d\n",
+									  inputSignal, outputSignal);
 
 					feedback = ((delayOut*Gain_f) >> Gain_div_f)&0xFFF;
 
@@ -1374,7 +1377,7 @@ main(void)
 				SEGGER_RTT_WriteString(0, "Beginning 40,000 reads...\n");
 				for (readCounter=0U; readCounter < 40000; readCounter++)
 				{
-					inputSignal = getSensorDataADC(true) - 0x4FF;// From unsigned to signed
+					inputSignal = getSensorDataADC(true) - 2011;// From unsigned to signed
 
 					delayBuffer[writePos] = (inputSignal + feedback)&0xFFF;
 					
@@ -1428,7 +1431,7 @@ main(void)
 			case '2':
 			{
 				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
-
+				//Ensure LEDs work (Red doens't seem to be...)
     			GPIO_DRV_SetPinOutput(kGpioLED3);
 
 				OSA_TimeDelay(50);
@@ -1449,20 +1452,20 @@ main(void)
 
 				// Set green LED as output
 				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
-				//PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
 
 				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
 				
 				initPWM();
 				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
-				PORT_HAL_SetMuxMode(0x4004A000u,11u, kPortMuxAlt2);
+				//PORT_HAL_SetMuxMode(0x4004A000u,11u, kPortMuxAlt2);
 
 				SEGGER_RTT_WriteString(0,"Done");
 				uint16_t testOutput = 0;
 				for(uint8_t i=0; i < 15; i++)
 				{
 					//SEGGER_RTT_printf(0,"testOuput = %5d\n", testOutput);
-					writeToPWM(testOutput);
+					writeToPWM(testOutput, true);
 					testOutput = 5120 * (1 + (i%2));
 					OSA_TimeDelay(500);
 				}
@@ -1481,25 +1484,6 @@ main(void)
 				int16_t maxValue = -4000;
 				int16_t minValue = 4000;
 
-				//int16_t outputSignal = 0;
-
-				//int16_t feedback = 0;
-				//int16_t delayOut = 0;
-
-				//uint16_t writePos = 0;
-				//uint16_t readPos = 10000; // Should be any other number < delayBufSize
-				
-				//
-				// Multiply by gain, then bitshift by Gain_div to make it smaller
-				// 
-				// Gain(real) = Gain / 2^(Gain_div)
-				//
-
-				//int8_t Gain_d = 1;
-				//int8_t Gain_f = 1;
-
-				//int8_t Gain_div_d = 1;
-				//int8_t Gain_div_f = 0;
 				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
 				for(uint16_t i = 0; i < sampleBufSize; i++)
 				{
@@ -1512,7 +1496,10 @@ main(void)
 				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
 
 				configureADC();
-				SEGGER_RTT_WriteString(0, "Beginning 40,000 reads...\n");
+				SEGGER_RTT_WriteString(0, "ADC configured\n");
+				OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+				SEGGER_RTT_WriteString(0, "START\n");
 				while(1)
 				{
 					for (readCounter=0U; readCounter < 40000; readCounter++)
@@ -1532,6 +1519,79 @@ main(void)
 									  maxValue, minValue, maxValue - minValue);
 					maxValue = -4000;
 					minValue = 4000;
+				}
+				break;
+			}
+			case '4':
+			{
+				uint16_t readCounter = 0;
+				SEGGER_RTT_WriteString(0,"\nInitialising delay sequence...\n");
+				int16_t delayBuffer[delayBufSize];
+
+				int16_t inputSignal = 0;
+				int16_t outputSignal = 0;
+
+				int16_t feedback = 0;
+				int16_t delayOut = 0;
+
+				uint16_t writePos = 0;
+				uint16_t readPos = 10000; // Should be any other number < delayBufSize
+				
+				//
+				// Multiply by gain, then bitshift by Gain_div to make it smaller
+				// 
+				// Gain(real) = Gain / 2^(Gain_div)
+				//
+
+				int8_t Gain_d = 1;
+				int8_t Gain_f = 1;
+
+				int8_t Gain_div_d = 1;
+				int8_t Gain_div_f = 0;
+				SEGGER_RTT_WriteString(0, "\tpopulating buffer...\n");
+				for(uint16_t i = 0; i < delayBufSize; i++)
+				{
+					delayBuffer[i] = 0;
+				}
+
+				SEGGER_RTT_WriteString(0,"\tBegin here\n");
+
+				// runs quicker with this :)
+				warpSetLowPowerMode(kWarpPowerModeRUN, 0 /* sleep seconds : irrelevant here */);
+
+				configureADC();
+				SEGGER_RTT_WriteString(0, "ADC configured\n");
+				OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+				// Set green LED as output
+				//PORT_HAL_SetMuxMode(PORTB_BASE,10u,kPortMuxAlt2);
+				PORT_HAL_SetMuxMode(PORTB_BASE,11u, kPortPinDisabled);
+
+				SEGGER_RTT_WriteString(0, "\nInitialising PWM...\n");
+				OSA_TimeDelay(gWarpMenuPrintDelayMilliseconds);
+
+				initPWM();
+				SEGGER_RTT_WriteString(0,"PWM configured\n");
+				OSA_TimeDelay(500); // Desperately hoping this gives it time or smth
+
+				while(1)
+				{
+					inputSignal = getSensorDataADC(true) - 2011;// From unsigned to signed
+
+					delayBuffer[writePos] = (inputSignal + feedback)&0xFFF;
+					
+					delayOut = ((delayBuffer[readPos]*Gain_d) >> Gain_div_d)&0xFFF;
+					
+					outputSignal = (delayOut + inputSignal)&0xFFF;
+
+					writeToPWM(outputSignal + 2011, false);
+					//SEGGER_RTT_printf(0, "writePos: %6d (%6d) | readPos: %6d (%6d)\n",
+					//	writePos, delayBuffer[writePos], readPos, outputSignal);
+
+					feedback = ((delayOut*Gain_f) >> Gain_div_f)&0xFFF;
+
+					writePos = (writePos+1) % delayBufSize;
+					readPos = (readPos+1) % delayBufSize;
 				}
 				break;
 			}

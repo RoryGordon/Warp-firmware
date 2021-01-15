@@ -46,16 +46,19 @@ void initPWM(void)
     //TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL);
 }
 
-void writeToPWM(uint16_t output)
+void writeToPWM(uint16_t output, bool print)
 {
     PwmParams.uDutyCyclePercent = (10*output) >> 10; // times 10 div 1024 is easier than  div 100 :/
     
     if(TPM_DRV_PwmStart(TPM_0, &PwmParams, PWM_CHANNEL))
     {
-        //TPM_DRV_SetTimeOverflowIntCmd(TPM_0, true);
-        SEGGER_RTT_printf(0, "\tfreq: %d, Input val: %3d\n"/*, Channel val: %4d, mod val: %4d\n"*/,
-            TPM_DRV_GetClock(TPM_0), PwmParams.uDutyCyclePercent/*,
-            TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL), TPM_HAL_GetMod(g_tpmBaseAddr[TPM_0])*/);
+        if (print)
+        {
+            //TPM_DRV_SetTimeOverflowIntCmd(TPM_0, true);
+            SEGGER_RTT_printf(0, "\tfreq: %d, Input val: %3d\n",/* Channel val: %4d, mod val: %4d\n",*/
+                TPM_DRV_GetClock(TPM_0), PwmParams.uDutyCyclePercent/*,
+                TPM_DRV_GetChnVal(TPM_0, PWM_CHANNEL), TPM_HAL_GetMod(g_tpmBaseAddr[TPM_0])*/);
+        }
     }
     else
     {
