@@ -1303,7 +1303,7 @@ main(void)
 					delayBuffer[i] = 0;
 				}
 
-				SEGGER_RTT_WriteString(0,"\tBegin here\nInput , Ouput\n-------------");
+				SEGGER_RTT_WriteString(0,"\tBegin here\nInput , Ouput\n-------------\n");
 				for(int16_t i = 0; i < 10*delayBufSize; i++)
 				{
 					if(i%5 == 0 && i <= 25)
