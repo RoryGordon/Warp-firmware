@@ -1,5 +1,7 @@
 # Delay Pedal: rarg2 Rory Gordon, Homerton College
 
+Repository: https://github.com/RoryGordon/Warp-firmware
+
 ## Overview
 
 The purpose of this program is to accept a high-impedance audio signal and pass this signal through a delay scheme in order to emulate the effect of a delay-style guitar pedal. As the output was never achieved, the functionality has been split into various menu options in order to demonstrate the work done so far.
