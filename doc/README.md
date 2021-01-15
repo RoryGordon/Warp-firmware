@@ -1,4 +1,4 @@
-# Delay Pedal: rarg2 coursework 5
+# Delay Pedal: rarg2 Rory Gordon, Homerton College
 
 ## Overview
 
